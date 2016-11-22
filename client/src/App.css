@@ -1,0 +1,51 @@
+body {
+  background: #353433;
+  color: #e9e8e7;
+  font: 18px sans-serif;
+}
+
+.App {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.Appのheader {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 40px;
+  left: 0;
+  background: #090807;
+  border-bottom: 1px solid #454443;
+  line-height: 40px;
+}
+
+.Appのtitle {
+  color: #8b8685;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.AppのmidiSettings {
+  position: absolute;
+  top: 5px;
+  right: 4px;
+  height: 30px;
+  background: #353433;
+  border: 1px solid #454443;
+  color: white;
+  font-family: inherit;
+  font-size: 16px;
+}
+
+.Appのstuff {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
