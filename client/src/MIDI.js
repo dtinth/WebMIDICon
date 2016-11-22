@@ -1,25 +1,67 @@
 import { observable, action } from 'mobx'
 
-export const store = observable({
-  status: 'Initializing MIDI system'
+const store = observable({
+  status: 'Initializing MIDI system',
+  outputs: [ ],
+  selectedOutputKey: null
+})
+
+export function getStatus () {
+  return store.status
+}
+
+export function getOutputs () {
+  return store.outputs
+}
+
+export function isSelected (outputKey) {
+  return store.selectedOutputKey === outputKey
+}
+
+export const selectOutput = action('selectOutput', (outputKey) => {
+  const access = window.midiAccess
+  if (!access) return
+  const output = access.outputs.get(outputKey)
+  if (!output) return window.alert('No output key ' + outputKey + ' found')
+  window.midiOutput = output
+  setStatus('Using output: ' + output.name)
 })
 
 const setStatus = action('setStatus', (status) => {
   store.status = status
 })
 
+const handleAvailableOutputs = action('handleAvailableOutputs', (outputs) => {
+  store.outputs = outputs
+  for (const output of outputs) {
+    if (store.selectedOutputKey === output.key) return
+  }
+  if (outputs.length) {
+    store.selectedOutputKey = outputs[0].key
+  } else {
+    store.selectedOutputKey = null
+  }
+})
+
 function ok (access) {
   setStatus('Found MIDI outputs: ' + access.outputs.size)
   try {
-    const output = access.outputs.values().next().value
-    window.midiOutput = output
-    setStatus('Using output: ' + output.name)
+    const ports = [ ]
+    const iterator = access.outputs.keys()
+    for (;;) {
+      const { done, value: key } = iterator.next()
+      if (done) break
+      ports.push({ key, name: access.outputs.get(key).name })
+    }
+    handleAvailableOutputs(ports)
+    selectOutput(store.selectedOutputKey)
   } catch (e) {
     setStatus('Cannot access mIDI output ' + e)
   }
 }
 
 export function send (data) {
+  console.log(data)
   if (window.midiOutput) {
     window.midiOutput.send(data)
   }
@@ -35,8 +77,8 @@ function init () {
     setStatus('Requesting MIDI access')
     navigator.requestMIDIAccess({ sysex: false }).then(
       (access) => {
-        window._midiAccess = access
-        ok(window._midiAccess)
+        window.midiAccess = access
+        ok(window.midiAccess)
       },
       (e) => {
         setStatus('MIDI cannot request!! ' + e)

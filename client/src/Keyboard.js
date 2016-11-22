@@ -43,7 +43,10 @@ export const Keyboard = observer(class Keyboard extends React.PureComponent {
       case '#iso':
         return <IsomorphicKeyboard store={this.store} />
       default:
-        return <div>Unknown...</div>
+        return <div className='Keyboardのmenu'>
+          <a href='#piano'>Piano</a>
+          <a href='#iso'>Isokeyboard</a>
+        </div>
     }
   }
   render () {
@@ -64,12 +67,12 @@ class MIDIEmitter extends React.Component {
       return function (next) {
         for (const note of next) {
           if (!previous.has(note)) {
-            MIDI.send([ 0x90, note + 32, 0x60 ])
+            MIDI.send([ 0x90, note + 36, 0x60 ])
           }
         }
         for (const note of previous) {
           if (!next.has(note)) {
-            MIDI.send([ 0x80, note + 32, 0x60 ])
+            MIDI.send([ 0x80, note + 36, 0x60 ])
           }
         }
         previous = next

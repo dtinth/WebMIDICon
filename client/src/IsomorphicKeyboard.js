@@ -35,8 +35,8 @@ export class IsomorphicKeyboard extends React.PureComponent {
     const keyDistance = Math.sqrt(
       width * width +
       height * height
-    ) / 16
-    const keySize = keyDistance * 0.67
+    ) / 18
+    const keySize = keyDistance * 0.5
     const xOffset = keyDistance * Math.sqrt(3) / 2
     const yOffset = keyDistance
     const x = (column) => keyDistance / 2 + column * xOffset
@@ -85,7 +85,7 @@ export class IsomorphicKeyboard extends React.PureComponent {
         }))
         .sort((a, b) => a.distance - b.distance)
       )
-      const threshold = rankedKeys[0].distance + this.keyDistance / 8
+      const threshold = rankedKeys[0].distance + this.keyDistance / 12
       for (const { distance, noteValue } of rankedKeys) {
         if (distance > threshold) break
         activated.add(noteValue)
