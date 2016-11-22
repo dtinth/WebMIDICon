@@ -15,11 +15,9 @@ export class PianoKeyboard extends React.Component {
         onTouchMove={this.handleTouch}
         onTouchEnd={this.handleTouch}
       >
-        <div className='Keyboardのrows'>
-          {this.renderRow(0, 24)}
-          {this.renderRow(1, 12)}
-          {this.renderRow(2, 0)}
-        </div>
+        {this.renderRow(0, 24)}
+        {this.renderRow(1, 12)}
+        {this.renderRow(2, 0)}
       </div>
     )
   }

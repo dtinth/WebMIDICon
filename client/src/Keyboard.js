@@ -55,7 +55,7 @@ export class Keyboard extends React.Component {
     e.preventDefault()
   }
   render () {
-    // return <PianoKeyboard store={this.store} />
+    return <PianoKeyboard store={this.store} />
     return <IsomorphicKeyboard store={this.store} />
   }
 }
