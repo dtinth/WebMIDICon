@@ -2,30 +2,14 @@ import './Keyboard.css'
 import * as MIDI from './MIDI'
 
 import React from 'react'
-import { autorun } from 'mobx'
+import { observer } from 'mobx-react'
 
 import createStore from './createStore'
 import IsomorphicKeyboard from './IsomorphicKeyboard'
 import PianoKeyboard from './PianoKeyboard'
+import { getHash } from './Hash'
 
-const handleNotes = (() => {
-  let previous = new Set()
-  return function (next) {
-    for (const note of next) {
-      if (!previous.has(note)) {
-        MIDI.send([ 0x90, note + 32, 0x60 ])
-      }
-    }
-    for (const note of previous) {
-      if (!next.has(note)) {
-        MIDI.send([ 0x80, note + 32, 0x60 ])
-      }
-    }
-    previous = next
-  }
-})()
-
-export class Keyboard extends React.Component {
+export const Keyboard = observer(class Keyboard extends React.PureComponent {
   constructor (props) {
     super(props)
     this.store = createStore()
@@ -33,9 +17,6 @@ export class Keyboard extends React.Component {
   componentDidMount () {
     window.addEventListener('keydown', this.handleKeyDown)
     window.addEventListener('keyup', this.handleKeyUp)
-    this.unsubscribe = autorun(() => {
-      handleNotes(this.store.activeNotes)
-    })
   }
   componentWillUnmount () {
     window.removeEventListener('keydown', this.handleKeyDown)
@@ -54,9 +35,55 @@ export class Keyboard extends React.Component {
     this.store.handleKeyUp(e.keyCode)
     e.preventDefault()
   }
+  renderContent () {
+    const hash = getHash()
+    switch (hash) {
+      case '#piano':
+        return <PianoKeyboard store={this.store} />
+      case '#iso':
+        return <IsomorphicKeyboard store={this.store} />
+      default:
+        return <div>Unknown...</div>
+    }
+  }
   render () {
-    return <PianoKeyboard store={this.store} />
-    return <IsomorphicKeyboard store={this.store} />
+    return (
+      <div>
+        {this.renderContent()}
+        <MIDIEmitter activeNotes={this.store.activeNotes} />
+      </div>
+    )
+  }
+})
+
+class MIDIEmitter extends React.Component {
+  constructor (props) {
+    super(props)
+    this.handleNotes = (() => {
+      let previous = new Set()
+      return function (next) {
+        for (const note of next) {
+          if (!previous.has(note)) {
+            MIDI.send([ 0x90, note + 32, 0x60 ])
+          }
+        }
+        for (const note of previous) {
+          if (!next.has(note)) {
+            MIDI.send([ 0x80, note + 32, 0x60 ])
+          }
+        }
+        previous = next
+      }
+    })()
+  }
+  componentDidMount () {
+    this.handleNotes(this.props.activeNotes)
+  }
+  componentWillReceiveProps (nextProps) {
+    this.handleNotes(nextProps.activeNotes)
+  }
+  render () {
+    return null
   }
 }
 
