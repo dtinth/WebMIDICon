@@ -28,17 +28,18 @@ export class Keyboard extends React.Component {
   constructor (props) {
     super(props)
     this.store = createStore()
-    autorun(() => {
-      handleNotes(this.store.activeNotes)
-    })
   }
   componentDidMount () {
     window.addEventListener('keydown', this.handleKeyDown)
     window.addEventListener('keyup', this.handleKeyUp)
+    this.unsubscribe = autorun(() => {
+      handleNotes(this.store.activeNotes)
+    })
   }
   componentWillUnmount () {
     window.removeEventListener('keydown', this.handleKeyDown)
     window.removeEventListener('keyup', this.handleKeyUp)
+    this.unsubscribe()
   }
   shouldComponentUpdate () {
     return false
