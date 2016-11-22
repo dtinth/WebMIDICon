@@ -46,6 +46,7 @@ export class Keyboard extends React.Component {
     return false
   }
   handleKeyDown = (e) => {
+    if (e.metaKey || e.ctrlKey || e.altKey) return
     this.store.handleKeyDown(e.keyCode)
     e.preventDefault()
   }
