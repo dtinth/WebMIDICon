@@ -1,3 +1,5 @@
+import './PianoKeyboard.css'
+
 import React from 'react'
 import { computed } from 'mobx'
 import { observer } from 'mobx-react'
@@ -88,11 +90,11 @@ export class Octave extends React.Component {
     const blackNoteValue = whiteNoteValue + 1
     return (
       <div
-        className='KeyboardのkeyHolder'
+        className='PianoKeyboardのkeyHolder'
         style={{ left: percent(position / 14), width: percent(1 / 14) }}
       >
-        {this.renderKey('Keyboardのkey', whiteNoteValue)}
-        {hasBlackKey && this.renderKey('KeyboardのblackKey', blackNoteValue)}
+        {this.renderKey('PianoKeyboardのkey', whiteNoteValue)}
+        {hasBlackKey && this.renderKey('PianoKeyboardのblackKey', blackNoteValue)}
       </div>
     )
   }
