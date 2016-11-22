@@ -1,40 +1,34 @@
+import { observable, action } from 'mobx'
 
-const div = document.createElement('div')
-div.setAttribute('style', 'position:absolute;z-index:99;top:0;left:0;background:#654;color:#dec')
-div.textContent = 'MIDI service'
-document.body.appendChild(div)
+export const store = observable({
+  status: 'Initializing MIDI system'
+})
 
-if (module.hot) {
-  module.hot.dispose(() => {
-    document.body.removeChild(div)
-  })
-}
+const setStatus = action('setStatus', (status) => {
+  store.status = status
+})
 
 function ok (access) {
-  setStatus('MIDI outputs: ' + access.outputs.size)
+  setStatus('Found MIDI outputs: ' + access.outputs.size)
   try {
     const output = access.outputs.values().next().value
-    window._midiOutput = output
-    setStatus('Using output: ' + output)
+    window.midiOutput = output
+    setStatus('Using output: ' + output.name)
   } catch (e) {
     setStatus('Cannot access mIDI output ' + e)
   }
 }
 
 export function send (data) {
-  console.log(data)
-  if (window._midiOutput) {
-    setStatus('Output: ' + data)
-    window._midiOutput.send(data)
-  } else {
-    setStatus('...MIDI not initalized but wana send ' + data)
+  if (window.midiOutput) {
+    window.midiOutput.send(data)
   }
 }
 
-setTimeout(() => {
-  if (window._midiAccess) {
+function init () {
+  if (window.midiAccess) {
     setStatus('MIDI saved!!')
-    ok(window._midiAccess)
+    ok(window.midiAccess)
     return
   }
   if (navigator.requestMIDIAccess) {
@@ -51,8 +45,6 @@ setTimeout(() => {
   } else {
     setStatus('MIDI not supported')
   }
-}, 500)
-
-function setStatus (text) {
-  div.textContent = text
 }
+
+setTimeout(init)
