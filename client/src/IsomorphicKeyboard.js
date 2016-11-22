@@ -1,3 +1,5 @@
+import './IsomorphicKeyboard.css'
+
 import React from 'react'
 import { computed } from 'mobx'
 import { observer } from 'mobx-react'
@@ -124,13 +126,13 @@ const Circle = observer(class Circle extends React.PureComponent {
         }}
       >
         <div
-          className='Keyboardのcircle'
+          className='IsomorphicKeyboardのcircle'
           style={{
             borderColor: `hsl(${(noteValue % 12) * 30},50%,72%)`
           }}
         />
         <div
-          className='Keyboardのcircle is-active'
+          className='IsomorphicKeyboardのcircle is-active'
           style={{
             borderColor: 'white',
             background: `hsl(${(noteValue % 12) * 30},50%,72%)`,

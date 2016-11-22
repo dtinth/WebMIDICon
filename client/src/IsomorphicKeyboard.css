@@ -1,0 +1,8 @@
+
+.IsomorphicKeyboardのcircle {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  box-sizing: border-box;
+  border: 3px solid #8b8685;
+  border-radius: 100%;
+}
