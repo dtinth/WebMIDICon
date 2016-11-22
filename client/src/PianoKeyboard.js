@@ -4,7 +4,7 @@ import React from 'react'
 import { computed } from 'mobx'
 import { observer } from 'mobx-react'
 
-export class PianoKeyboard extends React.Component {
+export class PianoKeyboard extends React.PureComponent {
   constructor (props) {
     super(props)
     this.keys = { }
