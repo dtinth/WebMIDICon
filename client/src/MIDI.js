@@ -44,6 +44,7 @@ const handleAvailableOutputs = action('handleAvailableOutputs', (outputs) => {
 })
 
 function ok (access) {
+  window.midiAccess = access
   setStatus('Found MIDI outputs: ' + access.outputs.size)
   try {
     const ports = [ ]
@@ -77,16 +78,34 @@ function init () {
     setStatus('Requesting MIDI access')
     navigator.requestMIDIAccess({ sysex: false }).then(
       (access) => {
-        window.midiAccess = access
-        ok(window.midiAccess)
+        ok(access)
       },
       (e) => {
         setStatus('MIDI cannot request!! ' + e)
       }
     )
+  } else if (
+    /* global webkit */
+    typeof webkit !== 'undefined' &&
+    webkit.messageHandlers &&
+    webkit.messageHandlers.send &&
+    webkit.messageHandlers.send.postMessage
+  ) {
+    ok(sham(webkit.messageHandlers.send))
   } else {
     setStatus('MIDI not supported')
   }
+}
+
+function sham (port) {
+  const midiAccess = {
+    outputs: new Map()
+  }
+  midiAccess.outputs.set('bluetooth', {
+    name: 'Bluetooth',
+    send: (bytes) => port.postMessage(bytes.join(';'))
+  })
+  return midiAccess
 }
 
 setTimeout(init)
