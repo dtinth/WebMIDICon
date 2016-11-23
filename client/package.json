@@ -6,7 +6,9 @@
   "author": "Thai Pangsakulyanont <dtinth@spacet.me>",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --hot --port=9998 --host=0.0.0.0 --compress"
+    "start": "webpack-dev-server --hot --port=9998 --host=0.0.0.0 --compress",
+    "build": "webpack -p",
+    "deploy": "gh-pages -d build"
   },
   "standard": {
     "parser": "babel-eslint"
@@ -20,6 +22,7 @@
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-2": "^6.18.0",
     "css-loader": "^0.26.0",
+    "gh-pages": "^0.12.0",
     "html-webpack-plugin": "^2.24.1",
     "postcss-cssnext": "^2.8.0",
     "postcss-loader": "^1.1.1",

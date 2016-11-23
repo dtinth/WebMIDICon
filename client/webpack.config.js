@@ -6,7 +6,9 @@ const HtmlPlugin = require('html-webpack-plugin')
 module.exports = {
   entry: './src/index',
   output: {
-    path: path.resolve(__dirname, 'build')
+    path: path.resolve(__dirname, 'build'),
+    publicPath: '',
+    filename: '[chunkhash].js'
   },
   resolve: {
     alias: {
@@ -16,7 +18,15 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.js$/, include: path.resolve(__dirname, 'src'), loader: 'babel-loader' },
+      {
+        test: /\.js$/,
+        include: [
+          path.resolve(__dirname, 'src'),
+          path.resolve(__dirname, 'node_modules/preact/src'),
+          path.resolve(__dirname, 'node_modules/preact-compat/src')
+        ],
+        loader: 'babel-loader'
+      },
       {
         test: /\.css$/,
         use: [
