@@ -10,20 +10,12 @@ module.exports = {
     publicPath: '',
     filename: process.env.DEV ? 'bundle.js' : '[chunkhash].js'
   },
-  resolve: {
-    alias: {
-      'react': 'preact-compat',
-      'react-dom': 'preact-compat'
-    }
-  },
   module: {
     rules: [
       {
         test: /\.js$/,
         include: [
-          path.resolve(__dirname, 'src'),
-          path.resolve(__dirname, 'node_modules/preact/src'),
-          path.resolve(__dirname, 'node_modules/preact-compat/src')
+          path.resolve(__dirname, 'src')
         ],
         loader: 'babel-loader'
       },

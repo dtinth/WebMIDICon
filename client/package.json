@@ -36,11 +36,8 @@
     "lodash": "^4.17.2",
     "mobx": "^2.6.3",
     "mobx-react": "^3.5.9",
-    "preact": "^6.4.0",
-    "preact-compat": "^3.9.2",
-    "react": "^15.4.0",
-    "react-redux": "^4.4.6",
-    "redux": "^3.6.0",
+    "react": "latest",
+    "react-dom": "^15.4.1",
     "reselect": "^2.5.4"
   }
 }
