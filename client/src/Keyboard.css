@@ -17,12 +17,17 @@
 .Keyboardのmenu {
   font-size: 5vw;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.Keyboardのmenu > a {
+.KeyboardのmenuItem {
+  flex-basis: 48%;
+}
+
+.KeyboardのmenuLink {
   color: #e9e8e7;
   display: block;
-  flex-basis: 48%;
   background: #090807;
   margin: 0.5em;
   padding: 0.5em;

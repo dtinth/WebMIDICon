@@ -40,14 +40,27 @@ export const Keyboard = observer(class Keyboard extends React.PureComponent {
     switch (hash) {
       case '#piano':
         return <PianoKeyboard store={this.store} />
-      case '#iso':
-        return <IsomorphicKeyboard store={this.store} />
+      case '#harmonic':
+        return <IsomorphicKeyboard type='harmonic' store={this.store} />
+      case '#jammer':
+        return <IsomorphicKeyboard type='jammer' store={this.store} />
+      case '#drums':
+        return <div>Soon....</div>
       default:
         return <div className='Keyboardのmenu'>
-          <a href='#piano'>Piano</a>
-          <a href='#iso'>Isokeyboard</a>
+          {this.renderMenuItem('#piano', 'Piano')}
+          {this.renderMenuItem('#harmonic', 'Harmonic')}
+          {this.renderMenuItem('#jammer', 'Jammer')}
+          {this.renderMenuItem('#drums', 'Drums')}
         </div>
     }
+  }
+  renderMenuItem (href, text) {
+    return (
+      <div className='KeyboardのmenuItem'>
+        <a className='KeyboardのmenuLink' href={href}>{text}</a>
+      </div>
+    )
   }
   render () {
     return (
