@@ -153,6 +153,8 @@ const Circle = observer(class Circle extends React.PureComponent {
   }
   render () {
     const { size, noteValue, left, top } = this.props
+    const transpose = this.props.store.transpose
+    const trueNoteValue = transpose + noteValue
     return (
       <div
         style={{
@@ -166,14 +168,14 @@ const Circle = observer(class Circle extends React.PureComponent {
         <div
           className='IsomorphicKeyboardのcircle'
           style={{
-            borderColor: `hsl(${(noteValue % 12) * 30},50%,72%)`
+            borderColor: `hsl(${(trueNoteValue % 12) * 30},50%,72%)`
           }}
         />
         <div
           className='IsomorphicKeyboardのcircle is-active'
           style={{
             borderColor: 'white',
-            background: `hsl(${(noteValue % 12) * 30},50%,72%)`,
+            background: `hsl(${(trueNoteValue % 12) * 30},50%,72%)`,
             opacity: this.isTouched.get() ? 1 : 0
           }}
         />
