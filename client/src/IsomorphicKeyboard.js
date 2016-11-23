@@ -5,53 +5,54 @@ import { computed } from 'mobx'
 import { observer } from 'mobx-react'
 import { createSelector } from 'reselect'
 
-function generateKeys (type, width, height) {
-  if (!width || !height) return { keys: [ ], keyDistance: 0, keySize: 0 }
-  if (type === 'jammer') {
-    const keyDistance = Math.sqrt(
-      width * width +
-      height * height
-    ) / 18
+const types = {
+  jammer: (width, height) => {
+    const keyDistance = Math.sqrt(width * width + height * height) / 18
     const keySize = keyDistance * 0.5
     const xOffset = keyDistance / 2
     const yOffset = keyDistance * Math.sqrt(3)
-    const x = (column) => keyDistance / 2 + column * xOffset
-    const y = (column, row) => height - keyDistance / 2 + (column / 2 - row) * yOffset
-    const keys = [ ]
-    for (let i = 0; x(i) <= width; i++) {
-      for (let j = 0; y(i, j) >= 0; j++) {
-        const cx = x(i)
-        const cy = y(i, j)
-        const noteValue = i * -5 + j * 12
-        if (cx < 0) continue
-        if (cy > height) continue
-        keys.push({ key: `${i}:${j}`, x: cx, y: cy, noteValue: noteValue })
-      }
+    return {
+      keyDistance,
+      keySize,
+      x: (column) => keyDistance / 2 + column * xOffset,
+      y: (column, row) => height - keyDistance / 2 + (column / 2 - row) * yOffset,
+      note: (column, row) => column * -5 + row * 12
     }
-    return { keys, keyDistance, keySize }
-  } else {
-    const keyDistance = Math.sqrt(
-      width * width +
-      height * height
-    ) / 18
+  },
+  harmonic: (width, height) => {
+    const keyDistance = Math.sqrt(width * width + height * height) / 18
     const keySize = keyDistance * 0.5
     const xOffset = keyDistance * Math.sqrt(3) / 2
     const yOffset = keyDistance
-    const x = (column) => keyDistance / 2 + column * xOffset
-    const y = (column, row) => height - keyDistance / 2 + (column / 2 - row) * yOffset
-    const keys = [ ]
-    for (let i = 0; x(i) <= width; i++) {
-      for (let j = 0; y(i, j) >= 0; j++) {
-        const cx = x(i)
-        const cy = y(i, j)
-        const noteValue = j * 7 - i * 3
-        if (cx < 0) continue
-        if (cy > height) continue
-        keys.push({ key: `${i}:${j}`, x: cx, y: cy, noteValue: noteValue })
-      }
+    return {
+      keyDistance,
+      keySize,
+      x: (column) => keyDistance / 2 + column * xOffset,
+      y: (column, row) => height - keyDistance / 2 + (column / 2 - row) * yOffset,
+      note: (column, row) => row * 7 - column * 3
     }
-    return { keys, keyDistance, keySize }
   }
+}
+
+const INVALID = { keys: [ ], keyDistance: 0, keySize: 0 }
+
+function generateKeys (type, width, height) {
+  if (!width || !height) return INVALID
+  const typedefFactory = types[type]
+  if (!typedefFactory) return INVALID
+  const { x, y, note, keyDistance, keySize } = typedefFactory(width, height)
+  const keys = [ ]
+  for (let i = 0; x(i) <= width; i++) {
+    for (let j = 0; y(i, j) >= 0; j++) {
+      const cx = x(i)
+      const cy = y(i, j)
+      const noteValue = note(i, j)
+      if (cx < 0) continue
+      if (cy > height) continue
+      keys.push({ key: `${i}:${j}`, x: cx, y: cy, noteValue: noteValue })
+    }
+  }
+  return { keys, keyDistance, keySize }
 }
 
 export class IsomorphicKeyboard extends React.PureComponent {
