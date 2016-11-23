@@ -88,7 +88,9 @@ const DrumButton = class DrumButton extends React.PureComponent {
   }
   registerActiveElement = (element) => {
     this.activeElement = element
-    element.style.opacity = '0'
+    if (element) {
+      element.style.opacity = '0'
+    }
   }
   handleTouchStart = (e) => {
     if (!this.element) return
