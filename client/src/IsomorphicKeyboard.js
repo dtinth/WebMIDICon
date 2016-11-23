@@ -3,6 +3,7 @@ import './IsomorphicKeyboard.css'
 import React from 'react'
 import { computed } from 'mobx'
 import { observer } from 'mobx-react'
+import { createSelector } from 'reselect'
 
 export class IsomorphicKeyboard extends React.PureComponent {
   constructor (props) {
@@ -23,49 +24,59 @@ export class IsomorphicKeyboard extends React.PureComponent {
   handleSizeChange = () => {
     if (this.container) {
       this.setState({
-        keyElements: this.renderKeys(
-          this.container.offsetWidth,
-          this.container.offsetHeight
-        )
+        width: this.container.offsetWidth,
+        height: this.container.offsetHeight
       })
     }
   }
-  renderKeys (width, height) {
-    if (!width || !height) return null
-    const keyDistance = Math.sqrt(
-      width * width +
-      height * height
-    ) / 18
-    const keySize = keyDistance * 0.5
-    const xOffset = keyDistance * Math.sqrt(3) / 2
-    const yOffset = keyDistance
-    const x = (column) => keyDistance / 2 + column * xOffset
-    const y = (column, row) => height - keyDistance / 2 + (column / 2 - row) * yOffset
-    const out = [ ]
-    this.keys.length = 0
-    this.keyDistance = keyDistance
-    for (let i = 0; x(i) <= width; i++) {
-      for (let j = 0; y(i, j) >= 0; j++) {
-        const cx = x(i)
-        const cy = y(i, j)
-        const noteValue = j * 7 - i * 3 // j + 3 * i
-        if (cx < 0) continue
-        if (cy > height) continue
-        out.push(
+  selectKeys = createSelector(
+    ({ props }) => props.type,
+    ({ state }) => state.width,
+    ({ state }) => state.height,
+    (type, width, height) => {
+      if (!width || !height) return { keys: [ ], keyDistance: 0, keySize: 0 }
+      const keyDistance = Math.sqrt(
+        width * width +
+        height * height
+      ) / 18
+      const keySize = keyDistance * 0.5
+      const xOffset = keyDistance * Math.sqrt(3) / 2
+      const yOffset = keyDistance
+      const x = (column) => keyDistance / 2 + column * xOffset
+      const y = (column, row) => height - keyDistance / 2 + (column / 2 - row) * yOffset
+      const keys = [ ]
+      for (let i = 0; x(i) <= width; i++) {
+        for (let j = 0; y(i, j) >= 0; j++) {
+          const cx = x(i)
+          const cy = y(i, j)
+          const noteValue = j * 7 - i * 3 // j + 3 * i
+          if (cx < 0) continue
+          if (cy > height) continue
+          keys.push({ key: `${i}:${j}`, x: cx, y: cy, noteValue: noteValue })
+        }
+      }
+      // out
+      return { keys, keyDistance, keySize }
+    }
+  )
+  renderKeys = createSelector(
+    this.selectKeys,
+    ({ props }) => props.store,
+    ({ keys, keySize }, store) => {
+      return keys.map((key) => {
+        return (
           <Circle
-            store={this.props.store}
-            key={i + ':' + j}
+            store={store}
+            key={key.key}
             size={keySize}
-            noteValue={noteValue}
-            left={cx}
-            top={cy}
+            noteValue={key.noteValue}
+            left={key.x}
+            top={key.y}
           />
         )
-        this.keys.push({ x: cx, y: cy, noteValue: noteValue })
-      }
+      })
     }
-    return out
-  }
+  ).bind(this, this)
   updateTouches = (e) => {
     e.preventDefault()
     const container = this.container
@@ -74,8 +85,9 @@ export class IsomorphicKeyboard extends React.PureComponent {
     const bx = bound.left
     const by = bound.top
     const activated = new Set()
+    const { keys, keyDistance } = this.selectKeys(this)
     void [ ].forEach.call(e.touches, (touch) => {
-      const rankedKeys = (this.keys
+      const rankedKeys = (keys
         .map(({ noteValue, x, y }) => ({
           noteValue,
           distance: Math.sqrt(
@@ -85,7 +97,7 @@ export class IsomorphicKeyboard extends React.PureComponent {
         }))
         .sort((a, b) => a.distance - b.distance)
       )
-      const threshold = rankedKeys[0].distance + this.keyDistance / 12
+      const threshold = rankedKeys[0].distance + keyDistance / 12
       for (const { distance, noteValue } of rankedKeys) {
         if (distance > threshold) break
         activated.add(noteValue)
@@ -102,7 +114,7 @@ export class IsomorphicKeyboard extends React.PureComponent {
         onTouchEnd={this.updateTouches}
         style={{ position: 'absolute', overflow: 'hidden', top: 0, right: 0, bottom: 0, left: 0 }}
       >
-        {this.state.keyElements}
+        {this.renderKeys()}
       </div>
     )
   }
