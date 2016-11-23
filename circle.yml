@@ -7,5 +7,5 @@ dependencies:
   override:
     - yarn
 test:
-  overide:
+  override:
     - cd client && npm run build
