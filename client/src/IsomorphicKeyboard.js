@@ -12,7 +12,6 @@ const types = {
     const xOffset = keyDistance / 2
     const yOffset = keyDistance * Math.sqrt(3)
     return {
-      keyDistance,
       keySize,
       x: (column) => keyDistance / 2 + column * xOffset,
       y: (column, row) => height - keyDistance / 2 + (column / 2 - row) * yOffset,
@@ -25,7 +24,6 @@ const types = {
     const xOffset = keyDistance * Math.sqrt(3) / 2
     const yOffset = keyDistance
     return {
-      keyDistance,
       keySize,
       x: (column) => keyDistance / 2 + column * xOffset,
       y: (column, row) => height - keyDistance / 2 + (column / 2 - row) * yOffset,
@@ -34,13 +32,13 @@ const types = {
   }
 }
 
-const INVALID = { keys: [ ], keyDistance: 0, keySize: 0 }
+const INVALID = { keys: [ ], keySize: 0 }
 
 function generateKeys (type, width, height) {
   if (!width || !height) return INVALID
   const typedefFactory = types[type]
   if (!typedefFactory) return INVALID
-  const { x, y, note, keyDistance, keySize } = typedefFactory(width, height)
+  const { x, y, note, keySize } = typedefFactory(width, height)
   const keys = [ ]
   for (let i = 0; x(i) <= width; i++) {
     for (let j = 0; y(i, j) >= 0; j++) {
@@ -52,7 +50,7 @@ function generateKeys (type, width, height) {
       keys.push({ key: `${i}:${j}`, x: cx, y: cy, noteValue: noteValue })
     }
   }
-  return { keys, keyDistance, keySize }
+  return { keys, keySize }
 }
 
 export class IsomorphicKeyboard extends React.PureComponent {
@@ -111,7 +109,7 @@ export class IsomorphicKeyboard extends React.PureComponent {
     const bx = bound.left
     const by = bound.top
     const activated = new Set()
-    const { keys, keyDistance } = this.selectKeys(this)
+    const { keys } = this.selectKeys(this)
     void [ ].forEach.call(e.touches, (touch) => {
       const rankedKeys = (keys
         .map(({ noteValue, x, y }) => ({
@@ -123,11 +121,7 @@ export class IsomorphicKeyboard extends React.PureComponent {
         }))
         .sort((a, b) => a.distance - b.distance)
       )
-      const threshold = rankedKeys[0].distance + keyDistance / 12
-      for (const { distance, noteValue } of rankedKeys) {
-        if (distance > threshold) break
-        activated.add(noteValue)
-      }
+      activated.add(rankedKeys[0].noteValue)
     })
     this.props.store.handleTouches([ ...activated ])
   }
