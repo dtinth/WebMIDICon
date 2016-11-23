@@ -118,6 +118,8 @@ const Key = observer(class Key extends React.PureComponent {
   }
   render () {
     const active = this.isTouched.get()
+    const transpose = this.props.store.transpose
+    const trueNoteValue = transpose + this.props.noteValue
     return (
       <div>
         <div
@@ -128,6 +130,7 @@ const Key = observer(class Key extends React.PureComponent {
           className={this.props.className + ' is-active'}
           style={{
             opacity: active ? 1 : 0,
+            background: `hsl(${(trueNoteValue % 12) * 30},100%,90%)`,
             transition: active ? '' : '0.3s opacity'
           }}
         />
