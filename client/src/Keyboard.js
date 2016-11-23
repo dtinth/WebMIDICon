@@ -22,7 +22,6 @@ export const Keyboard = observer(class Keyboard extends React.PureComponent {
   componentWillUnmount () {
     window.removeEventListener('keydown', this.handleKeyDown)
     window.removeEventListener('keyup', this.handleKeyUp)
-    this.unsubscribe()
   }
   shouldComponentUpdate () {
     return false
