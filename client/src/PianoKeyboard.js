@@ -16,6 +16,7 @@ export class PianoKeyboard extends React.PureComponent {
         onTouchStart={this.handleTouch}
         onTouchMove={this.handleTouch}
         onTouchEnd={this.handleTouch}
+        className='PianoKeyboard'
       >
         {this.renderRow(0, 24)}
         {this.renderRow(1, 12)}
