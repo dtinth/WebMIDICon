@@ -38,6 +38,8 @@ module.exports = {
     ]
   },
   plugins: [
-    new HtmlPlugin()
+    new HtmlPlugin({
+      template: './src/index.html'
+    })
   ]
 }
