@@ -5,6 +5,32 @@ import { computed } from 'mobx'
 import { observer } from 'mobx-react'
 import { createSelector } from 'reselect'
 
+function generateKeys (type, width, height) {
+  if (!width || !height) return { keys: [ ], keyDistance: 0, keySize: 0 }
+  const keyDistance = Math.sqrt(
+    width * width +
+    height * height
+  ) / 18
+  const keySize = keyDistance * 0.5
+  const xOffset = keyDistance * Math.sqrt(3) / 2
+  const yOffset = keyDistance
+  const x = (column) => keyDistance / 2 + column * xOffset
+  const y = (column, row) => height - keyDistance / 2 + (column / 2 - row) * yOffset
+  const keys = [ ]
+  for (let i = 0; x(i) <= width; i++) {
+    for (let j = 0; y(i, j) >= 0; j++) {
+      const cx = x(i)
+      const cy = y(i, j)
+      const noteValue = j * 7 - i * 3 // j + 3 * i
+      if (cx < 0) continue
+      if (cy > height) continue
+      keys.push({ key: `${i}:${j}`, x: cx, y: cy, noteValue: noteValue })
+    }
+  }
+  // out
+  return { keys, keyDistance, keySize }
+}
+
 export class IsomorphicKeyboard extends React.PureComponent {
   constructor (props) {
     super(props)
@@ -33,31 +59,7 @@ export class IsomorphicKeyboard extends React.PureComponent {
     ({ props }) => props.type,
     ({ state }) => state.width,
     ({ state }) => state.height,
-    (type, width, height) => {
-      if (!width || !height) return { keys: [ ], keyDistance: 0, keySize: 0 }
-      const keyDistance = Math.sqrt(
-        width * width +
-        height * height
-      ) / 18
-      const keySize = keyDistance * 0.5
-      const xOffset = keyDistance * Math.sqrt(3) / 2
-      const yOffset = keyDistance
-      const x = (column) => keyDistance / 2 + column * xOffset
-      const y = (column, row) => height - keyDistance / 2 + (column / 2 - row) * yOffset
-      const keys = [ ]
-      for (let i = 0; x(i) <= width; i++) {
-        for (let j = 0; y(i, j) >= 0; j++) {
-          const cx = x(i)
-          const cy = y(i, j)
-          const noteValue = j * 7 - i * 3 // j + 3 * i
-          if (cx < 0) continue
-          if (cy > height) continue
-          keys.push({ key: `${i}:${j}`, x: cx, y: cy, noteValue: noteValue })
-        }
-      }
-      // out
-      return { keys, keyDistance, keySize }
-    }
+    generateKeys
   )
   renderKeys = createSelector(
     this.selectKeys,
