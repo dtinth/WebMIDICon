@@ -136,9 +136,7 @@ const Circle = observer(class Circle extends React.PureComponent {
           style={{
             borderColor: 'white',
             background: `hsl(${(noteValue % 12) * 30},50%,72%)`,
-            opacity: this.isTouched.get() ? 1 : 0,
-            transform: 'scale(' + (this.isTouched.get() ? 1 : 1.25) + ')',
-            transition: this.isTouched.get() ? '' : '0.5s opacity, 0.5s transform'
+            opacity: this.isTouched.get() ? 1 : 0
           }}
         />
       </div>

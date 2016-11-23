@@ -6,6 +6,7 @@ import { observer } from 'mobx-react'
 
 import createStore from './createStore'
 import IsomorphicKeyboard from './IsomorphicKeyboard'
+import KeyboardToolbar from './KeyboardToolbar'
 import PianoKeyboard from './PianoKeyboard'
 import { getHash } from './Hash'
 
@@ -52,8 +53,17 @@ export const Keyboard = observer(class Keyboard extends React.PureComponent {
   render () {
     return (
       <div>
-        {this.renderContent()}
-        <MIDIEmitter activeNotes={this.store.activeNotes} />
+        <div className='Keyboardのtoolbar'>
+          <KeyboardToolbar store={this.store} />
+        </div>
+        <div className='Keyboardのcontent'>
+          {this.renderContent()}
+        </div>
+        <MIDIEmitter
+          activeNotes={this.store.activeNotes}
+          transpose={this.store.transpose}
+          octave={this.store.octave}
+        />
       </div>
     )
   }
@@ -62,28 +72,31 @@ export const Keyboard = observer(class Keyboard extends React.PureComponent {
 class MIDIEmitter extends React.Component {
   constructor (props) {
     super(props)
-    this.handleNotes = (() => {
-      let previous = new Set()
-      return function (next) {
-        for (const note of next) {
-          if (!previous.has(note)) {
-            MIDI.send([ 0x90, note + 36, 0x60 ])
-          }
-        }
-        for (const note of previous) {
-          if (!next.has(note)) {
-            MIDI.send([ 0x80, note + 36, 0x60 ])
-          }
-        }
-        previous = next
+    this.currentNotes = new Map()
+  }
+  handleNotes (props) {
+    const activeNotes = props.activeNotes
+    const currentNotes = this.currentNotes
+    for (const note of activeNotes) {
+      if (!currentNotes.has(note)) {
+        const midiNote = note + props.transpose + props.octave * 12
+        MIDI.send([ 0x90, midiNote, 0x60 ])
+        currentNotes.set(note, { midiNote })
       }
-    })()
+    }
+    for (const note of currentNotes.keys()) {
+      if (!activeNotes.has(note)) {
+        const data = currentNotes.get(note)
+        MIDI.send([ 0x80, data.midiNote, 0x60 ])
+        currentNotes.delete(note)
+      }
+    }
   }
   componentDidMount () {
-    this.handleNotes(this.props.activeNotes)
+    this.handleNotes(this.props)
   }
   componentWillReceiveProps (nextProps) {
-    this.handleNotes(nextProps.activeNotes)
+    this.handleNotes(nextProps)
   }
   render () {
     return null
