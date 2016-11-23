@@ -5,6 +5,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 
 import createStore from './createStore'
+import DrumPad from './DrumPad'
 import IsomorphicKeyboard from './IsomorphicKeyboard'
 import KeyboardToolbar from './KeyboardToolbar'
 import PianoKeyboard from './PianoKeyboard'
@@ -45,7 +46,7 @@ export const Keyboard = observer(class Keyboard extends React.PureComponent {
       case '#jammer':
         return <IsomorphicKeyboard type='jammer' store={this.store} />
       case '#drums':
-        return <div>Soon....</div>
+        return <DrumPad />
       default:
         return <div className='Keyboardのmenu'>
           {this.renderMenuItem('#piano', 'Piano')}
