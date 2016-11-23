@@ -8,7 +8,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'build'),
     publicPath: '',
-    filename: '[chunkhash].js'
+    filename: process.env.DEV ? 'bundle.js' : '[chunkhash].js'
   },
   resolve: {
     alias: {
