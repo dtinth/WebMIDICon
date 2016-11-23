@@ -13,4 +13,4 @@ deployment:
   github-pages:
     branch: master
     commands:
-      - cd client && npm run deploy
+      - cd client && git config --global user.email 'aki@spacet.me' && git config --global user.name 'CircleCI' && npm run deploy
