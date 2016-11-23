@@ -5,7 +5,12 @@ dependencies:
   pre:
     - curl -o- -L https://yarnpkg.com/install.sh | bash
   override:
-    - yarn
+    - cd client && yarn
 test:
   override:
     - cd client && npm run build
+deployment:
+  github-pages:
+    branch: master
+    commands:
+      - cd client && npm run deploy
