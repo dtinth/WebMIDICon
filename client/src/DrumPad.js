@@ -72,12 +72,12 @@ const DrumButton = class DrumButton extends React.PureComponent {
     return (
       <div
         onTouchStart={this.handleTouchStart}
-        style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0 }}
+        style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, transform: 'translateZ(0)' }}
         ref={this.registerTouchElement}
       >
-        <div style={{ position: 'absolute', top: 2, right: 2, bottom: 2, left: 2, background }} />
-        <div ref={this.registerActiveElement} style={{ position: 'absolute', top: 1, right: 1, bottom: 1, left: 1, background: backgroundActive }} />
-        <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ position: 'absolute', top: 2, right: 2, bottom: 2, left: 2, background, transform: 'translateZ(0)' }} />
+        <div ref={this.registerActiveElement} style={{ position: 'absolute', top: 1, right: 1, bottom: 1, left: 1, background: backgroundActive, transform: 'translateZ(0)' }} />
+        <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', transform: 'translateZ(0)' }}>
           <div style={{ fontSize: '3vw' }}>{name}</div>
         </div>
       </div>
