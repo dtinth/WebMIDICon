@@ -1,15 +1,16 @@
 import './Keyboard.css'
+
 import * as MIDI from './MIDI'
 
-import React from 'react'
-import { observer } from 'mobx-react'
-
-import createStore from './createStore'
 import DrumPad from './DrumPad'
 import IsomorphicKeyboard from './IsomorphicKeyboard'
 import KeyboardToolbar from './KeyboardToolbar'
+import Pedal from './Pedal'
 import PianoKeyboard from './PianoKeyboard'
+import React from 'react'
+import createStore from './createStore'
 import { getHash } from './Hash'
+import { observer } from 'mobx-react'
 
 export const Keyboard = observer(class Keyboard extends React.PureComponent {
   constructor (props) {
@@ -45,6 +46,8 @@ export const Keyboard = observer(class Keyboard extends React.PureComponent {
         return <IsomorphicKeyboard type='harmonic' store={this.store} />
       case '#jammer':
         return <IsomorphicKeyboard type='jammer' store={this.store} />
+      case '#pedal':
+        return <Pedal />
       case '#drums':
         return <DrumPad />
       default:
@@ -53,6 +56,7 @@ export const Keyboard = observer(class Keyboard extends React.PureComponent {
           {this.renderMenuItem('#harmonic', 'Harmonic')}
           {this.renderMenuItem('#jammer', 'Jammer')}
           {this.renderMenuItem('#drums', 'Drums')}
+          {this.renderMenuItem('#pedal', 'iPedal')}
         </div>
     }
   }
