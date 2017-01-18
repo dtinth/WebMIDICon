@@ -3,24 +3,24 @@ import * as MIDI from './MIDI'
 import React from 'react'
 
 const buttons = [
-  { name: 'Cymbal 2', note: 52 },
+  { name: 'Cymbal 1', note: 52 },
   { name: 'Ride 2', note: 53 },
+  { name: 'Cymbal 2', note: 57 },
   { name: 'Cymbal 3', note: 49 },
-  { name: 'Cymbal 1', note: 57 },
 
   { name: 'Tom 2', note: 48 },
   { name: 'Tom 1', note: 45 },
   { name: 'Tom 3', note: 41 },
   { name: 'Ride 1', note: 59 },
 
-  { name: 'Snare 1', note: 38 },
-  { name: 'Snare 2', note: 40 },
+  { name: 'Kick', note: 36 },
+  { name: 'Snare', note: 38 },
   { name: 'Hat 1', note: 42 },
   { name: 'Hat 2', note: 46 },
 
   { name: 'Kick', note: 36 },
-  { name: 'Kick', note: 36 },
   { name: 'Rim', note: 37 },
+  { name: 'Snare 2', note: 40 },
   { name: 'Kick', note: 36 }
 ]
 
