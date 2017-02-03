@@ -7,7 +7,7 @@ import { createSelector } from 'reselect'
 
 const types = {
   jammer: (width, height) => {
-    const keyDistance = Math.sqrt(width * width + height * height) / 18
+    const keyDistance = Math.sqrt(width * width + height * height) / 14
     const keySize = keyDistance * 0.5
     const xOffset = keyDistance / 2
     const yOffset = keyDistance * Math.sqrt(3)
@@ -19,7 +19,7 @@ const types = {
     }
   },
   harmonic: (width, height) => {
-    const keyDistance = Math.sqrt(width * width + height * height) / 18
+    const keyDistance = Math.sqrt(width * width + height * height) / 14
     const keySize = keyDistance * 0.5
     const xOffset = keyDistance * Math.sqrt(3) / 2
     const yOffset = keyDistance
