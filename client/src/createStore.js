@@ -4,7 +4,7 @@ import { observable, action, asMap } from 'mobx'
 
 const transposeKeys = [ 27, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123 ]
 const firstRow = [ 16, 90, 83, 88, 68, 67, 86, 71, 66, 72, 78, 74, 77, 188, 76, 190, 186, 191 ]
-const secondRow = [ 9, 81, 50, 87, 51, 69, 82, 53, 84, 54, 89, 55, 85, 73, 57, 79, 48, 80, 219, 187, 221, 8, 220 ]
+const secondRow = [ 9, 81, 50, 87, 51, 69, 82, 53, 84, 54, 89, 55, 85, 73, 57, 79, 48, 80, 219, 187, 221, 8, 220, 45, 46, 35 ]
 
 export function createStore () {
   const store = observable({
