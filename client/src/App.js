@@ -1,10 +1,10 @@
 import './App.css'
+
 import * as MIDI from './MIDI'
 
+import Keyboard from './Keyboard'
 import React from 'react'
 import { observer } from 'mobx-react'
-
-import Keyboard from './Keyboard'
 
 export function App () {
   return (

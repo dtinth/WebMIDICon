@@ -2,6 +2,7 @@ import './Keyboard.css'
 
 import * as MIDI from './MIDI'
 
+import BeginnerChordMachine from './BeginnerChordMachine'
 import DrumPad from './DrumPad'
 import IsomorphicKeyboard from './IsomorphicKeyboard'
 import KeyboardToolbar from './KeyboardToolbar'
@@ -50,6 +51,8 @@ export const Keyboard = observer(class Keyboard extends React.PureComponent {
         return <Pedal />
       case '#drums':
         return <DrumPad />
+      case '#beginner':
+        return <BeginnerChordMachine store={this.store} />
       default:
         return <div className='Keyboardのmenu'>
           {this.renderMenuItem('#piano', 'Piano')}
