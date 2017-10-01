@@ -25,7 +25,7 @@ const buttons = [
 ]
 
 export class DrumPad extends React.PureComponent {
-  render() {
+  render () {
     return (
       <div
         onTouchStart={(e) => e.preventDefault()}
@@ -37,7 +37,7 @@ export class DrumPad extends React.PureComponent {
       </div>
     )
   }
-  renderButton(button, index) {
+  renderButton (button, index) {
     const top = (Math.floor(index / 4) * 25) + '%'
     const left = ((index % 4) * 25) + '%'
     const width = '25%'
@@ -55,7 +55,7 @@ export class DrumPad extends React.PureComponent {
       </div>
     )
   }
-  handleTrigger(note, velocity) {
+  handleTrigger (note, velocity) {
     const midiVelocity = Math.max(0, Math.min(127, Math.round(velocity * 127)))
     MIDI.send([0x99, note, midiVelocity])
     MIDI.send([0x89, note, midiVelocity])
@@ -63,11 +63,11 @@ export class DrumPad extends React.PureComponent {
 }
 
 const DrumButton = class DrumButton extends React.PureComponent {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.touchId = 0
   }
-  render() {
+  render () {
     const { background, backgroundActive, name } = this.props
     return (
       <div
@@ -80,10 +80,10 @@ const DrumButton = class DrumButton extends React.PureComponent {
           bottom: 0,
           left: 0,
           transform: 'translateZ(0)',
-          "-moz-user-select": "none",
-          "-khtml-user-select": "none",
-          "-webkit-user-select": "none",
-          "user-select": "none"
+          '-moz-user-select': 'none',
+          '-khtml-user-select': 'none',
+          '-webkit-user-select': 'none',
+          'user-select': 'none'
         }}
 
         ref={this.registerTouchElement}
