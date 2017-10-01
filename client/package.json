@@ -32,12 +32,15 @@
     "webpack-dev-server": "^2.1.0-beta"
   },
   "dependencies": {
+    "babel-plugin-emotion": "^7.3.2",
     "babel-runtime": "^6.18.0",
+    "emotion": "^7.3.2",
     "lodash": "^4.17.2",
     "mobx": "^2.6.3",
     "mobx-react": "^3.5.9",
     "react": "latest",
     "react-dom": "^15.4.1",
+    "react-emotion": "^7.3.2",
     "reselect": "^2.5.4"
   }
 }

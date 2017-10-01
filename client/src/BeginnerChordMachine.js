@@ -2,6 +2,7 @@ import './PianoKeyboard.css'
 
 import React from 'react'
 import { observer } from 'mobx-react'
+import styled from 'react-emotion'
 
 function cancelEvent (e) {
   e.preventDefault()
@@ -32,6 +33,24 @@ export class BeginnerChordMachine extends React.PureComponent {
     )
   }
 }
+
+const CircleElement = styled.div`
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  box-sizing: border-box;
+  border: 3px solid #8b8685;
+  border-radius: 100%;
+`
+
+const CircleOverlay = styled.div`
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
 
 const Circle = observer(class Circle extends React.PureComponent {
   state = { active: false }
@@ -83,47 +102,22 @@ const Circle = observer(class Circle extends React.PureComponent {
           height: size
         }}
       >
-        <div
-          className='IsomorphicKeyboardのcircle'
+        <CircleElement
           onTouchStart={this.onTouchStart}
           onTouchEnd={this.onTouchEnd}
           style={{
             borderColor: `hsl(${(trueNoteValue % 12) * 30},50%,72%)`
           }}
         />
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            pointerEvents: 'none',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-          <div
-            style={{
-              fontSize: 32,
-              color: `hsl(${fnHue},50%,72%)`
-            }}
-          >
+        <CircleOverlay>
+          <div style={{ fontSize: 32, color: `hsl(${fnHue},50%,72%)` }}>
             {this.props.text}
           </div>
-          <div
-            style={{
-              color: `#8b8685`,
-              marginTop: 5
-            }}
-          >
+          <div style={{ color: `#8b8685`, marginTop: 5 }}>
             {hint}{this.props.q}
           </div>
-        </div>
-        <div
-          className='IsomorphicKeyboardのcircle is-active'
+        </CircleOverlay>
+        <CircleElement
           style={{
             borderColor: 'white',
             background: `hsl(${(trueNoteValue % 12) * 30},50%,72%)`,
