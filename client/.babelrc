@@ -1,1 +1,2 @@
-{ "presets": [ [ "latest", { "es2015": { "modules": false } } ], "react", "stage-2" ], "plugins": [ "transform-runtime" ] }
+{ "presets": [ [ "latest", { "es2015": { "modules": false } } ], "react", "stage-2" ]
+, "plugins": [ "emotion", "transform-runtime" ] }
