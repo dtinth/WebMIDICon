@@ -1,8 +1,16 @@
 # midi-instruments
 
-My web-based MIDI instruments. I wanted to create a MIDI instrument that allows me to jam with other musicians.
+A collection of **web-based MIDI instruments.** I wanted to create a MIDI instrument that allows me to jam with other musicians. Play MIDI with your PC keyboard, or with a touch screen.
 
-This project is a rewrite of [IO-MIDI-INSTRUMENT](https://github.com/dtinth/IO-MIDI-INSTRUMENT) using Web MIDI API instead of Socket.io.
+
+## Check out the video demos!
+
+- **Original demo video at JSConf.Asia 2016**<br />
+  https://www.youtube.com/watch?v=3Y-XeJmGQis
+
+- **iPad-drumming demo**<br />
+  *Wada Kouji - Butter-Fly (Digimon Tri Ver.) (Cover by MindaRyn)*<br />
+  https://www.youtube.com/watch?v=CHarkZrQH34
 
 
 ## Usage
