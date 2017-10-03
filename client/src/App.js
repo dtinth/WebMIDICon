@@ -5,22 +5,77 @@ import * as MIDI from './MIDI'
 import Keyboard from './Keyboard'
 import React from 'react'
 import { observer } from 'mobx-react'
+import styled from 'react-emotion'
+
+const MIDISettings = styled.button`
+  height: 30px;
+  background: #252423;
+  border: 1px solid #454443;
+  color: #8b8685;
+  font-family: inherit;
+  font-size: 16px;
+  margin: 0;
+  display: block;
+`
+
+const Wrapper = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+`
+
+const Header = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 40px;
+  left: 0;
+  background: #090807;
+  border-bottom: 1px solid #454443;
+  line-height: 40px;
+  z-index: 10;
+`
+
+const HeaderTitle = styled.div`
+  color: #8b8685;
+  font-weight: bold;
+  margin-left: 10px;
+`
+
+const HeaderRight = styled.div`
+  position: absolute;
+  top: 0;
+  right: 4px;
+  bottom: 0;
+  line-height: 40px;
+`
+
+const AppContent = styled.div`
+  position: absolute;
+  top: 40px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+`
 
 export function App () {
   return (
-    <div className='App'>
-      <div className='Appのheader'>
-        <div className='Appのtitle'>
+    <Wrapper>
+      <Header>
+        <HeaderTitle>
           my web based instruments
-        </div>
-        <div className='Appのright'>
+        </HeaderTitle>
+        <HeaderRight>
           <MIDIStatus />
-        </div>
-      </div>
-      <div className='Appのstuff'>
+        </HeaderRight>
+      </Header>
+      <AppContent>
         <Keyboard />
-      </div>
-    </div>
+      </AppContent>
+    </Wrapper>
   )
 }
 
@@ -35,9 +90,9 @@ const MIDIStatus = observer(class MIDIStatus extends React.Component {
   render () {
     return (
       <div style={{ display: 'inline-block', verticalAlign: 'middle', position: 'relative' }}>
-        <button className='AppのmidiSettings' onClick={this.handleToggle}>
+        <MIDISettings onClick={this.handleToggle}>
           {MIDI.getStatus()}
-        </button>
+        </MIDISettings>
         {this.renderSelector()}
       </div>
     )
