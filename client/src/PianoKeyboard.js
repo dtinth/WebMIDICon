@@ -17,6 +17,34 @@ const PianoKeyboardKeyHolder = styled.div`
   bottom: 0;
 `
 
+const PianoKeyboardKey = styled.div`
+  & .white {
+    position: absolute;
+    background: #8b8685;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 2px solid #b9b8b7;
+    border-bottom-color: #090807;
+    border-right-color: #090807;
+    z-index: 1;
+  }
+
+  & .black {
+    position: absolute;
+    background: #252423;
+    top: 0;
+    bottom: 50%;
+    left: 60%;
+    width: 80%;
+    border: 2px solid #b9b8b7;
+    border-bottom-color: #090807;
+    border-right-color: #090807;
+    z-index: 2;
+  }
+`
+
 export class PianoKeyboard extends React.PureComponent {
   constructor (props) {
     super(props)
@@ -133,34 +161,7 @@ const Key = observer(class Key extends React.PureComponent {
     const transpose = this.props.store.transpose
     const trueNoteValue = transpose + this.props.noteValue
     return (
-      <div css={`
-        /* TODO: This code looks ugly. Clean up later. */
-        & .white {
-          position: absolute;
-          background: #8b8685;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          left: 0;
-          border: 2px solid #b9b8b7;
-          border-bottom-color: #090807;
-          border-right-color: #090807;
-          z-index: 1;
-        }
-
-        & .black {
-          position: absolute;
-          background: #252423;
-          top: 0;
-          bottom: 50%;
-          left: 60%;
-          width: 80%;
-          border: 2px solid #b9b8b7;
-          border-bottom-color: #090807;
-          border-right-color: #090807;
-          z-index: 2;
-        }
-      `}>
+      <PianoKeyboardKey>
         <div
           className={this.props.keyColor}
           ref={this.props.refKey}
@@ -173,7 +174,7 @@ const Key = observer(class Key extends React.PureComponent {
             transition: active ? '' : '0.3s opacity'
           }}
         />
-      </div>
+      </PianoKeyboardKey>
     )
   }
 })
