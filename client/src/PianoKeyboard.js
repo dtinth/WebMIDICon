@@ -1,8 +1,21 @@
-import './PianoKeyboard.css'
-
 import React from 'react'
 import { computed } from 'mobx'
 import { observer } from 'mobx-react'
+import styled, { css } from 'react-emotion'
+
+const PianoKeyboardWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+`
+
+const PianoKeyboardKeyHolder = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+`
 
 export class PianoKeyboard extends React.PureComponent {
   constructor (props) {
@@ -12,7 +25,7 @@ export class PianoKeyboard extends React.PureComponent {
   }
   render () {
     return (
-      <div
+      <PianoKeyboardWrapper
         onTouchStart={this.handleTouch}
         onTouchMove={this.handleTouch}
         onTouchEnd={this.handleTouch}
@@ -21,7 +34,7 @@ export class PianoKeyboard extends React.PureComponent {
         {this.renderRow(0, 24)}
         {this.renderRow(1, 12)}
         {this.renderRow(2, 0)}
-      </div>
+      </PianoKeyboardWrapper>
     )
   }
   renderRow (position, keyShift) {
@@ -90,20 +103,19 @@ export class Octave extends React.Component {
     const whiteNoteValue = note + this.props.keyShift
     const blackNoteValue = whiteNoteValue + 1
     return (
-      <div
-        className='PianoKeyboardのkeyHolder'
+      <PianoKeyboardKeyHolder
         style={{ left: percent(position / 14), width: percent(1 / 14) }}
       >
-        {this.renderKey('PianoKeyboardのkey', whiteNoteValue)}
-        {hasBlackKey && this.renderKey('PianoKeyboardのblackKey', blackNoteValue)}
-      </div>
+        {this.renderKey('white', whiteNoteValue)}
+        {hasBlackKey && this.renderKey('black', blackNoteValue)}
+      </PianoKeyboardKeyHolder>
     )
   }
-  renderKey (className, noteValue) {
+  renderKey (keyColor, noteValue) {
     return (
       <Key
         store={this.props.store}
-        className={className}
+        keyColor={keyColor}
         noteValue={noteValue}
         refKey={(element) => this.props.refKey(noteValue, element)}
       />
@@ -121,13 +133,40 @@ const Key = observer(class Key extends React.PureComponent {
     const transpose = this.props.store.transpose
     const trueNoteValue = transpose + this.props.noteValue
     return (
-      <div>
+      <div css={`
+        /* TODO: This code looks ugly. Clean up later. */
+        & .white {
+          position: absolute;
+          background: #8b8685;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          border: 2px solid #b9b8b7;
+          border-bottom-color: #090807;
+          border-right-color: #090807;
+          z-index: 1;
+        }
+
+        & .black {
+          position: absolute;
+          background: #252423;
+          top: 0;
+          bottom: 50%;
+          left: 60%;
+          width: 80%;
+          border: 2px solid #b9b8b7;
+          border-bottom-color: #090807;
+          border-right-color: #090807;
+          z-index: 2;
+        }
+      `}>
         <div
-          className={this.props.className}
+          className={this.props.keyColor}
           ref={this.props.refKey}
         />
         <div
-          className={this.props.className + ' is-active'}
+          className={this.props.keyColor + ' is-active'}
           style={{
             opacity: active ? 1 : 0,
             background: `hsl(${(trueNoteValue % 12) * 30},100%,90%)`,
