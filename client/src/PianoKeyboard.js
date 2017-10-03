@@ -154,7 +154,7 @@ const Key = observer(class Key extends React.PureComponent {
           top: 0;
           bottom: 50%;
           left: 60%;
-          width: 80%;
+          width: 75%;
           border: 2px solid #b9b8b7;
           border-bottom-color: #090807;
           border-right-color: #090807;
