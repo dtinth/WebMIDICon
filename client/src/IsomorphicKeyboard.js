@@ -1,9 +1,19 @@
-import './IsomorphicKeyboard.css'
-
 import React from 'react'
 import { computed } from 'mobx'
 import { observer } from 'mobx-react'
 import { createSelector } from 'reselect'
+import styled from 'react-emotion'
+
+const IsomorphicKeyboardCircle = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-sizing: border-box;
+  border: 3px solid #8b8685;
+  border-radius: 100%;
+`
 
 const types = {
   jammer: (width, height) => {
@@ -159,14 +169,13 @@ const Circle = observer(class Circle extends React.PureComponent {
           height: size
         }}
       >
-        <div
-          className='IsomorphicKeyboardのcircle'
+        <IsomorphicKeyboardCircle
           style={{
             borderColor: `hsl(${(trueNoteValue % 12) * 30},50%,72%)`
           }}
         />
-        <div
-          className='IsomorphicKeyboardのcircle is-active'
+        <IsomorphicKeyboardCircle
+          className='is-active'
           style={{
             borderColor: 'white',
             background: `hsl(${(trueNoteValue % 12) * 30},50%,72%)`,

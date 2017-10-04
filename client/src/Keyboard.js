@@ -1,5 +1,3 @@
-import './Keyboard.css'
-
 import * as MIDI from './MIDI'
 
 import BeginnerChordMachine from './BeginnerChordMachine'
@@ -12,6 +10,45 @@ import React from 'react'
 import createStore from './createStore'
 import { getHash } from './Hash'
 import { observer } from 'mobx-react'
+import styled from 'react-emotion'
+
+const KeyboardMenu = styled.div`
+  font-size: 5vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+`
+
+const KeyboardMenuItem = styled.div`
+  flex-basis: 48%;
+`
+
+const KeyboardMenuLink = styled.a`
+  color: #e9e8e7;
+  display: block;
+  background: #090807;
+  margin: 0.5em;
+  padding: 0.5em;
+  border: 2px solid #555453;
+  text-align: center;
+  text-decoration: none;
+`
+
+const KeyboardToolbarWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 40px;
+  left: 0;
+`
+
+const KeyboardContent = styled.div`
+  position: absolute;
+  top: 40px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+`
 
 export const Keyboard = observer(class Keyboard extends React.PureComponent {
   constructor (props) {
@@ -54,31 +91,31 @@ export const Keyboard = observer(class Keyboard extends React.PureComponent {
       case '#beginner':
         return <BeginnerChordMachine store={this.store} />
       default:
-        return <div className='Keyboardのmenu'>
+        return <KeyboardMenu>
           {this.renderMenuItem('#piano', 'Piano')}
           {this.renderMenuItem('#harmonic', 'Harmonic')}
           {this.renderMenuItem('#jammer', 'Jammer')}
           {this.renderMenuItem('#drums', 'Drums')}
           {this.renderMenuItem('#pedal', 'iPedal')}
-        </div>
+        </KeyboardMenu>
     }
   }
   renderMenuItem (href, text) {
     return (
-      <div className='KeyboardのmenuItem'>
-        <a className='KeyboardのmenuLink' href={href}>{text}</a>
-      </div>
+      <KeyboardMenuItem>
+        <KeyboardMenuLink href={href}>{text}</KeyboardMenuLink>
+      </KeyboardMenuItem>
     )
   }
   render () {
     return (
       <div>
-        <div className='Keyboardのtoolbar'>
+        <KeyboardToolbarWrapper>
           <KeyboardToolbar store={this.store} />
-        </div>
-        <div className='Keyboardのcontent'>
+        </KeyboardToolbarWrapper>
+        <KeyboardContent>
           {this.renderContent()}
-        </div>
+        </KeyboardContent>
         <MIDIEmitter
           activeNotes={this.store.activeNotes}
           transpose={this.store.transpose}

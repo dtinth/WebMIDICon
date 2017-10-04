@@ -6,7 +6,7 @@
   "author": "Thai Pangsakulyanont <dtinth@spacet.me>",
   "license": "MIT",
   "scripts": {
-    "start": "DEV=1 webpack-dev-server --hot --port=9998 --host=0.0.0.0 --compress",
+    "start": "cross-env DEV=1 webpack-dev-server --hot --port=9998 --host=0.0.0.0 --compress",
     "build": "webpack -p",
     "deploy": "gh-pages -d build"
   },
