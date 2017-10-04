@@ -1,7 +1,8 @@
+import styled, { css } from 'react-emotion'
+
 import React from 'react'
 import { computed } from 'mobx'
 import { observer } from 'mobx-react'
-import styled, { css } from 'react-emotion'
 
 const PianoKeyboardWrapper = styled.div`
   position: absolute;
@@ -42,6 +43,12 @@ const PianoKeyboardKey = styled.div`
     border-bottom-color: #090807;
     border-right-color: #090807;
     z-index: 2;
+  }
+
+  & .black.is-active,
+  & .white.is-active {
+    pointer-events: none;
+    border-color: white black black white;
   }
 `
 
@@ -92,6 +99,7 @@ export class PianoKeyboard extends React.PureComponent {
     void [ ].forEach.call(e.touches, (touch) => {
       const element = document.elementFromPoint(touch.clientX, touch.clientY)
       const matching = this.keyMap.get(element)
+      console.log(element, matching, this.keyMap)
       if (matching != null) {
         keys.add(matching)
       }
