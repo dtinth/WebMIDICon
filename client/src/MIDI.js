@@ -36,9 +36,9 @@ const handleAvailableOutputs = action('handleAvailableOutputs', (outputs) => {
   for (const output of outputs) {
     if (store.selectedOutputKey === output.key) return
   }
-  if (outputs.length && !store.selectedOutputKey) {
+  if (outputs.length) {
     store.selectedOutputKey = outputs[0].key
-  } else if (!store.length) {
+  } else {
     store.selectedOutputKey = null
   }
 })
