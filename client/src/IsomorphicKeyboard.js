@@ -63,7 +63,7 @@ function generateKeys (type, width, height) {
   return { keys, keySize }
 }
 
-export class IsomorphicKeyboard extends React.PureComponent {
+export class IsomorphicKeyboard extends React.Component {
   constructor (props) {
     super(props)
     this.keys = [ ]
@@ -150,7 +150,7 @@ export class IsomorphicKeyboard extends React.PureComponent {
   }
 }
 
-const Circle = observer(class Circle extends React.PureComponent {
+const Circle = observer(class Circle extends React.Component {
   constructor (props) {
     super(props)
     this.isTouched = computed(() => this.props.store.activeNotes.has(this.props.noteValue))
