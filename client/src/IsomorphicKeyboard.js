@@ -1,7 +1,7 @@
 import React from 'react'
 import { computed } from 'mobx'
-import { observer } from 'mobx-react'
 import { createSelector } from 'reselect'
+import { observer } from 'mobx-react'
 import styled from 'react-emotion'
 
 const IsomorphicKeyboardCircle = styled.div`
@@ -63,14 +63,16 @@ function generateKeys (type, width, height) {
   return { keys, keySize }
 }
 
-export class IsomorphicKeyboard extends React.PureComponent {
+export class IsomorphicKeyboard extends React.Component {
   constructor (props) {
     super(props)
     this.keys = [ ]
     this.state = { keyElements: null }
   }
   componentDidMount () {
-    this.handleSizeChange()
+    window.requestAnimationFrame(() => {
+      this.handleSizeChange()
+    })
     window.addEventListener('resize', this.handleSizeChange)
   }
   componentWillUnmount () {
@@ -93,7 +95,7 @@ export class IsomorphicKeyboard extends React.PureComponent {
     ({ state }) => state.height,
     generateKeys
   )
-  renderKeys = createSelector(
+  selectKeyElements = createSelector(
     this.selectKeys,
     ({ props }) => props.store,
     ({ keys, keySize }, store) => {
@@ -110,7 +112,14 @@ export class IsomorphicKeyboard extends React.PureComponent {
         )
       })
     }
-  ).bind(this, this)
+  )
+  getSelectorState = () => ({
+    props: this.props,
+    state: this.state
+  })
+  renderKeys = () => {
+    return this.selectKeyElements(this.getSelectorState())
+  }
   updateTouches = (e) => {
     e.preventDefault()
     const container = this.container
@@ -119,7 +128,7 @@ export class IsomorphicKeyboard extends React.PureComponent {
     const bx = bound.left
     const by = bound.top
     const activated = new Set()
-    const { keys } = this.selectKeys(this)
+    const { keys } = this.selectKeys(this.getSelectorState())
     void [ ].forEach.call(e.touches, (touch) => {
       const rankedKeys = (keys
         .map(({ noteValue, x, y }) => ({
@@ -150,7 +159,7 @@ export class IsomorphicKeyboard extends React.PureComponent {
   }
 }
 
-const Circle = observer(class Circle extends React.PureComponent {
+const Circle = observer(class Circle extends React.Component {
   constructor (props) {
     super(props)
     this.isTouched = computed(() => this.props.store.activeNotes.has(this.props.noteValue))
