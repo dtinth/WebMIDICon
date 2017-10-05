@@ -1,6 +1,6 @@
 'use strict'
 
-import { action, asMap, observable } from 'mobx'
+import { action, observable } from 'mobx'
 
 const transposeKeys = [ 27, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123 ]
 const firstRow = [ 16, 90, 83, 88, 68, 67, 86, 71, 66, 72, 78, 74, 77, 188, 76, 190, 186, 191 ]
@@ -9,7 +9,7 @@ const secondRow = [ 192, 9, 81, 50, 87, 51, 69, 82, 53, 84, 54, 89, 55, 85, 73, 
 export function createStore () {
   const store = observable({
     touches: [ ],
-    keyCodes: asMap({ }),
+    keyCodes: observable.map({ }),
     transpose: 0,
     octave: 3,
     setTranspose: action('setTranspose', (transpose) => {
