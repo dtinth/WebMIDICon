@@ -36,9 +36,9 @@ const handleAvailableOutputs = action('handleAvailableOutputs', (outputs) => {
   for (const output of outputs) {
     if (store.selectedOutputKey === output.key) return
   }
-  if (outputs.length) {
+  if (outputs.length && !store.selectedOutputKey) {
     store.selectedOutputKey = outputs[0].key
-  } else {
+  } else if (!store.length) {
     store.selectedOutputKey = null
   }
 })
@@ -68,6 +68,30 @@ export function send (data) {
   }
 }
 
+function addOutput (output) {
+  const { id, name } = output;
+  store.outputs = getOutputs().concat({ key: id , name })
+}
+
+function removeOutputById (id) {
+  store.outputs = getOutputs().filter(_output => _output.key !== id)
+
+  if (store.selectedOutputKey === id) {
+    selectOutput(null)
+    setStatus('Device Removed')
+  }
+}
+
+function onStateChange (e) {
+  if (!e.port || e.port.type !== 'output') return
+  const outputs = getOutputs()
+  const { id, connection, type } = e.port
+  const output = outputs.find(_output => _output.key === id)
+  output
+    ? removeOutputById(id)
+    : addOutput(e.port)
+}
+
 function init () {
   if (window.midiAccess) {
     setStatus('MIDI saved!!')
@@ -79,6 +103,7 @@ function init () {
     navigator.requestMIDIAccess({ sysex: false }).then(
       (access) => {
         ok(access)
+        access.onstatechange = onStateChange
       },
       (e) => {
         setStatus('MIDI cannot request!! ' + e)
