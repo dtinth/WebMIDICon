@@ -50,7 +50,7 @@ const KeyboardContent = styled.div`
   left: 0;
 `
 
-export const Keyboard = observer(class Keyboard extends React.PureComponent {
+export const Keyboard = observer(class Keyboard extends React.Component {
   constructor (props) {
     super(props)
     this.store = createStore()
