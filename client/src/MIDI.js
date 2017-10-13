@@ -57,7 +57,7 @@ function ok (access) {
     handleAvailableOutputs(ports)
     selectOutput(store.selectedOutputKey)
   } catch (e) {
-    setStatus('Cannot access mIDI output ' + e)
+    setStatus('Cannot access MIDI output ' + e)
   }
 }
 
