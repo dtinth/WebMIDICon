@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx'
+import { action, observable } from 'mobx'
 
 const store = observable({
   status: 'Initializing MIDI system',
