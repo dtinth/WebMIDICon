@@ -47,18 +47,22 @@ function ok (access) {
   window.midiAccess = access
   setStatus('Found MIDI outputs: ' + access.outputs.size)
   try {
-    const ports = [ ]
-    const iterator = access.outputs.keys()
-    for (;;) {
-      const { done, value: key } = iterator.next()
-      if (done) break
-      ports.push({ key, name: access.outputs.get(key).name })
-    }
-    handleAvailableOutputs(ports)
-    selectOutput(store.selectedOutputKey)
+    refreshOutputList(access)
   } catch (e) {
     setStatus('Cannot access MIDI output ' + e)
   }
+}
+
+function refreshOutputList (access) {
+  const ports = [ ]
+  const iterator = access.outputs.keys()
+  for (;;) {
+    const { done, value: key } = iterator.next()
+    if (done) break
+    ports.push({ key, name: access.outputs.get(key).name })
+  }
+  handleAvailableOutputs(ports)
+  selectOutput(store.selectedOutputKey)
 }
 
 export function send (data) {
