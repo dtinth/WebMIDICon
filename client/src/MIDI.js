@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx'
+import { action, observable } from 'mobx'
 
 const store = observable({
   status: 'Initializing MIDI system',
@@ -47,18 +47,22 @@ function ok (access) {
   window.midiAccess = access
   setStatus('Found MIDI outputs: ' + access.outputs.size)
   try {
-    const ports = [ ]
-    const iterator = access.outputs.keys()
-    for (;;) {
-      const { done, value: key } = iterator.next()
-      if (done) break
-      ports.push({ key, name: access.outputs.get(key).name })
-    }
-    handleAvailableOutputs(ports)
-    selectOutput(store.selectedOutputKey)
+    refreshOutputList(access)
   } catch (e) {
-    setStatus('Cannot access mIDI output ' + e)
+    setStatus('Cannot access MIDI output ' + e)
   }
+}
+
+function refreshOutputList (access) {
+  const ports = [ ]
+  const iterator = access.outputs.keys()
+  for (;;) {
+    const { done, value: key } = iterator.next()
+    if (done) break
+    ports.push({ key, name: access.outputs.get(key).name })
+  }
+  handleAvailableOutputs(ports)
+  selectOutput(store.selectedOutputKey)
 }
 
 export function send (data) {
@@ -66,6 +70,10 @@ export function send (data) {
   if (window.midiOutput) {
     window.midiOutput.send(data)
   }
+}
+
+function onStateChange (access) {
+  refreshOutputList(access)
 }
 
 function init () {
@@ -79,6 +87,7 @@ function init () {
     navigator.requestMIDIAccess({ sysex: false }).then(
       (access) => {
         ok(access)
+        access.onstatechange = () => onStateChange(access)
       },
       (e) => {
         setStatus('MIDI cannot request!! ' + e)
