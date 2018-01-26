@@ -36,10 +36,12 @@ const handleAvailableOutputs = action('handleAvailableOutputs', (outputs) => {
   for (const output of outputs) {
     if (store.selectedOutputKey === output.key) return
   }
-  if (outputs.length) {
-    store.selectedOutputKey = outputs[0].key
-  } else {
-    store.selectedOutputKey = null
+  if (!store.selectedOutputKey) {
+    if (outputs.length) {
+      store.selectedOutputKey = outputs[0].key
+    } else {
+      store.selectedOutputKey = null
+    }
   }
 })
 
@@ -61,8 +63,11 @@ function refreshOutputList (access) {
     if (done) break
     ports.push({ key, name: access.outputs.get(key).name })
   }
+  const previousKey = store.selectedOutputKey
   handleAvailableOutputs(ports)
-  selectOutput(store.selectedOutputKey)
+  if (previousKey !== store.selectedOutputKey) {
+    selectOutput(store.selectedOutputKey)
+  }
 }
 
 export function send (data) {
