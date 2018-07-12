@@ -12,18 +12,18 @@ import { getHash } from './Hash'
 import { observer } from 'mobx-react'
 import styled from 'react-emotion'
 
-const KeyboardMenu = styled.div`
+const KeyboardMenu = styled('div')`
   font-size: 5vw;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 `
 
-const KeyboardMenuItem = styled.div`
+const KeyboardMenuItem = styled('div')`
   flex-basis: 48%;
 `
 
-const KeyboardMenuLink = styled.a`
+const KeyboardMenuLink = styled('a')`
   color: #e9e8e7;
   display: block;
   background: #090807;
@@ -34,7 +34,7 @@ const KeyboardMenuLink = styled.a`
   text-decoration: none;
 `
 
-const KeyboardToolbarWrapper = styled.div`
+const KeyboardToolbarWrapper = styled('div')`
   position: absolute;
   top: 0;
   right: 0;
@@ -42,7 +42,7 @@ const KeyboardToolbarWrapper = styled.div`
   left: 0;
 `
 
-const KeyboardContent = styled.div`
+const KeyboardContent = styled('div')`
   position: absolute;
   top: 40px;
   right: 0;

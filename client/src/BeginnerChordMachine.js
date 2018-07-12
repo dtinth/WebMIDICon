@@ -48,7 +48,7 @@ export class BeginnerChordMachine extends React.PureComponent {
   }
 }
 
-const CircleElement = styled.div`
+const CircleElement = styled('div')`
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;
   box-sizing: border-box;
@@ -56,7 +56,7 @@ const CircleElement = styled.div`
   border-radius: 100%;
 `
 
-const CircleOverlay = styled.div`
+const CircleOverlay = styled('div')`
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;
   pointer-events: none;
@@ -66,7 +66,7 @@ const CircleOverlay = styled.div`
   justify-content: center;
 `
 
-const KeyIndicatorText = styled.div`
+const KeyIndicatorText = styled('div')`
   position: absolute;
   top: -220px;
   left: -200px;
