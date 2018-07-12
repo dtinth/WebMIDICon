@@ -4,7 +4,7 @@ import { createSelector } from 'reselect'
 import { observer } from 'mobx-react'
 import styled from 'react-emotion'
 
-const IsomorphicKeyboardCircle = styled.div`
+const IsomorphicKeyboardCircle = styled('div')`
   position: absolute;
   top: 0;
   right: 0;
