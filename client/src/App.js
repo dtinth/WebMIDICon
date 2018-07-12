@@ -7,7 +7,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import styled from 'react-emotion'
 
-const MIDISettings = styled.button`
+const MIDISettings = styled('button')`
   height: 30px;
   background: #252423;
   border: 1px solid #454443;
@@ -18,7 +18,7 @@ const MIDISettings = styled.button`
   display: block;
 `
 
-const Wrapper = styled.div`
+const Wrapper = styled('div')`
   position: absolute;
   top: 0;
   right: 0;
@@ -27,7 +27,7 @@ const Wrapper = styled.div`
   overflow: hidden;
 `
 
-const Header = styled.div`
+const Header = styled('div')`
   position: absolute;
   top: 0;
   right: 0;
@@ -39,13 +39,13 @@ const Header = styled.div`
   z-index: 10;
 `
 
-const HeaderTitle = styled.div`
+const HeaderTitle = styled('div')`
   color: #8b8685;
   font-weight: bold;
   margin-left: 10px;
 `
 
-const HeaderRight = styled.div`
+const HeaderRight = styled('div')`
   position: absolute;
   top: 0;
   right: 4px;
@@ -53,7 +53,7 @@ const HeaderRight = styled.div`
   line-height: 40px;
 `
 
-const AppContent = styled.div`
+const AppContent = styled('div')`
   position: absolute;
   top: 40px;
   right: 0;

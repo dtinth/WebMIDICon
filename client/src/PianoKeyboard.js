@@ -4,7 +4,7 @@ import React from 'react'
 import { computed } from 'mobx'
 import { observer } from 'mobx-react'
 
-const PianoKeyboardWrapper = styled.div`
+const PianoKeyboardWrapper = styled('div')`
   position: absolute;
   top: 0;
   right: 0;
@@ -12,13 +12,13 @@ const PianoKeyboardWrapper = styled.div`
   left: 0;
 `
 
-const PianoKeyboardKeyHolder = styled.div`
+const PianoKeyboardKeyHolder = styled('div')`
   position: absolute;
   top: 0;
   bottom: 0;
 `
 
-const PianoKeyboardKey = styled.div`
+const PianoKeyboardKey = styled('div')`
   & .white {
     position: absolute;
     background: #8b8685;
