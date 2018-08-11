@@ -7,7 +7,7 @@ const main = document.createElement('div')
 main.id = 'main'
 document.body.appendChild(main)
 
-function render () {
+function render() {
   ReactDOM.render(<App />, main)
 }
 
