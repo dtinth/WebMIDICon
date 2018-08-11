@@ -1,16 +1,53 @@
-machine:
-  node:
-    version: 10
-dependencies:
-  pre:
-    - curl -o- -L https://yarnpkg.com/install.sh | bash
-  override:
-    - cd client && yarn
-test:
-  override:
-    - cd client && npm run build
-deployment:
-  github-pages:
-    branch: master
-    commands:
-      - cd client && git config --global user.email 'aki@spacet.me' && git config --global user.name 'CircleCI' && npm run deploy
+version: 2
+jobs:
+  build:
+    working_directory: ~/midi-instruments
+    environment:
+      CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
+      CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
+    docker:
+    - image: circleci/node:10
+    steps:
+    - checkout
+    - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
+    - restore_cache:
+        keys:
+        - v1-dep-{{ .Branch }}-
+        - v1-dep-master-
+        - v1-dep-
+    - run: cd client && yarn
+    - save_cache:
+        key: v1-dep-{{ .Branch }}-{{ epoch }}
+        paths:
+        - client/node_modules
+        - ~/.cache/yarn
+    - run:
+        name: lint code
+        command: |
+          cd client
+          yarn line
+    - run:
+        name: check coding style
+        command: |
+          cd client
+          yarn prettier
+    - run:
+        name: build
+        command: |
+          cd client
+          yarn build
+    - run:
+        name: deploy
+        command: |
+          if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            cd client
+            git config --global user.email 'aki@spacet.me'
+            git config --global user.name 'CircleCI'
+            yarn deploy
+          fi
+    - store_test_results:
+        path: /tmp/circleci-test-results
+    - store_artifacts:
+        path: /tmp/circleci-artifacts
+    - store_artifacts:
+        path: /tmp/circleci-test-results

@@ -1,4 +1,4 @@
-import styled, { css } from 'react-emotion'
+import styled from 'react-emotion'
 
 import React from 'react'
 import { computed } from 'mobx'
