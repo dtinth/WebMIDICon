@@ -23,9 +23,10 @@ const types = {
     const yOffset = keyDistance * Math.sqrt(3)
     return {
       keySize,
-      x: (column) => keyDistance / 2 + column * xOffset,
-      y: (column, row) => height - keyDistance / 2 + (column / 2 - row) * yOffset,
-      note: (column, row) => column * -5 + row * 12
+      x: column => keyDistance / 2 + column * xOffset,
+      y: (column, row) =>
+        height - keyDistance / 2 + (column / 2 - row) * yOffset,
+      note: (column, row) => column * -5 + row * 12,
     }
   },
   harmonic: (width, height) => {
@@ -35,21 +36,22 @@ const types = {
     const yOffset = keyDistance
     return {
       keySize,
-      x: (column) => keyDistance / 2 + column * xOffset,
-      y: (column, row) => height - keyDistance / 2 + (column / 2 - row) * yOffset,
-      note: (column, row) => row * 7 - column * 3
+      x: column => keyDistance / 2 + column * xOffset,
+      y: (column, row) =>
+        height - keyDistance / 2 + (column / 2 - row) * yOffset,
+      note: (column, row) => row * 7 - column * 3,
     }
-  }
+  },
 }
 
-const INVALID = { keys: [ ], keySize: 0 }
+const INVALID = { keys: [], keySize: 0 }
 
-function generateKeys (type, width, height) {
+function generateKeys(type, width, height) {
   if (!width || !height) return INVALID
   const typedefFactory = types[type]
   if (!typedefFactory) return INVALID
   const { x, y, note, keySize } = typedefFactory(width, height)
-  const keys = [ ]
+  const keys = []
   for (let i = 0; x(i) <= width; i++) {
     for (let j = 0; y(i, j) >= 0; j++) {
       const cx = x(i)
@@ -64,28 +66,28 @@ function generateKeys (type, width, height) {
 }
 
 export class IsomorphicKeyboard extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
-    this.keys = [ ]
+    this.keys = []
     this.state = { keyElements: null }
   }
-  componentDidMount () {
+  componentDidMount() {
     window.requestAnimationFrame(() => {
       this.handleSizeChange()
     })
     window.addEventListener('resize', this.handleSizeChange)
   }
-  componentWillUnmount () {
+  componentWillUnmount() {
     window.removeEventListener('resize', this.handleSizeChange)
   }
-  handleContainerRef = (container) => {
+  handleContainerRef = container => {
     this.container = container
   }
   handleSizeChange = () => {
     if (this.container) {
       this.setState({
         width: this.container.offsetWidth,
-        height: this.container.offsetHeight
+        height: this.container.offsetHeight,
       })
     }
   }
@@ -99,7 +101,7 @@ export class IsomorphicKeyboard extends React.Component {
     this.selectKeys,
     ({ props }) => props.store,
     ({ keys, keySize }, store) => {
-      return keys.map((key) => {
+      return keys.map(key => {
         return (
           <Circle
             store={store}
@@ -115,12 +117,12 @@ export class IsomorphicKeyboard extends React.Component {
   )
   getSelectorState = () => ({
     props: this.props,
-    state: this.state
+    state: this.state,
   })
   renderKeys = () => {
     return this.selectKeyElements(this.getSelectorState())
   }
-  updateTouches = (e) => {
+  updateTouches = e => {
     e.preventDefault()
     const container = this.container
     if (!container) return
@@ -129,29 +131,35 @@ export class IsomorphicKeyboard extends React.Component {
     const by = bound.top
     const activated = new Set()
     const { keys } = this.selectKeys(this.getSelectorState())
-    void [ ].forEach.call(e.touches, (touch) => {
-      const rankedKeys = (keys
+    void [].forEach.call(e.touches, touch => {
+      const rankedKeys = keys
         .map(({ noteValue, x, y }) => ({
           noteValue,
           distance: Math.sqrt(
             Math.pow(touch.clientX - (bx + x), 2) +
-            Math.pow(touch.clientY - (by + y), 2)
-          )
+              Math.pow(touch.clientY - (by + y), 2)
+          ),
         }))
         .sort((a, b) => a.distance - b.distance)
-      )
       activated.add(rankedKeys[0].noteValue)
     })
-    this.props.store.handleTouches([ ...activated ])
+    this.props.store.handleTouches([...activated])
   }
-  render () {
+  render() {
     return (
       <div
         ref={this.handleContainerRef}
         onTouchStart={this.updateTouches}
         onTouchMove={this.updateTouches}
         onTouchEnd={this.updateTouches}
-        style={{ position: 'absolute', overflow: 'hidden', top: 0, right: 0, bottom: 0, left: 0 }}
+        style={{
+          position: 'absolute',
+          overflow: 'hidden',
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+        }}
       >
         {this.renderKeys()}
       </div>
@@ -159,41 +167,45 @@ export class IsomorphicKeyboard extends React.Component {
   }
 }
 
-const Circle = observer(class Circle extends React.Component {
-  constructor (props) {
-    super(props)
-    this.isTouched = computed(() => this.props.store.activeNotes.has(this.props.noteValue))
-  }
-  render () {
-    const { size, noteValue, left, top } = this.props
-    const transpose = this.props.store.transpose
-    const trueNoteValue = transpose + noteValue
-    return (
-      <div
-        style={{
-          position: 'absolute',
-          left: left - size / 2,
-          top: top - size / 2,
-          width: size,
-          height: size
-        }}
-      >
-        <IsomorphicKeyboardCircle
+const Circle = observer(
+  class Circle extends React.Component {
+    constructor(props) {
+      super(props)
+      this.isTouched = computed(() =>
+        this.props.store.activeNotes.has(this.props.noteValue)
+      )
+    }
+    render() {
+      const { size, noteValue, left, top } = this.props
+      const transpose = this.props.store.transpose
+      const trueNoteValue = transpose + noteValue
+      return (
+        <div
           style={{
-            borderColor: `hsl(${(trueNoteValue % 12) * 30},50%,72%)`
+            position: 'absolute',
+            left: left - size / 2,
+            top: top - size / 2,
+            width: size,
+            height: size,
           }}
-        />
-        <IsomorphicKeyboardCircle
-          className='is-active'
-          style={{
-            borderColor: 'white',
-            background: `hsl(${(trueNoteValue % 12) * 30},50%,72%)`,
-            opacity: this.isTouched.get() ? 1 : 0
-          }}
-        />
-      </div>
-    )
+        >
+          <IsomorphicKeyboardCircle
+            style={{
+              borderColor: `hsl(${(trueNoteValue % 12) * 30},50%,72%)`,
+            }}
+          />
+          <IsomorphicKeyboardCircle
+            className="is-active"
+            style={{
+              borderColor: 'white',
+              background: `hsl(${(trueNoteValue % 12) * 30},50%,72%)`,
+              opacity: this.isTouched.get() ? 1 : 0,
+            }}
+          />
+        </div>
+      )
+    }
   }
-})
+)
 
 export default IsomorphicKeyboard

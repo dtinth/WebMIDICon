@@ -21,25 +21,27 @@ const buttons = [
   { name: 'Kick', note: 36 },
   { name: 'Sidestick', note: 37 },
   { name: 'Kick', note: 36 },
-  { name: 'Kick', note: 36 }
+  { name: 'Kick', note: 36 },
 ]
 
 export class DrumPad extends React.PureComponent {
-  render () {
+  render() {
     return (
       <div
-        onTouchStart={(e) => e.preventDefault()}
+        onTouchStart={e => e.preventDefault()}
         style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0 }}
       >
-        <div style={{ position: 'absolute', top: 2, right: 2, bottom: 2, left: 2 }}>
+        <div
+          style={{ position: 'absolute', top: 2, right: 2, bottom: 2, left: 2 }}
+        >
           {buttons.map((button, index) => this.renderButton(button, index))}
         </div>
       </div>
     )
   }
-  renderButton (button, index) {
-    const top = (Math.floor(index / 4) * 25) + '%'
-    const left = ((index % 4) * 25) + '%'
+  renderButton(button, index) {
+    const top = Math.floor(index / 4) * 25 + '%'
+    const left = (index % 4) * 25 + '%'
     const width = '25%'
     const height = '25%'
     const background = `hsl(${button.note * 15}, 20%, 30%)`
@@ -50,12 +52,12 @@ export class DrumPad extends React.PureComponent {
           background={background}
           backgroundActive={backgroundActive}
           name={button.name}
-          onTrigger={(velocity) => this.handleTrigger(button.note, velocity)}
+          onTrigger={velocity => this.handleTrigger(button.note, velocity)}
         />
       </div>
     )
   }
-  handleTrigger (note, velocity) {
+  handleTrigger(note, velocity) {
     const midiVelocity = Math.max(0, Math.min(127, Math.round(velocity * 127)))
     MIDI.send([0x99, note, midiVelocity])
     MIDI.send([0x89, note, midiVelocity])
@@ -63,11 +65,11 @@ export class DrumPad extends React.PureComponent {
 }
 
 const DrumButton = class DrumButton extends React.PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.touchId = 0
   }
-  render () {
+  render() {
     const { background, backgroundActive, name } = this.props
     return (
       <div
@@ -83,34 +85,66 @@ const DrumButton = class DrumButton extends React.PureComponent {
           '-moz-user-select': 'none',
           '-khtml-user-select': 'none',
           '-webkit-user-select': 'none',
-          'user-select': 'none'
+          'user-select': 'none',
         }}
-
         ref={this.registerTouchElement}
       >
-        <div style={{ position: 'absolute', top: 2, right: 2, bottom: 2, left: 2, background, transform: 'translateZ(0)' }} />
-        <div ref={this.registerActiveElement} style={{ position: 'absolute', top: 1, right: 1, bottom: 1, left: 1, background: backgroundActive, transform: 'translateZ(0)' }} />
-        <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', transform: 'translateZ(0)' }}>
+        <div
+          style={{
+            position: 'absolute',
+            top: 2,
+            right: 2,
+            bottom: 2,
+            left: 2,
+            background,
+            transform: 'translateZ(0)',
+          }}
+        />
+        <div
+          ref={this.registerActiveElement}
+          style={{
+            position: 'absolute',
+            top: 1,
+            right: 1,
+            bottom: 1,
+            left: 1,
+            background: backgroundActive,
+            transform: 'translateZ(0)',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transform: 'translateZ(0)',
+          }}
+        >
           <div style={{ fontSize: '3vw' }}>{name}</div>
         </div>
       </div>
     )
   }
-  registerTouchElement = (element) => {
+  registerTouchElement = element => {
     this.element = element
   }
-  registerActiveElement = (element) => {
+  registerActiveElement = element => {
     this.activeElement = element
     if (element) {
       element.style.opacity = '0'
     }
   }
 
-  onContextMenu = (e) => {
+  onContextMenu = e => {
     e.preventDefault()
   }
 
-  handleTouchStart = (e) => {
+  handleTouchStart = e => {
     if (!this.element) return
     const touch = e.changedTouches[0]
     if (!touch) return

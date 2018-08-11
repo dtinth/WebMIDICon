@@ -53,18 +53,18 @@ const PianoKeyboardKey = styled('div')`
 `
 
 export class PianoKeyboard extends React.PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props)
-    this.keys = { }
+    this.keys = {}
     this.keyMap = new WeakMap()
   }
-  render () {
+  render() {
     return (
       <PianoKeyboardWrapper
         onTouchStart={this.handleTouch}
         onTouchMove={this.handleTouch}
         onTouchEnd={this.handleTouch}
-        className='PianoKeyboard'
+        className="PianoKeyboard"
       >
         {this.renderRow(0, 24)}
         {this.renderRow(1, 12)}
@@ -72,7 +72,7 @@ export class PianoKeyboard extends React.PureComponent {
       </PianoKeyboardWrapper>
     )
   }
-  renderRow (position, keyShift) {
+  renderRow(position, keyShift) {
     const gutterSize = 0.04
     return (
       <div
@@ -81,7 +81,7 @@ export class PianoKeyboard extends React.PureComponent {
           top: percent(gutterSize + position / 3 * (1 - gutterSize)),
           right: '3%',
           height: percent((1 - gutterSize) / 3 - gutterSize),
-          left: '3%'
+          left: '3%',
         }}
       >
         <Octave
@@ -94,9 +94,9 @@ export class PianoKeyboard extends React.PureComponent {
       </div>
     )
   }
-  handleTouch = (e) => {
+  handleTouch = e => {
     const keys = new Set()
-    void [ ].forEach.call(e.touches, (touch) => {
+    void [].forEach.call(e.touches, touch => {
       const element = document.elementFromPoint(touch.clientX, touch.clientY)
       const matching = this.keyMap.get(element)
       console.log(element, matching, this.keyMap)
@@ -104,18 +104,18 @@ export class PianoKeyboard extends React.PureComponent {
         keys.add(matching)
       }
     })
-    this.props.store.handleTouches([ ...keys ])
+    this.props.store.handleTouches([...keys])
     e.preventDefault()
   }
-  handleKeyRef (keyId, row, element) {
-    const current = this.keys[keyId] || (this.keys[keyId] = { })
+  handleKeyRef(keyId, row, element) {
+    const current = this.keys[keyId] || (this.keys[keyId] = {})
     current[row] = element
     if (element) this.keyMap.set(element, keyId)
   }
 }
 
 export class Octave extends React.Component {
-  render () {
+  render() {
     return (
       <div>
         {this.renderKeySet(0, 5, true)}
@@ -135,7 +135,7 @@ export class Octave extends React.Component {
       </div>
     )
   }
-  renderKeySet (position, note, hasBlackKey) {
+  renderKeySet(position, note, hasBlackKey) {
     const whiteNoteValue = note + this.props.keyShift
     const blackNoteValue = whiteNoteValue + 1
     return (
@@ -147,47 +147,48 @@ export class Octave extends React.Component {
       </PianoKeyboardKeyHolder>
     )
   }
-  renderKey (keyColor, noteValue) {
+  renderKey(keyColor, noteValue) {
     return (
       <Key
         store={this.props.store}
         keyColor={keyColor}
         noteValue={noteValue}
-        refKey={(element) => this.props.refKey(noteValue, element)}
+        refKey={element => this.props.refKey(noteValue, element)}
       />
     )
   }
 }
 
-const Key = observer(class Key extends React.PureComponent {
-  constructor (props) {
-    super(props)
-    this.isTouched = computed(() => this.props.store.activeNotes.has(this.props.noteValue))
+const Key = observer(
+  class Key extends React.PureComponent {
+    constructor(props) {
+      super(props)
+      this.isTouched = computed(() =>
+        this.props.store.activeNotes.has(this.props.noteValue)
+      )
+    }
+    render() {
+      const active = this.isTouched.get()
+      const transpose = this.props.store.transpose
+      const trueNoteValue = transpose + this.props.noteValue
+      return (
+        <PianoKeyboardKey>
+          <div className={this.props.keyColor} ref={this.props.refKey} />
+          <div
+            className={this.props.keyColor + ' is-active'}
+            style={{
+              opacity: active ? 1 : 0,
+              background: `hsl(${(trueNoteValue % 12) * 30},100%,90%)`,
+              transition: active ? '' : '0.3s opacity',
+            }}
+          />
+        </PianoKeyboardKey>
+      )
+    }
   }
-  render () {
-    const active = this.isTouched.get()
-    const transpose = this.props.store.transpose
-    const trueNoteValue = transpose + this.props.noteValue
-    return (
-      <PianoKeyboardKey>
-        <div
-          className={this.props.keyColor}
-          ref={this.props.refKey}
-        />
-        <div
-          className={this.props.keyColor + ' is-active'}
-          style={{
-            opacity: active ? 1 : 0,
-            background: `hsl(${(trueNoteValue % 12) * 30},100%,90%)`,
-            transition: active ? '' : '0.3s opacity'
-          }}
-        />
-      </PianoKeyboardKey>
-    )
-  }
-})
+)
 
-function percent (x) {
+function percent(x) {
   return (x * 100).toFixed(6) + '%'
 }
 

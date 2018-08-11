@@ -2,23 +2,23 @@ import { action, observable } from 'mobx'
 
 const store = observable({
   status: 'Initializing MIDI system',
-  outputs: [ ],
-  selectedOutputKey: null
+  outputs: [],
+  selectedOutputKey: null,
 })
 
-export function getStatus () {
+export function getStatus() {
   return store.status
 }
 
-export function getOutputs () {
+export function getOutputs() {
   return store.outputs
 }
 
-export function isSelected (outputKey) {
+export function isSelected(outputKey) {
   return store.selectedOutputKey === outputKey
 }
 
-export const selectOutput = action('selectOutput', (outputKey) => {
+export const selectOutput = action('selectOutput', outputKey => {
   const access = window.midiAccess
   if (!access) return
   const output = access.outputs.get(outputKey)
@@ -27,11 +27,11 @@ export const selectOutput = action('selectOutput', (outputKey) => {
   setStatus('Using output: ' + output.name)
 })
 
-const setStatus = action('setStatus', (status) => {
+const setStatus = action('setStatus', status => {
   store.status = status
 })
 
-const handleAvailableOutputs = action('handleAvailableOutputs', (outputs) => {
+const handleAvailableOutputs = action('handleAvailableOutputs', outputs => {
   store.outputs = outputs
   for (const output of outputs) {
     if (store.selectedOutputKey === output.key) return
@@ -45,7 +45,7 @@ const handleAvailableOutputs = action('handleAvailableOutputs', (outputs) => {
   }
 })
 
-function ok (access) {
+function ok(access) {
   window.midiAccess = access
   setStatus('Found MIDI outputs: ' + access.outputs.size)
   try {
@@ -55,8 +55,8 @@ function ok (access) {
   }
 }
 
-function refreshOutputList (access) {
-  const ports = [ ]
+function refreshOutputList(access) {
+  const ports = []
   const iterator = access.outputs.keys()
   for (;;) {
     const { done, value: key } = iterator.next()
@@ -70,18 +70,18 @@ function refreshOutputList (access) {
   }
 }
 
-export function send (data) {
+export function send(data) {
   console.log(data)
   if (window.midiOutput) {
     window.midiOutput.send(data)
   }
 }
 
-function onStateChange (access) {
+function onStateChange(access) {
   refreshOutputList(access)
 }
 
-function init () {
+function init() {
   if (window.midiAccess) {
     setStatus('MIDI saved!!')
     ok(window.midiAccess)
@@ -90,11 +90,11 @@ function init () {
   if (navigator.requestMIDIAccess) {
     setStatus('Requesting MIDI access')
     navigator.requestMIDIAccess({ sysex: false }).then(
-      (access) => {
+      access => {
         ok(access)
         access.onstatechange = () => onStateChange(access)
       },
-      (e) => {
+      e => {
         setStatus('MIDI cannot request!! ' + e)
       }
     )
@@ -111,13 +111,13 @@ function init () {
   }
 }
 
-function sham (port) {
+function sham(port) {
   const midiAccess = {
-    outputs: new Map()
+    outputs: new Map(),
   }
   midiAccess.outputs.set('bluetooth', {
     name: 'Bluetooth',
-    send: (bytes) => port.postMessage(bytes.join(';'))
+    send: bytes => port.postMessage(bytes.join(';')),
   })
   return midiAccess
 }
