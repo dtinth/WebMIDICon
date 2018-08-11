@@ -25,7 +25,7 @@ jobs:
         name: lint code
         command: |
           cd client
-          yarn line
+          yarn lint
     - run:
         name: check coding style
         command: |
