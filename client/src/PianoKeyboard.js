@@ -78,7 +78,7 @@ export class PianoKeyboard extends React.PureComponent {
       <div
         style={{
           position: 'absolute',
-          top: percent(gutterSize + position / 3 * (1 - gutterSize)),
+          top: percent(gutterSize + (position / 3) * (1 - gutterSize)),
           right: '3%',
           height: percent((1 - gutterSize) / 3 - gutterSize),
           left: '3%',

@@ -181,7 +181,9 @@ const Circle = observer(
       const fnHue =
         this.props.fn === 'dominant'
           ? 0
-          : this.props.fn === 'subdominant' ? 240 : 120
+          : this.props.fn === 'subdominant'
+            ? 240
+            : 120
       return (
         <div
           style={{
