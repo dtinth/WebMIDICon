@@ -22,6 +22,11 @@ A collection of **web-based MIDI instruments.** I wanted to create a MIDI instru
 3. Play and enjoy!
 
 
+## Hacking on this project
+
+- The easiest way is to use Code Sandbox! https://codesandbox.io/s/github/dtinth/midi-instruments/tree/master/client
+
+
 ## MIDI setup
 
 MIDI communicates via MIDI ports. This section describe on setting them up.
