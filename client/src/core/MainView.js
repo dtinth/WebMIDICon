@@ -1,69 +1,14 @@
 import * as MIDI from './MIDI'
 
-import KeyboardToolbar from './KeyboardToolbar'
+import MainToolbar from './MainToolbar'
 import React from 'react'
 import createStore from './createStore'
 import { getHash } from './Hash'
 import { observer } from 'mobx-react'
 import styled from 'react-emotion'
 
-const KeyboardMenu = styled('ul')`
-  font-size: 2vw;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 0;
-  list-style: none;
-`
-
-const KeyboardMenuItem = styled('li')`
-  flex-basis: 48%;
-  display: flex;
-  flex-direction: column;
-`
-
-const KeyboardMenuLink = styled('a')`
-  flex: 1;
-  color: #e9e8e7;
-  display: block;
-  background: #252423;
-  margin: 0.5em;
-  padding: 0.5em;
-  border: 2px solid #555453;
-  text-align: left;
-  text-decoration: none;
-  box-shadow: 4px 4px 0 #090807;
-  &:hover {
-    transform: scale(1.025);
-  }
-  & > h2 {
-    margin: 0;
-    font-size: 1.5em;
-    color: #d7fc70;
-  }
-  & > p {
-    margin: 0.5em 0 0;
-  }
-`
-
-const KeyboardToolbarWrapper = styled('div')`
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 40px;
-  left: 0;
-`
-
-const KeyboardContent = styled('div')`
-  position: absolute;
-  top: 40px;
-  right: 0;
-  bottom: 0;
-  left: 0;
-`
-
-export const Keyboard = observer(
-  class Keyboard extends React.Component {
+export const MainView = observer(
+  class MainView extends React.Component {
     constructor(props) {
       super(props)
       this.store = createStore()
@@ -100,7 +45,7 @@ export const Keyboard = observer(
       }
       console.log('Conpnent not found')
       return (
-        <KeyboardMenu>
+        <MainMenu>
           {this.props.instruments.map(instrument => (
             <React.Fragment key={instrument.id}>
               {this.renderMenuItem(
@@ -110,26 +55,26 @@ export const Keyboard = observer(
               )}
             </React.Fragment>
           ))}
-        </KeyboardMenu>
+        </MainMenu>
       )
     }
     renderMenuItem(href, text, description) {
       return (
-        <KeyboardMenuItem>
-          <KeyboardMenuLink href={href}>
+        <MainMenuItem>
+          <MainMenuLink href={href}>
             <h2>{text}</h2>
             <p>{description}</p>
-          </KeyboardMenuLink>
-        </KeyboardMenuItem>
+          </MainMenuLink>
+        </MainMenuItem>
       )
     }
     render() {
       return (
         <div>
-          <KeyboardToolbarWrapper>
-            <KeyboardToolbar store={this.store} />
-          </KeyboardToolbarWrapper>
-          <KeyboardContent>{this.renderContent()}</KeyboardContent>
+          <MainToolbarWrapper>
+            <MainToolbar store={this.store} />
+          </MainToolbarWrapper>
+          <MainContent>{this.renderContent()}</MainContent>
           <MIDIEmitter
             activeNotes={this.store.activeNotes}
             transpose={this.store.transpose}
@@ -140,6 +85,61 @@ export const Keyboard = observer(
     }
   }
 )
+
+const MainToolbarWrapper = styled('div')`
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 40px;
+  left: 0;
+`
+
+const MainContent = styled('div')`
+  position: absolute;
+  top: 40px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+`
+
+const MainMenu = styled('ul')`
+  font-size: 2vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+  list-style: none;
+`
+
+const MainMenuItem = styled('li')`
+  flex-basis: 48%;
+  display: flex;
+  flex-direction: column;
+`
+
+const MainMenuLink = styled('a')`
+  flex: 1;
+  color: #e9e8e7;
+  display: block;
+  background: #252423;
+  margin: 0.5em;
+  padding: 0.5em;
+  border: 2px solid #555453;
+  text-align: left;
+  text-decoration: none;
+  box-shadow: 4px 4px 0 #090807;
+  &:hover {
+    transform: scale(1.025);
+  }
+  & > h2 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #d7fc70;
+  }
+  & > p {
+    margin: 0.5em 0 0;
+  }
+`
 
 class MIDIEmitter extends React.Component {
   constructor(props) {
@@ -175,4 +175,4 @@ class MIDIEmitter extends React.Component {
   }
 }
 
-export default Keyboard
+export default MainView

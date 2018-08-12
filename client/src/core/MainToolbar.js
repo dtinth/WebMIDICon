@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 
-export const KeyboardToolbar = observer(
+export const MainToolbar = observer(
   class MIDIToolbar extends React.Component {
     render() {
       return (
@@ -115,4 +115,4 @@ const Button = props => (
   </div>
 )
 
-export default KeyboardToolbar
+export default MainToolbar

@@ -1,7 +1,7 @@
 import './App.css'
 
 import * as MIDI from './MIDI'
-import Keyboard from './Keyboard'
+import MainView from './MainView'
 import React from 'react'
 import { observer } from 'mobx-react'
 import styled from 'react-emotion'
@@ -76,7 +76,7 @@ export function App({ features }) {
         </HeaderRight>
       </Header>
       <AppContent>
-        <Keyboard instruments={instruments} />
+        <MainView instruments={instruments} />
       </AppContent>
     </Wrapper>
   )
