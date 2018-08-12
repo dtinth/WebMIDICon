@@ -6,8 +6,8 @@
   "author": "Thai Pangsakulyanont <dtinth@spacet.me>",
   "license": "MIT",
   "scripts": {
-    "start": "cross-env DEV=1 webpack-dev-server --hot --port=9998 --host=0.0.0.0 --compress",
-    "build": "webpack -p",
+    "start": "cross-env DEV=1 webpack-dev-server --hot --port=9998 --host=0.0.0.0 --compress --mode=development",
+    "build": "webpack --mode=production",
     "lint": "eslint src",
     "prettier": "prettier --list-different 'src/**/*.js'",
     "prettier:fix": "prettier --write 'src/**/*.js'",
