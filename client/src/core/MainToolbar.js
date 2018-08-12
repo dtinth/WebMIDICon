@@ -1,84 +1,95 @@
 import React from 'react'
-import { observer } from 'mobx-react'
+import { Observer } from 'mobx-react'
 
-export const MainToolbar = observer(
-  class MIDIToolbar extends React.Component {
-    render() {
-      return (
-        <div
+export class MainToolbar extends React.Component {
+  render() {
+    return (
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        <a
+          ref={this.props.innerRef}
+          href="#"
           style={{
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            display: 'flex',
-            alignItems: 'center',
+            color: '#8b8685',
+            display: 'block',
+            marginLeft: 10,
+            textDecoration: 'none',
           }}
         >
-          <a
-            href="#"
-            style={{
-              color: '#8b8685',
-              display: 'block',
-              marginLeft: 10,
-              textDecoration: 'none',
-            }}
-          >
-            &larr;
-          </a>
-          <Title>Transpose</Title>
-          {this.renderTransposeButton(-6)}
-          {this.renderTransposeButton(-5)}
-          {this.renderTransposeButton(-4)}
-          {this.renderTransposeButton(-3)}
-          {this.renderTransposeButton(-2)}
-          {this.renderTransposeButton(-1)}
-          {this.renderTransposeButton(0)}
-          {this.renderTransposeButton(1)}
-          {this.renderTransposeButton(2)}
-          {this.renderTransposeButton(3)}
-          {this.renderTransposeButton(4)}
-          {this.renderTransposeButton(5)}
-          {this.renderTransposeButton(6)}
+          &larr;
+        </a>
+        <Observer>
+          {() => (
+            <React.Fragment>
+              <Title>Transpose</Title>
+              {this.renderTransposeButton(-6)}
+              {this.renderTransposeButton(-5)}
+              {this.renderTransposeButton(-4)}
+              {this.renderTransposeButton(-3)}
+              {this.renderTransposeButton(-2)}
+              {this.renderTransposeButton(-1)}
+              {this.renderTransposeButton(0)}
+              {this.renderTransposeButton(1)}
+              {this.renderTransposeButton(2)}
+              {this.renderTransposeButton(3)}
+              {this.renderTransposeButton(4)}
+              {this.renderTransposeButton(5)}
+              {this.renderTransposeButton(6)}
+            </React.Fragment>
+          )}
+        </Observer>
 
-          <Title>Octave</Title>
-          {this.renderOctaveButton(0)}
-          {this.renderOctaveButton(1)}
-          {this.renderOctaveButton(2)}
-          {this.renderOctaveButton(3)}
-          {this.renderOctaveButton(4)}
-          {this.renderOctaveButton(5)}
-          {this.renderOctaveButton(6)}
-        </div>
-      )
-    }
-    renderTransposeButton(n) {
-      const store = this.props.store
-      return (
-        <Button
-          width="1.3em"
-          onTap={() => store.setTranspose(n)}
-          selected={store.transpose === n}
-        >
-          {n}
-        </Button>
-      )
-    }
-    renderOctaveButton(n) {
-      const store = this.props.store
-      return (
-        <Button
-          width="1.2em"
-          onTap={() => store.setOctave(n)}
-          selected={store.octave === n}
-        >
-          {n}
-        </Button>
-      )
-    }
+        <Observer>
+          {() => (
+            <React.Fragment>
+              <Title>Octave</Title>
+              {this.renderOctaveButton(0)}
+              {this.renderOctaveButton(1)}
+              {this.renderOctaveButton(2)}
+              {this.renderOctaveButton(3)}
+              {this.renderOctaveButton(4)}
+              {this.renderOctaveButton(5)}
+              {this.renderOctaveButton(6)}
+            </React.Fragment>
+          )}
+        </Observer>
+      </div>
+    )
   }
-)
+  renderTransposeButton(n) {
+    const store = this.props.store
+    return (
+      <Button
+        width="1.3em"
+        onTap={() => store.setTranspose(n)}
+        selected={store.transpose === n}
+      >
+        {n}
+      </Button>
+    )
+  }
+  renderOctaveButton(n) {
+    const store = this.props.store
+    return (
+      <Button
+        width="1.2em"
+        onTap={() => store.setOctave(n)}
+        selected={store.octave === n}
+      >
+        {n}
+      </Button>
+    )
+  }
+}
 
 const Title = props => (
   <div

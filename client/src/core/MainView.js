@@ -20,14 +20,14 @@ export class MainView extends React.Component {
   }
   handleGlobalKeyDown = e => {
     if (e.keyCode === 13) {
-      if (this.mainContent) this.mainContent.focus()
+      if (this.contentElement) this.contentElement.focus()
     }
   }
   handleKeyDown = e => {
     if (e.metaKey || e.ctrlKey || e.altKey) return
     e.stopPropagation()
     if (e.keyCode === 13) {
-      if (this.mainContent) this.mainContent.blur()
+      if (this.toolbarElement) this.toolbarElement.focus()
       return
     }
     this.store.handleKeyDown(e.keyCode)
@@ -88,13 +88,16 @@ export class MainView extends React.Component {
     return (
       <div>
         <MainToolbarWrapper>
-          <MainToolbar store={this.store} />
+          <MainToolbar
+            store={this.store}
+            innerRef={element => (this.toolbarElement = element)}
+          />
         </MainToolbarWrapper>
         <MainContent
           tabIndex={0}
           onKeyDown={this.handleKeyDown}
           onKeyUp={this.handleKeyUp}
-          innerRef={element => (this.mainContent = element)}
+          innerRef={element => (this.contentElement = element)}
         >
           {this.renderContent()}
         </MainContent>
