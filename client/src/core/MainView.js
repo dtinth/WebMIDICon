@@ -3,88 +3,98 @@ import * as MIDI from './MIDI'
 import MainToolbar from './MainToolbar'
 import React from 'react'
 import createStore from './createStore'
-import { getHash } from './Hash'
-import { observer } from 'mobx-react'
 import styled from 'react-emotion'
+import { Switch, Route } from 'react-router-dom'
+import { Observer } from 'mobx-react'
 
-export const MainView = observer(
-  class MainView extends React.Component {
-    constructor(props) {
-      super(props)
-      this.store = createStore()
-    }
-    componentDidMount() {
-      window.addEventListener('keydown', this.handleKeyDown)
-      window.addEventListener('keyup', this.handleKeyUp)
-    }
-    componentWillUnmount() {
-      window.removeEventListener('keydown', this.handleKeyDown)
-      window.removeEventListener('keyup', this.handleKeyUp)
-    }
-    shouldComponentUpdate() {
-      return false
-    }
-    handleKeyDown = e => {
-      if (e.metaKey || e.ctrlKey || e.altKey) return
-      this.store.handleKeyDown(e.keyCode)
-      e.preventDefault()
-    }
-    handleKeyUp = e => {
-      this.store.handleKeyUp(e.keyCode)
-      e.preventDefault()
-    }
-    renderContent() {
-      const hash = getHash()
-      const found = this.props.instruments.filter(
-        instrument => hash === `#${instrument.id}`
-      )[0]
-      if (found) {
-        const Component = found.component
-        console.log('Conpnent found', found)
-        return <Component store={this.store} />
-      }
-      console.log('Conpnent not found')
-      return (
-        <MainMenu>
-          {this.props.instruments.map(instrument => (
-            <React.Fragment key={instrument.id}>
-              {this.renderMenuItem(
-                `#${instrument.id}`,
-                instrument.name,
-                instrument.description
-              )}
-            </React.Fragment>
-          ))}
-        </MainMenu>
-      )
-    }
-    renderMenuItem(href, text, description) {
-      return (
-        <MainMenuItem>
-          <MainMenuLink href={href}>
-            <h2>{text}</h2>
-            <p>{description}</p>
-          </MainMenuLink>
-        </MainMenuItem>
-      )
-    }
-    render() {
-      return (
-        <div>
-          <MainToolbarWrapper>
-            <MainToolbar store={this.store} />
-          </MainToolbarWrapper>
-          <MainContent>{this.renderContent()}</MainContent>
-          <MIDIEmitter
-            activeNotes={this.store.activeNotes}
-            transpose={this.store.transpose}
-            octave={this.store.octave}
-          />
-        </div>
-      )
-    }
+export class MainView extends React.Component {
+  constructor(props) {
+    super(props)
+    this.store = createStore()
   }
-)
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleKeyDown)
+    window.addEventListener('keyup', this.handleKeyUp)
+  }
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleKeyDown)
+    window.removeEventListener('keyup', this.handleKeyUp)
+  }
+  handleKeyDown = e => {
+    if (e.metaKey || e.ctrlKey || e.altKey) return
+    this.store.handleKeyDown(e.keyCode)
+    e.preventDefault()
+  }
+  handleKeyUp = e => {
+    this.store.handleKeyUp(e.keyCode)
+    e.preventDefault()
+  }
+  renderContent() {
+    return (
+      <Switch>
+        {this.props.instruments
+          .map(instrument => {
+            const Component = instrument.component
+            return (
+              <Route
+                key={instrument.id}
+                path={`/${instrument.id}`}
+                component={() => <Component store={this.store} />}
+              />
+            )
+          })
+          .concat([
+            <Route key="@@main" render={() => this.renderMainMenu()} />,
+          ])}
+      </Switch>
+    )
+  }
+  renderMainMenu() {
+    return (
+      <MainMenu>
+        {this.props.instruments.map(instrument => (
+          <React.Fragment key={instrument.id}>
+            {this.renderMenuItem(
+              `#/${instrument.id}`,
+              instrument.name,
+              instrument.description
+            )}
+          </React.Fragment>
+        ))}
+      </MainMenu>
+    )
+  }
+
+  renderMenuItem(href, text, description) {
+    return (
+      <MainMenuItem>
+        <MainMenuLink href={href}>
+          <h2>{text}</h2>
+          <p>{description}</p>
+        </MainMenuLink>
+      </MainMenuItem>
+    )
+  }
+  render() {
+    return (
+      <div>
+        <MainToolbarWrapper>
+          <MainToolbar store={this.store} />
+        </MainToolbarWrapper>
+        <MainContent>{this.renderContent()}</MainContent>
+        <Observer>
+          {() => (
+            <MIDIEmitter
+              activeNotes={this.store.activeNotes}
+              transpose={this.store.transpose}
+              octave={this.store.octave}
+            />
+          )}
+        </Observer>
+      </div>
+    )
+  }
+}
 
 const MainToolbarWrapper = styled('div')`
   position: absolute;

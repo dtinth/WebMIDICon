@@ -6,6 +6,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import styled from 'react-emotion'
 import { sortBy } from 'lodash'
+import { HashRouter } from 'react-router-dom'
 
 const MIDISettings = styled('button')`
   height: 30px;
@@ -68,17 +69,19 @@ export function App({ features }) {
   )
   console.log('Loaded instruments:', instruments)
   return (
-    <Wrapper>
-      <Header>
-        <HeaderTitle>my web based instruments</HeaderTitle>
-        <HeaderRight>
-          <MIDIStatus />
-        </HeaderRight>
-      </Header>
-      <AppContent>
-        <MainView instruments={instruments} />
-      </AppContent>
-    </Wrapper>
+    <HashRouter>
+      <Wrapper>
+        <Header>
+          <HeaderTitle>my web based instruments</HeaderTitle>
+          <HeaderRight>
+            <MIDIStatus />
+          </HeaderRight>
+        </Header>
+        <AppContent>
+          <MainView instruments={instruments} />
+        </AppContent>
+      </Wrapper>
+    </HashRouter>
   )
 }
 
