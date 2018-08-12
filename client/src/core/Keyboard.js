@@ -7,14 +7,16 @@ import { getHash } from './Hash'
 import { observer } from 'mobx-react'
 import styled from 'react-emotion'
 
-const KeyboardMenu = styled('div')`
-  font-size: 5vw;
+const KeyboardMenu = styled('ul')`
+  font-size: 2vw;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  padding: 0;
+  list-style: none;
 `
 
-const KeyboardMenuItem = styled('div')`
+const KeyboardMenuItem = styled('li')`
   flex-basis: 48%;
 `
 
@@ -25,8 +27,15 @@ const KeyboardMenuLink = styled('a')`
   margin: 0.5em;
   padding: 0.5em;
   border: 2px solid #555453;
-  text-align: center;
+  text-align: left;
   text-decoration: none;
+  & > h2 {
+    margin: 0;
+    font-size: 1.5em;
+  }
+  & > p {
+    margin: 0.5em 0 0;
+  }
 `
 
 const KeyboardToolbarWrapper = styled('div')`
@@ -99,7 +108,10 @@ export const Keyboard = observer(
     renderMenuItem(href, text, description) {
       return (
         <KeyboardMenuItem>
-          <KeyboardMenuLink href={href}>{text}</KeyboardMenuLink>
+          <KeyboardMenuLink href={href}>
+            <h2>{text}</h2>
+            <p>{description}</p>
+          </KeyboardMenuLink>
         </KeyboardMenuItem>
       )
     }
