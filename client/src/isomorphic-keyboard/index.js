@@ -5,6 +5,7 @@ export default {
   instruments: [
     {
       id: 'jammer',
+      sortKey: '301_jammer',
       name: 'Jammer',
       description:
         'A isomorphic keyboard with the Jammer (Wicki-Hayden) key layout.',
@@ -14,6 +15,7 @@ export default {
     },
     {
       id: 'sonome',
+      sortKey: '302_sonome',
       name: 'Sonome',
       description:
         'A isomorphic keyboard with the Sonome (harmonic table) key layout.',

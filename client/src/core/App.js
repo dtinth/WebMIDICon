@@ -5,6 +5,7 @@ import Keyboard from './Keyboard'
 import React from 'react'
 import { observer } from 'mobx-react'
 import styled from 'react-emotion'
+import { sortBy } from 'lodash'
 
 const MIDISettings = styled('button')`
   height: 30px;
@@ -61,7 +62,10 @@ const AppContent = styled('div')`
 `
 
 export function App({ features }) {
-  const instruments = [].concat(...features.map(f => f.instruments || []))
+  const instruments = sortBy(
+    [].concat(...features.map(f => f.instruments || [])),
+    'sortKey'
+  )
   console.log('Loaded instruments:', instruments)
   return (
     <Wrapper>

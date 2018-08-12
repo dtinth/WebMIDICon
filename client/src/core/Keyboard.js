@@ -18,20 +18,28 @@ const KeyboardMenu = styled('ul')`
 
 const KeyboardMenuItem = styled('li')`
   flex-basis: 48%;
+  display: flex;
+  flex-direction: column;
 `
 
 const KeyboardMenuLink = styled('a')`
+  flex: 1;
   color: #e9e8e7;
   display: block;
-  background: #090807;
+  background: #252423;
   margin: 0.5em;
   padding: 0.5em;
   border: 2px solid #555453;
   text-align: left;
   text-decoration: none;
+  box-shadow: 4px 4px 0 #090807;
+  &:hover {
+    transform: scale(1.025);
+  }
   & > h2 {
     margin: 0;
     font-size: 1.5em;
+    color: #d7fc70;
   }
   & > p {
     margin: 0.5em 0 0;
