@@ -1,7 +1,6 @@
 import './App.css'
 
 import * as MIDI from './MIDI'
-
 import Keyboard from './Keyboard'
 import React from 'react'
 import { observer } from 'mobx-react'
@@ -61,7 +60,9 @@ const AppContent = styled('div')`
   left: 0;
 `
 
-export function App() {
+export function App({ features }) {
+  const instruments = [].concat(...features.map(f => f.instruments || []))
+  console.log('Loaded instruments:', instruments)
   return (
     <Wrapper>
       <Header>
@@ -71,7 +72,7 @@ export function App() {
         </HeaderRight>
       </Header>
       <AppContent>
-        <Keyboard />
+        <Keyboard instruments={instruments} />
       </AppContent>
     </Wrapper>
   )
@@ -146,5 +147,3 @@ const MIDIStatus = observer(
     }
   }
 )
-
-export default App

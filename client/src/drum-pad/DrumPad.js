@@ -1,4 +1,4 @@
-import * as MIDI from './MIDI'
+import { MIDI } from '../core'
 
 import React from 'react'
 
@@ -163,5 +163,3 @@ const DrumButton = class DrumButton extends React.PureComponent {
     }, 50)
   }
 }
-
-export default DrumPad

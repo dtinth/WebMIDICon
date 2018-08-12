@@ -1,11 +1,6 @@
 import * as MIDI from './MIDI'
 
-import BeginnerChordMachine from './BeginnerChordMachine'
-import DrumPad from './DrumPad'
-import IsomorphicKeyboard from './IsomorphicKeyboard'
 import KeyboardToolbar from './KeyboardToolbar'
-import Pedal from './Pedal'
-import PianoKeyboard from './PianoKeyboard'
 import React from 'react'
 import createStore from './createStore'
 import { getHash } from './Hash'
@@ -78,32 +73,30 @@ export const Keyboard = observer(
     }
     renderContent() {
       const hash = getHash()
-      switch (hash) {
-        case '#piano':
-          return <PianoKeyboard store={this.store} />
-        case '#harmonic':
-          return <IsomorphicKeyboard type="harmonic" store={this.store} />
-        case '#jammer':
-          return <IsomorphicKeyboard type="jammer" store={this.store} />
-        case '#pedal':
-          return <Pedal />
-        case '#drums':
-          return <DrumPad />
-        case '#beginner':
-          return <BeginnerChordMachine store={this.store} />
-        default:
-          return (
-            <KeyboardMenu>
-              {this.renderMenuItem('#piano', 'Piano')}
-              {this.renderMenuItem('#harmonic', 'Harmonic')}
-              {this.renderMenuItem('#jammer', 'Jammer')}
-              {this.renderMenuItem('#drums', 'Drums')}
-              {this.renderMenuItem('#pedal', 'iPedal')}
-            </KeyboardMenu>
-          )
+      const found = this.props.instruments.filter(
+        instrument => hash === `#${instrument.id}`
+      )[0]
+      if (found) {
+        const Component = found.component
+        console.log('Conpnent found', found)
+        return <Component store={this.store} />
       }
+      console.log('Conpnent not found')
+      return (
+        <KeyboardMenu>
+          {this.props.instruments.map(instrument => (
+            <React.Fragment key={instrument.id}>
+              {this.renderMenuItem(
+                `#${instrument.id}`,
+                instrument.name,
+                instrument.description
+              )}
+            </React.Fragment>
+          ))}
+        </KeyboardMenu>
+      )
     }
-    renderMenuItem(href, text) {
+    renderMenuItem(href, text, description) {
       return (
         <KeyboardMenuItem>
           <KeyboardMenuLink href={href}>{text}</KeyboardMenuLink>

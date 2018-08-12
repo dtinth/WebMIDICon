@@ -223,5 +223,3 @@ const Circle = observer(
     }
   }
 )
-
-export default BeginnerChordMachine

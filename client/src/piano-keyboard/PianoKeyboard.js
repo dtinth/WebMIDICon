@@ -191,5 +191,3 @@ const Key = observer(
 function percent(x) {
   return (x * 100).toFixed(6) + '%'
 }
-
-export default PianoKeyboard
