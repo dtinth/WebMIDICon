@@ -13,19 +13,28 @@ export class MainView extends React.Component {
     this.store = createStore()
   }
   componentDidMount() {
-    window.addEventListener('keydown', this.handleKeyDown)
-    window.addEventListener('keyup', this.handleKeyUp)
+    window.addEventListener('keydown', this.handleGlobalKeyDown, false)
   }
   componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleKeyDown)
-    window.removeEventListener('keyup', this.handleKeyUp)
+    window.removeEventListener('keydown', this.handleGlobalKeyDown, false)
+  }
+  handleGlobalKeyDown = e => {
+    if (e.keyCode === 13) {
+      if (this.mainContent) this.mainContent.focus()
+    }
   }
   handleKeyDown = e => {
     if (e.metaKey || e.ctrlKey || e.altKey) return
+    e.stopPropagation()
+    if (e.keyCode === 13) {
+      if (this.mainContent) this.mainContent.blur()
+      return
+    }
     this.store.handleKeyDown(e.keyCode)
     e.preventDefault()
   }
   handleKeyUp = e => {
+    e.stopPropagation()
     this.store.handleKeyUp(e.keyCode)
     e.preventDefault()
   }
@@ -81,7 +90,14 @@ export class MainView extends React.Component {
         <MainToolbarWrapper>
           <MainToolbar store={this.store} />
         </MainToolbarWrapper>
-        <MainContent>{this.renderContent()}</MainContent>
+        <MainContent
+          tabIndex={0}
+          onKeyDown={this.handleKeyDown}
+          onKeyUp={this.handleKeyUp}
+          innerRef={element => (this.mainContent = element)}
+        >
+          {this.renderContent()}
+        </MainContent>
         <Observer>
           {() => (
             <MIDIEmitter
@@ -110,6 +126,10 @@ const MainContent = styled('div')`
   right: 0;
   bottom: 0;
   left: 0;
+  &:focus {
+    outline: none;
+    box-shadow: inset 0 0 0 2px #656463;
+  }
 `
 
 const MainMenu = styled('ul')`
