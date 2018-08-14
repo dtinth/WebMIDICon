@@ -7,11 +7,12 @@ import styled from 'react-emotion'
 import { Switch, Route } from 'react-router-dom'
 import { Observer } from 'mobx-react'
 import { sortBy } from 'lodash'
+import FeatureList from './FeatureList'
 
 export class MainView extends React.Component {
   constructor(props) {
     super(props)
-    const {features}=props
+    const { features } = props
     this.store = createStore(features)
     const instruments = sortBy(
       [].concat(...features.map(f => f.instruments || [])),
@@ -68,17 +69,20 @@ export class MainView extends React.Component {
   }
   renderMainMenu() {
     return (
-      <MainMenu>
-        {this.instruments.map(instrument => (
-          <React.Fragment key={instrument.id}>
-            {this.renderMenuItem(
-              `#/${instrument.id}`,
-              instrument.name,
-              instrument.description
-            )}
-          </React.Fragment>
-        ))}
-      </MainMenu>
+      <ScrollView>
+        <MainMenu>
+          {this.instruments.map(instrument => (
+            <React.Fragment key={instrument.id}>
+              {this.renderMenuItem(
+                `#/${instrument.id}`,
+                instrument.name,
+                instrument.description
+              )}
+            </React.Fragment>
+          ))}
+        </MainMenu>
+        <FeatureList features={this.props.features} />
+      </ScrollView>
     )
   }
 
@@ -176,11 +180,21 @@ const MainMenuLink = styled('a')`
   & > h2 {
     margin: 0;
     font-size: 1.5em;
-    color: #d7fc70;
+    color: #bef;
   }
   & > p {
     margin: 0.5em 0 0;
   }
+`
+
+const ScrollView = styled('div')`
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 `
 
 class MIDIEmitter extends React.Component {
