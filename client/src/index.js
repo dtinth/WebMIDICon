@@ -12,8 +12,8 @@ const featureModules = [
   require('./drum-pad'),
   require('./isomorphic-keyboard'),
   require('./piano-keyboard'),
-  require('./touch-screen-pedal'),
   require('./midi-keybindings'),
+  require('./touch-pedal'),
   require('./joypedal'),
 ]
 

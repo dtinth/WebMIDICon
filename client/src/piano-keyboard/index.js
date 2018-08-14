@@ -1,6 +1,9 @@
 import { PianoKeyboard } from './PianoKeyboard'
 
 export default {
+  name: 'piano-keyboard',
+  category: 'instruments',
+  description: 'A touchscreen piano keyboard.',
   instruments: [
     {
       id: 'piano',

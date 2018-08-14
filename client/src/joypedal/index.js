@@ -24,4 +24,9 @@ function updateGamepads() {
 
 setInterval(updateGamepads, 16)
 
-export default {}
+export default {
+  name: 'joypedal',
+  category: 'addons',
+  description:
+    'Press button 10 or 11 on any connected gamepad to activate the pedal. These buttons correspond to the analog buttons on a DualShock controller.',
+}

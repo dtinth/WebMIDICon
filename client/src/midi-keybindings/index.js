@@ -6,6 +6,11 @@ const state = observable({
 })
 
 export default {
+  name: 'midi-keybindings',
+  category: 'addons',
+  description:
+    'Play notes with your QWERTY keyboard. Supports 3 octaves. ' +
+    'Use Left/Right to transpose, Up/Down to change octave, Space to hold the pedal, and Esc-F12 to set a key.',
   onKeyDown(store, { keyCode }) {
     {
       const index = transposeKeys.indexOf(keyCode)

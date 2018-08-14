@@ -2,6 +2,11 @@ import { IsomorphicKeyboard } from './IsomorphicKeyboard'
 import React from 'react'
 
 export default {
+  name: 'isomorphic-keyboard',
+  category: 'instruments',
+  description:
+    'An isomorphic keyboard where each button has an consistent interval with adjacent keys. ' +
+    'To learn more, see [Isomorphic keyboards](http://www.altkeyboards.com/instruments/isomorphic-keyboards).',
   instruments: [
     {
       id: 'jammer',
