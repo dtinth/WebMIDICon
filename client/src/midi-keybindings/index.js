@@ -1,3 +1,4 @@
+import { MIDI } from '../core'
 import { observable } from 'mobx'
 
 const state = observable({
@@ -12,6 +13,10 @@ export default {
         store.setTranspose(index - 6)
         return
       }
+    }
+    if (keyCode === 32) {
+      MIDI.send([0xb0, 0x40, 127])
+      return
     }
     if (keyCode === 37) {
       store.setTranspose(store.transpose - 1)
@@ -32,6 +37,10 @@ export default {
     state.keyCodes.set(keyCode, true)
   },
   onKeyUp(store, { keyCode }) {
+    if (keyCode === 32) {
+      MIDI.send([0xb0, 0x40, 0])
+      return
+    }
     state.keyCodes.delete(keyCode)
   },
   getActiveNotes() {
