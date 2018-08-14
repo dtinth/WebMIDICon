@@ -2,75 +2,12 @@
 
 import { action, observable } from 'mobx'
 
-const transposeKeys = [
-  27,
-  112,
-  113,
-  114,
-  115,
-  116,
-  117,
-  118,
-  119,
-  120,
-  121,
-  122,
-  123,
-]
-const firstRow = [
-  16,
-  90,
-  83,
-  88,
-  68,
-  67,
-  86,
-  71,
-  66,
-  72,
-  78,
-  74,
-  77,
-  188,
-  76,
-  190,
-  186,
-  191,
-]
-const secondRow = [
-  192,
-  9,
-  81,
-  50,
-  87,
-  51,
-  69,
-  82,
-  53,
-  84,
-  54,
-  89,
-  55,
-  85,
-  73,
-  57,
-  79,
-  48,
-  80,
-  219,
-  187,
-  221,
-  8,
-  220,
-  45,
-  46,
-  35,
-]
-
-export function createStore() {
+export function createStore(features) {
+  const keyDownHandlers = features.map(f => f.onKeyDown).filter(fn => fn)
+  const keyUpHandlers = features.map(f => f.onKeyUp).filter(fn => fn)
+  const activeNoteProviders = features.map(f => f.getActiveNotes).filter(fn => fn)
   const store = observable({
     touches: [],
-    keyCodes: observable.map({}),
     transpose: 0,
     octave: 3,
     setTranspose: action('setTranspose', transpose => {
@@ -92,54 +29,22 @@ export function createStore() {
     handleTouches: action('updateTouches', touches => {
       store.touches = touches
     }),
-    handleKeyDown: action('handleKeyDown', keyCode => {
-      {
-        const index = transposeKeys.indexOf(keyCode)
-        if (index > -1) {
-          store.setTranspose(index - 6)
-          return
-        }
-      }
-      if (keyCode === 37) {
-        store.setTranspose(store.transpose - 1)
-        return
-      }
-      if (keyCode === 38) {
-        store.setOctave(store.octave + 1)
-        return
-      }
-      if (keyCode === 39) {
-        store.setTranspose(store.transpose + 1)
-        return
-      }
-      if (keyCode === 40) {
-        store.setOctave(store.octave - 1)
-        return
-      }
-      store.keyCodes.set(keyCode, true)
+    handleKeyDown: action('handleKeyDown', e => {
+      keyDownHandlers.forEach(handler => handler(store, e))
     }),
-    handleKeyUp: action('handleKeyUp', keyCode => {
-      store.keyCodes.delete(keyCode)
+    handleKeyUp: action('handleKeyUp', e => {
+      keyUpHandlers.forEach(handler => handler(store, e))
     }),
     get activeNotes() {
       const set = new Set()
       for (const key of store.touches) {
         set.add(key)
       }
-      for (const keyCode of store.keyCodes.keys()) {
-        {
-          const index = firstRow.indexOf(+keyCode)
-          if (index > -1) {
-            set.add(index + 11)
-          }
+      activeNoteProviders.forEach(provider => {
+        for (const key of provider()) {
+          set.add(key)
         }
-        {
-          const index = secondRow.indexOf(+keyCode)
-          if (index > -1) {
-            set.add(index + 22)
-          }
-        }
-      }
+      })
       return set
     },
   })

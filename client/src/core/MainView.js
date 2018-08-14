@@ -6,11 +6,19 @@ import createStore from './createStore'
 import styled from 'react-emotion'
 import { Switch, Route } from 'react-router-dom'
 import { Observer } from 'mobx-react'
+import { sortBy } from 'lodash'
 
 export class MainView extends React.Component {
   constructor(props) {
     super(props)
-    this.store = createStore()
+    const {features}=props
+    this.store = createStore(features)
+    const instruments = sortBy(
+      [].concat(...features.map(f => f.instruments || [])),
+      'sortKey'
+    )
+    console.log('Loaded instruments:', instruments)
+    this.instruments = instruments
   }
   componentDidMount() {
     window.addEventListener('keydown', this.handleGlobalKeyDown, false)
@@ -30,18 +38,18 @@ export class MainView extends React.Component {
       if (this.toolbarElement) this.toolbarElement.focus()
       return
     }
-    this.store.handleKeyDown(e.keyCode)
+    this.store.handleKeyDown(e.nativeEvent)
     e.preventDefault()
   }
   handleKeyUp = e => {
     e.stopPropagation()
-    this.store.handleKeyUp(e.keyCode)
+    this.store.handleKeyUp(e.nativeEvent)
     e.preventDefault()
   }
   renderContent() {
     return (
       <Switch>
-        {this.props.instruments
+        {this.instruments
           .map(instrument => {
             const Component = instrument.component
             return (
@@ -61,7 +69,7 @@ export class MainView extends React.Component {
   renderMainMenu() {
     return (
       <MainMenu>
-        {this.props.instruments.map(instrument => (
+        {this.instruments.map(instrument => (
           <React.Fragment key={instrument.id}>
             {this.renderMenuItem(
               `#/${instrument.id}`,
@@ -84,6 +92,7 @@ export class MainView extends React.Component {
       </MainMenuItem>
     )
   }
+
   render() {
     return (
       <div>

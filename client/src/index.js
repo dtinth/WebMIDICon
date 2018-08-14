@@ -13,6 +13,7 @@ const featureModules = [
   require('./isomorphic-keyboard'),
   require('./piano-keyboard'),
   require('./touch-screen-pedal'),
+  require('./midi-keybindings'),
 ]
 
 const features = featureModules.map(m => m.default)

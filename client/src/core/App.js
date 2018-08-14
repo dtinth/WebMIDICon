@@ -5,7 +5,6 @@ import MainView from './MainView'
 import React from 'react'
 import { observer } from 'mobx-react'
 import styled from 'react-emotion'
-import { sortBy } from 'lodash'
 import { HashRouter } from 'react-router-dom'
 
 const MIDISettings = styled('button')`
@@ -63,11 +62,6 @@ const AppContent = styled('div')`
 `
 
 export function App({ features }) {
-  const instruments = sortBy(
-    [].concat(...features.map(f => f.instruments || [])),
-    'sortKey'
-  )
-  console.log('Loaded instruments:', instruments)
   return (
     <HashRouter>
       <Wrapper>
@@ -78,7 +72,7 @@ export function App({ features }) {
           </HeaderRight>
         </Header>
         <AppContent>
-          <MainView instruments={instruments} />
+          <MainView features={features} />
         </AppContent>
       </Wrapper>
     </HashRouter>
