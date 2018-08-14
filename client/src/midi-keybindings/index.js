@@ -5,7 +5,7 @@ const state = observable({
 })
 
 export default {
-  onKeyDown(store, {keyCode}) {
+  onKeyDown(store, { keyCode }) {
     {
       const index = transposeKeys.indexOf(keyCode)
       if (index > -1) {
@@ -31,7 +31,7 @@ export default {
     }
     state.keyCodes.set(keyCode, true)
   },
-  onKeyUp(store, {keyCode}) {
+  onKeyUp(store, { keyCode }) {
     state.keyCodes.delete(keyCode)
   },
   getActiveNotes() {
@@ -47,7 +47,7 @@ export default {
       }
     }
     return notes
-  }
+  },
 }
 
 const transposeKeys = [

@@ -5,7 +5,9 @@ import { action, observable } from 'mobx'
 export function createStore(features) {
   const keyDownHandlers = features.map(f => f.onKeyDown).filter(fn => fn)
   const keyUpHandlers = features.map(f => f.onKeyUp).filter(fn => fn)
-  const activeNoteProviders = features.map(f => f.getActiveNotes).filter(fn => fn)
+  const activeNoteProviders = features
+    .map(f => f.getActiveNotes)
+    .filter(fn => fn)
   const store = observable({
     touches: [],
     transpose: 0,
