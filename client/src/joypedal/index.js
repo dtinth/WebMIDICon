@@ -5,7 +5,7 @@ function updateGamepads() {
   let down = false
   for (const gamepad of navigator.getGamepads()) {
     if (!gamepad) continue
-    for (let i = 10; i <= 11; i++) {
+    for (const i of [10, 11]) {
       if (gamepad.buttons[i] && gamepad.buttons[i].pressed) {
         down = true
       }
