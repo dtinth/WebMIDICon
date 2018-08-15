@@ -1,11 +1,11 @@
 import './App.css'
 
 import * as MIDI from './MIDI'
-
-import Keyboard from './Keyboard'
+import MainView from './MainView'
 import React from 'react'
 import { observer } from 'mobx-react'
 import styled from 'react-emotion'
+import { HashRouter } from 'react-router-dom'
 
 const MIDISettings = styled('button')`
   height: 30px;
@@ -61,19 +61,21 @@ const AppContent = styled('div')`
   left: 0;
 `
 
-export function App() {
+export function App({ features }) {
   return (
-    <Wrapper>
-      <Header>
-        <HeaderTitle>my web based instruments</HeaderTitle>
-        <HeaderRight>
-          <MIDIStatus />
-        </HeaderRight>
-      </Header>
-      <AppContent>
-        <Keyboard />
-      </AppContent>
-    </Wrapper>
+    <HashRouter>
+      <Wrapper>
+        <Header>
+          <HeaderTitle>my web based instruments</HeaderTitle>
+          <HeaderRight>
+            <MIDIStatus />
+          </HeaderRight>
+        </Header>
+        <AppContent>
+          <MainView features={features} />
+        </AppContent>
+      </Wrapper>
+    </HashRouter>
   )
 }
 
@@ -146,5 +148,3 @@ const MIDIStatus = observer(
     }
   }
 )
-
-export default App

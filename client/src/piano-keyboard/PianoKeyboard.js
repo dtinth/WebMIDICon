@@ -160,7 +160,7 @@ export class Octave extends React.Component {
 }
 
 const Key = observer(
-  class Key extends React.PureComponent {
+  class Key extends React.Component {
     constructor(props) {
       super(props)
       this.isTouched = computed(() =>
@@ -191,5 +191,3 @@ const Key = observer(
 function percent(x) {
   return (x * 100).toFixed(6) + '%'
 }
-
-export default PianoKeyboard

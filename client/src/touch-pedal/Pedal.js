@@ -1,8 +1,8 @@
-import * as MIDI from './MIDI'
+import { MIDI } from '../core'
 
 import React from 'react'
 
-export class DrumPad extends React.PureComponent {
+export class Pedal extends React.PureComponent {
   render() {
     return (
       <div
@@ -55,5 +55,3 @@ export class DrumPad extends React.PureComponent {
     e.preventDefault()
   }
 }
-
-export default DrumPad
