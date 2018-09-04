@@ -33,6 +33,13 @@ export class MainView extends React.Component {
     }
   }
   handleKeyDown = e => {
+    if (e.metaKey) {
+      if (e.keyCode >= 0x30 && e.keyCode <= 0x39) {
+        MIDI.send([0xc0, e.keyCode === 0x30 ? 9 : e.keyCode - 0x31])
+        e.preventDefault()
+        return
+      }
+    }
     if (e.metaKey || e.ctrlKey || e.altKey) return
     e.stopPropagation()
     if (e.keyCode === 13) {

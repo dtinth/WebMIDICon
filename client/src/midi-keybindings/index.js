@@ -6,6 +6,14 @@ const state = observable({
 })
 
 function getKeyCode(event) {
+  // macOS does not support the PC "Insert" key.
+  // You can use Karabiner to remap "Insert" key into "PrintScreen" key.
+  if (event.keyCode === 124) {
+    return 45
+  }
+
+  // Add 1000 to keyCode if on the right side.
+  // This allows us to distinguish RShift from LShift.
   return (event.location === 2 ? 1000 : 0) + event.keyCode
 }
 
