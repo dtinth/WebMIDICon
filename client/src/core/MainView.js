@@ -33,6 +33,13 @@ export class MainView extends React.Component {
     }
   }
   handleKeyDown = e => {
+    if (e.metaKey) {
+      if (e.keyCode >= 0x30 && e.keyCode <= 0x39) {
+        MIDI.send([0xc0, e.keyCode === 0x30 ? 9 : e.keyCode - 0x31])
+        e.preventDefault()
+        return
+      }
+    }
     if (e.metaKey || e.ctrlKey || e.altKey) return
     e.stopPropagation()
     if (e.keyCode === 13) {
@@ -47,6 +54,18 @@ export class MainView extends React.Component {
     this.store.handleKeyUp(e.nativeEvent)
     e.preventDefault()
   }
+  handleClick = e => {
+    setTimeout(() => {
+      if (!this.contentElement) return
+      if (
+        !document.activeElement ||
+        !this.contentElement.contains(document.activeElement)
+      ) {
+        this.contentElement.focus()
+      }
+    })
+  }
+
   renderContent() {
     return (
       <Switch>
@@ -70,6 +89,13 @@ export class MainView extends React.Component {
   renderMainMenu() {
     return (
       <ScrollView>
+        <Observer>
+          {() => (
+            <React.Fragment>
+              {MIDI.isNewWindowRequired() && <NewWindowRequired />}
+            </React.Fragment>
+          )}
+        </Observer>
         <MainMenu>
           {this.instruments.map(instrument => (
             <React.Fragment key={instrument.id}>
@@ -108,6 +134,7 @@ export class MainView extends React.Component {
         </MainToolbarWrapper>
         <MainContent
           tabIndex={0}
+          onClick={this.handleClick}
           onKeyDown={this.handleKeyDown}
           onKeyUp={this.handleKeyUp}
           innerRef={element => (this.contentElement = element)}
@@ -120,6 +147,7 @@ export class MainView extends React.Component {
               activeNotes={this.store.activeNotes}
               transpose={this.store.transpose}
               octave={this.store.octave}
+              velocity={this.store.noteVelocity}
             />
           )}
         </Observer>
@@ -208,14 +236,15 @@ class MIDIEmitter extends React.Component {
     for (const note of activeNotes) {
       if (!currentNotes.has(note)) {
         const midiNote = note + props.transpose + props.octave * 12
-        MIDI.send([0x90, midiNote, 0x60])
-        currentNotes.set(note, { midiNote })
+        const velocity = props.velocity
+        MIDI.send([0x90, midiNote, velocity])
+        currentNotes.set(note, { midiNote, velocity })
       }
     }
     for (const note of currentNotes.keys()) {
       if (!activeNotes.has(note)) {
         const data = currentNotes.get(note)
-        MIDI.send([0x80, data.midiNote, 0x60])
+        MIDI.send([0x80, data.midiNote, data.velocity])
         currentNotes.delete(note)
       }
     }
@@ -230,5 +259,28 @@ class MIDIEmitter extends React.Component {
     return null
   }
 }
+
+function NewWindowRequired() {
+  return (
+    <div style={{ margin: '1em auto', width: '96%' }}>
+      <ErrorMessage>
+        <strong>MIDI is not available in CodeSandbox Preview.</strong>
+        <br />
+        Please click “Open in New Window” button to use this app.
+      </ErrorMessage>
+    </div>
+  )
+}
+
+const ErrorMessage = styled('a')`
+  display: block;
+  margin: 0.5em;
+  padding: 0.5em;
+  background: #422;
+  border: 2px solid #c66;
+  color: #e9e8e7;
+  text-decoration: none;
+  box-shadow: 4px 4px 0 #090807;
+`
 
 export default MainView

@@ -12,6 +12,7 @@ export function createStore(features) {
     touches: [],
     transpose: 0,
     octave: 3,
+    noteVelocity: 0x60,
     setTranspose: action('setTranspose', transpose => {
       let octave = store.octave
       while (transpose > 6) {

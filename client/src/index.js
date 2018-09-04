@@ -3,9 +3,14 @@ import ReactDOM from 'react-dom'
 
 import { App } from './core'
 
-const main = document.createElement('div')
-main.id = 'main'
-document.body.appendChild(main)
+const main = (() => {
+  const existing = document.getElementById('main')
+  if (existing) return existing
+  const div = document.createElement('div')
+  div.id = 'main'
+  document.body.appendChild(div)
+  return div
+})()
 
 const featureModules = [
   require('./beginner-chord-machine'),

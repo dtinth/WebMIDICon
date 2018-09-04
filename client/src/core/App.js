@@ -66,7 +66,21 @@ export function App({ features }) {
     <HashRouter>
       <Wrapper>
         <Header>
-          <HeaderTitle>my web based instruments</HeaderTitle>
+          <HeaderTitle>
+            my web based instruments{' — '}
+            {!window.location.hostname.match(/codesandbox\.io$/) && (
+              <a
+                style={{
+                  color: '#ffb',
+                  textDecoration: 'none',
+                  fontWeight: 'normal',
+                }}
+                href="https://codesandbox.io/s/github/dtinth/midi-instruments/tree/master/client"
+              >
+                hack on this project using CodeSandbox
+              </a>
+            )}
+          </HeaderTitle>
           <HeaderRight>
             <MIDIStatus />
           </HeaderRight>

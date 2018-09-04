@@ -5,13 +5,26 @@ const state = observable({
   keyCodes: observable.map({}),
 })
 
+function getKeyCode(event) {
+  // macOS does not support the PC "Insert" key.
+  // You can use Karabiner to remap "Insert" key into "PrintScreen" key.
+  if (event.keyCode === 124) {
+    return 45
+  }
+
+  // Add 1000 to keyCode if on the right side.
+  // This allows us to distinguish RShift from LShift.
+  return (event.location === 2 ? 1000 : 0) + event.keyCode
+}
+
 export default {
   name: 'midi-keybindings',
   category: 'addons',
   description:
     'Play notes with your QWERTY keyboard. Supports 3 octaves. ' +
     'Use Left/Right to transpose, Up/Down to change octave, Space to hold the pedal, and Esc-F12 to set a key.',
-  onKeyDown(store, { keyCode }) {
+  onKeyDown(store, event) {
+    const keyCode = getKeyCode(event)
     {
       const index = transposeKeys.indexOf(keyCode)
       if (index > -1) {
@@ -41,7 +54,8 @@ export default {
     }
     state.keyCodes.set(keyCode, true)
   },
-  onKeyUp(store, { keyCode }) {
+  onKeyUp(store, event) {
+    const keyCode = getKeyCode(event)
     if (keyCode === 32) {
       MIDI.send([0xb0, 0x40, 0])
       return
@@ -99,6 +113,7 @@ const firstRow = [
   190,
   186,
   191,
+  1016,
 ]
 
 const secondRow = [
@@ -129,4 +144,7 @@ const secondRow = [
   45,
   46,
   35,
+  36,
+  34,
+  33,
 ]
