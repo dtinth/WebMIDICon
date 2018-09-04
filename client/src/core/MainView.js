@@ -140,6 +140,7 @@ export class MainView extends React.Component {
               activeNotes={this.store.activeNotes}
               transpose={this.store.transpose}
               octave={this.store.octave}
+              velocity={this.store.noteVelocity}
             />
           )}
         </Observer>
@@ -228,14 +229,15 @@ class MIDIEmitter extends React.Component {
     for (const note of activeNotes) {
       if (!currentNotes.has(note)) {
         const midiNote = note + props.transpose + props.octave * 12
-        MIDI.send([0x90, midiNote, 0x60])
-        currentNotes.set(note, { midiNote })
+        const velocity = props.velocity
+        MIDI.send([0x90, midiNote, velocity])
+        currentNotes.set(note, { midiNote, velocity })
       }
     }
     for (const note of currentNotes.keys()) {
       if (!activeNotes.has(note)) {
         const data = currentNotes.get(note)
-        MIDI.send([0x80, data.midiNote, 0x60])
+        MIDI.send([0x80, data.midiNote, data.velocity])
         currentNotes.delete(note)
       }
     }
