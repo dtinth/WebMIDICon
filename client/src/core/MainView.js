@@ -47,6 +47,18 @@ export class MainView extends React.Component {
     this.store.handleKeyUp(e.nativeEvent)
     e.preventDefault()
   }
+  handleClick = e => {
+    setTimeout(() => {
+      if (!this.contentElement) return
+      if (
+        !document.activeElement ||
+        !this.contentElement.contains(document.activeElement)
+      ) {
+        this.contentElement.focus()
+      }
+    })
+  }
+
   renderContent() {
     return (
       <Switch>
@@ -115,6 +127,7 @@ export class MainView extends React.Component {
         </MainToolbarWrapper>
         <MainContent
           tabIndex={0}
+          onClick={this.handleClick}
           onKeyDown={this.handleKeyDown}
           onKeyUp={this.handleKeyUp}
           innerRef={element => (this.contentElement = element)}
