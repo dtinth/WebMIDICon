@@ -4,10 +4,15 @@ const store = observable({
   status: 'Initializing MIDI system',
   outputs: [],
   selectedOutputKey: null,
+  requiresNewWindow: false,
 })
 
 export function getStatus() {
   return store.status
+}
+
+export function isNewWindowRequired() {
+  return store.requiresNewWindow
 }
 
 export function getOutputs() {
@@ -29,6 +34,12 @@ export const selectOutput = action('selectOutput', outputKey => {
 
 const setStatus = action('setStatus', status => {
   store.status = status
+})
+
+const requireNewWindow = action('requireNewWindow', () => {
+  store.status =
+    'MIDI not available in CodeSandbox preview, please Open in New Window'
+  store.requiresNewWindow = true
 })
 
 const handleAvailableOutputs = action('handleAvailableOutputs', outputs => {
@@ -95,7 +106,14 @@ function init() {
         access.onstatechange = () => onStateChange(access)
       },
       e => {
-        setStatus('MIDI cannot request!! ' + e)
+        if (
+          String(e).match(/^SecurityError:/) &&
+          window.location.hostname.match(/\.codesandbox\.io$/)
+        ) {
+          requireNewWindow()
+        } else {
+          setStatus('Failed to request MIDI access! ' + e)
+        }
       }
     )
   } else if (

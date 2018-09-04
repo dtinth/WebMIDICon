@@ -70,6 +70,13 @@ export class MainView extends React.Component {
   renderMainMenu() {
     return (
       <ScrollView>
+        <Observer>
+          {() => (
+            <React.Fragment>
+              {MIDI.isNewWindowRequired() && <NewWindowRequired />}
+            </React.Fragment>
+          )}
+        </Observer>
         <MainMenu>
           {this.instruments.map(instrument => (
             <React.Fragment key={instrument.id}>
@@ -230,5 +237,28 @@ class MIDIEmitter extends React.Component {
     return null
   }
 }
+
+function NewWindowRequired() {
+  return (
+    <div style={{ margin: '1em auto', width: '96%' }}>
+      <ErrorMessage>
+        <strong>MIDI is not available in CodeSandbox Preview.</strong>
+        <br />
+        Please click “Open in New Window” button to use this app.
+      </ErrorMessage>
+    </div>
+  )
+}
+
+const ErrorMessage = styled('a')`
+  display: block;
+  margin: 0.5em;
+  padding: 0.5em;
+  background: #422;
+  border: 2px solid #c66;
+  color: #e9e8e7;
+  text-decoration: none;
+  box-shadow: 4px 4px 0 #090807;
+`
 
 export default MainView
