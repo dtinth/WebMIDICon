@@ -27,11 +27,6 @@ jobs:
           cd client
           yarn lint
     - run:
-        name: check coding style
-        command: |
-          cd client
-          yarn prettier
-    - run:
         name: build
         command: |
           cd client
