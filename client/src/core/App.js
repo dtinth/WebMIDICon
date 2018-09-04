@@ -77,7 +77,7 @@ export function App({ features }) {
                 }}
                 href="https://codesandbox.io/s/github/dtinth/midi-instruments/tree/master/client"
               >
-                edit this project on CodeSandbox
+                hack on this project using CodeSandbox
               </a>
             )}
           </HeaderTitle>
