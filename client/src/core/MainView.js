@@ -42,7 +42,7 @@ export class MainView extends React.Component {
     }
     if (e.metaKey || e.ctrlKey || e.altKey) return
     e.stopPropagation()
-    if (e.keyCode === 13) {
+    if (e.keyCode === 27) {
       if (this.toolbarElement) this.toolbarElement.focus()
       return
     }
