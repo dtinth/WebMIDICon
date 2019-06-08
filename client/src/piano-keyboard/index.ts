@@ -1,6 +1,7 @@
 import { PianoKeyboard } from './PianoKeyboard'
+import { createFeature } from '../core'
 
-export default {
+export default createFeature({
   name: 'piano-keyboard',
   category: 'instruments',
   description: 'A touchscreen piano keyboard.',
@@ -13,4 +14,4 @@ export default {
       component: PianoKeyboard,
     },
   ],
-}
+})

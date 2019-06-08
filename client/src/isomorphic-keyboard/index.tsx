@@ -1,7 +1,8 @@
 import { IsomorphicKeyboard } from './IsomorphicKeyboard'
 import React from 'react'
+import { createFeature } from '../core'
 
-export default {
+export default createFeature({
   name: 'isomorphic-keyboard',
   category: 'instruments',
   description:
@@ -29,4 +30,4 @@ export default {
       ),
     },
   ],
-}
+})

@@ -1,6 +1,7 @@
 import { BeginnerChordMachine } from './BeginnerChordMachine'
+import { createFeature } from '../core'
 
-export default {
+export default createFeature({
   name: 'beginner-chord-machine',
   category: 'instruments',
   description:
@@ -14,4 +15,4 @@ export default {
       component: BeginnerChordMachine,
     },
   ],
-}
+})
