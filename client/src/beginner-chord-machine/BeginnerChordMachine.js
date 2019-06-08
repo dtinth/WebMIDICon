@@ -1,6 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import styled from 'react-emotion'
+import { TouchAbsorber } from '../core/TouchAbsorber'
 
 const noteNames = [
   'C',
@@ -26,85 +27,84 @@ export class BeginnerChordMachine extends React.PureComponent {
   render() {
     const store = this.props.store
     return (
-      <div
-        className="BeginnerChordMachine"
-        onTouchStart={cancelEvent}
-        onTouchMove={cancelEvent}
-        onTouchEnd={cancelEvent}
-        style={{ left: 0, top: 0, bottom: 0, right: 0, position: 'absolute' }}
-      >
-        <div style={{ left: '50%', top: '50%', position: 'absolute' }}>
-          <KeyIndicator store={store} />
-          <Circle
-            store={store}
-            v={[0, 16, 19]}
-            n={1}
-            x={-2}
-            y={1}
-            text="I"
-            fn="tonic"
-            q=""
-          />
-          <Circle
-            store={store}
-            v={[2, 17, 21]}
-            n={2}
-            x={0}
-            y={1}
-            text="ii"
-            fn="subdominant"
-            q="m"
-          />
-          <Circle
-            store={store}
-            v={[4, 19, 23]}
-            n={3}
-            x={2}
-            y={1}
-            text="iii"
-            fn="tonic"
-            q="m"
-          />
-          <Circle
-            store={store}
-            v={[5, 12, 21]}
-            n={4}
-            x={-3}
-            y={-1}
-            text="IV"
-            fn="subdominant"
-          />
-          <Circle
-            store={store}
-            v={[7, 14, 23]}
-            n={5}
-            x={-1}
-            y={-1}
-            text="V"
-            fn="dominant"
-          />
-          <Circle
-            store={store}
-            v={[9, 16, 24]}
-            n={6}
-            x={1}
-            y={-1}
-            text="vi"
-            fn="tonic"
-            q="m"
-          />
-          <Circle
-            store={store}
-            v={[-1, 14, 17]}
-            n={7}
-            x={3}
-            y={-1}
-            text="vii°"
-            fn="dominant"
-            q="dim"
-          />
+      <TouchAbsorber>
+        <div
+          className="BeginnerChordMachine"
+          style={{ left: 0, top: 0, bottom: 0, right: 0, position: 'absolute' }}
+        >
+          <div style={{ left: '50%', top: '50%', position: 'absolute' }}>
+            <KeyIndicator store={store} />
+            <Circle
+              store={store}
+              v={[0, 16, 19]}
+              n={1}
+              x={-2}
+              y={1}
+              text="I"
+              fn="tonic"
+              q=""
+            />
+            <Circle
+              store={store}
+              v={[2, 17, 21]}
+              n={2}
+              x={0}
+              y={1}
+              text="ii"
+              fn="subdominant"
+              q="m"
+            />
+            <Circle
+              store={store}
+              v={[4, 19, 23]}
+              n={3}
+              x={2}
+              y={1}
+              text="iii"
+              fn="tonic"
+              q="m"
+            />
+            <Circle
+              store={store}
+              v={[5, 12, 21]}
+              n={4}
+              x={-3}
+              y={-1}
+              text="IV"
+              fn="subdominant"
+            />
+            <Circle
+              store={store}
+              v={[7, 14, 23]}
+              n={5}
+              x={-1}
+              y={-1}
+              text="V"
+              fn="dominant"
+            />
+            <Circle
+              store={store}
+              v={[9, 16, 24]}
+              n={6}
+              x={1}
+              y={-1}
+              text="vi"
+              fn="tonic"
+              q="m"
+            />
+            <Circle
+              store={store}
+              v={[-1, 14, 17]}
+              n={7}
+              x={3}
+              y={-1}
+              text="vii°"
+              fn="dominant"
+              q="dim"
+            />
+          </div>
         </div>
-      </div>
+      </TouchAbsorber>
     )
   }
 }

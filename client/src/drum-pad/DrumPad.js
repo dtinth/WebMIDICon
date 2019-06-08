@@ -1,6 +1,7 @@
 import { MIDI } from '../core'
 
 import React from 'react'
+import { TouchAbsorber } from '../core/TouchAbsorber'
 
 const buttons = [
   { name: 'Ride Edge', note: 52 },
@@ -72,62 +73,64 @@ const DrumButton = class DrumButton extends React.PureComponent {
   render() {
     const { background, backgroundActive, name } = this.props
     return (
-      <div
-        onTouchStart={this.handleTouchStart}
-        onContextMenu={this.onContextMenu}
-        style={{
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0,
-          transform: 'translateZ(0)',
-          '-moz-user-select': 'none',
-          '-khtml-user-select': 'none',
-          '-webkit-user-select': 'none',
-          'user-select': 'none',
-        }}
-        ref={this.registerTouchElement}
-      >
+      <TouchAbsorber>
         <div
-          style={{
-            position: 'absolute',
-            top: 2,
-            right: 2,
-            bottom: 2,
-            left: 2,
-            background,
-            transform: 'translateZ(0)',
-          }}
-        />
-        <div
-          ref={this.registerActiveElement}
-          style={{
-            position: 'absolute',
-            top: 1,
-            right: 1,
-            bottom: 1,
-            left: 1,
-            background: backgroundActive,
-            transform: 'translateZ(0)',
-          }}
-        />
-        <div
+          onTouchStart={this.handleTouchStart}
+          onContextMenu={this.onContextMenu}
           style={{
             position: 'absolute',
             top: 0,
             right: 0,
             bottom: 0,
             left: 0,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
             transform: 'translateZ(0)',
+            '-moz-user-select': 'none',
+            '-khtml-user-select': 'none',
+            '-webkit-user-select': 'none',
+            'user-select': 'none',
           }}
+          ref={this.registerTouchElement}
         >
-          <div style={{ fontSize: '3vw' }}>{name}</div>
+          <div
+            style={{
+              position: 'absolute',
+              top: 2,
+              right: 2,
+              bottom: 2,
+              left: 2,
+              background,
+              transform: 'translateZ(0)',
+            }}
+          />
+          <div
+            ref={this.registerActiveElement}
+            style={{
+              position: 'absolute',
+              top: 1,
+              right: 1,
+              bottom: 1,
+              left: 1,
+              background: backgroundActive,
+              transform: 'translateZ(0)',
+            }}
+          />
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transform: 'translateZ(0)',
+            }}
+          >
+            <div style={{ fontSize: '3vw' }}>{name}</div>
+          </div>
         </div>
-      </div>
+      </TouchAbsorber>
     )
   }
   registerTouchElement = element => {
