@@ -6,43 +6,34 @@ jobs:
       CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
       CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
     docker:
-    - image: circleci/node:10
+      - image: circleci/node:10
     steps:
-    - checkout
-    - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
-    - restore_cache:
-        keys:
-        - v1-dep-{{ .Branch }}-
-        - v1-dep-master-
-        - v1-dep-
-    - run: cd client && yarn
-    - save_cache:
-        key: v1-dep-{{ .Branch }}-{{ epoch }}
-        paths:
-        - client/node_modules
-        - ~/.cache/yarn
-    - run:
-        name: lint code
-        command: |
-          cd client
-          yarn lint
-    - run:
-        name: build
-        command: |
-          cd client
-          yarn build
-    - run:
-        name: deploy
-        command: |
-          if [ "${CIRCLE_BRANCH}" == "master" ]; then
+      - checkout
+      - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
+      - restore_cache:
+          keys:
+            - v1-dep-{{ .Branch }}-
+            - v1-dep-master-
+            - v1-dep-
+      - run: cd client && yarn
+      - save_cache:
+          key: v1-dep-{{ .Branch }}-{{ epoch }}
+          paths:
+            - client/node_modules
+            - ~/.cache/yarn
+      - run:
+          name: lint code
+          command: |
             cd client
-            git config --global user.email 'aki@spacet.me'
-            git config --global user.name 'CircleCI'
-            yarn deploy
-          fi
-    - store_test_results:
-        path: /tmp/circleci-test-results
-    - store_artifacts:
-        path: /tmp/circleci-artifacts
-    - store_artifacts:
-        path: /tmp/circleci-test-results
+            yarn lint
+      - run:
+          name: type checking
+          command: |
+            cd client
+            yarn tsc
+      - store_test_results:
+          path: /tmp/circleci-test-results
+      - store_artifacts:
+          path: /tmp/circleci-artifacts
+      - store_artifacts:
+          path: /tmp/circleci-test-results
