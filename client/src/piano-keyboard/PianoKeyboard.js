@@ -3,6 +3,7 @@ import styled from 'react-emotion'
 import React from 'react'
 import { computed } from 'mobx'
 import { observer } from 'mobx-react'
+import { TouchAbsorber } from '../core/TouchAbsorber'
 
 const PianoKeyboardWrapper = styled('div')`
   position: absolute;
@@ -60,16 +61,18 @@ export class PianoKeyboard extends React.PureComponent {
   }
   render() {
     return (
-      <PianoKeyboardWrapper
-        onTouchStart={this.handleTouch}
-        onTouchMove={this.handleTouch}
-        onTouchEnd={this.handleTouch}
-        className="PianoKeyboard"
-      >
-        {this.renderRow(0, 24)}
-        {this.renderRow(1, 12)}
-        {this.renderRow(2, 0)}
-      </PianoKeyboardWrapper>
+      <TouchAbsorber>
+        <PianoKeyboardWrapper
+          onTouchStart={this.handleTouch}
+          onTouchMove={this.handleTouch}
+          onTouchEnd={this.handleTouch}
+          className="PianoKeyboard"
+        >
+          {this.renderRow(0, 24)}
+          {this.renderRow(1, 12)}
+          {this.renderRow(2, 0)}
+        </PianoKeyboardWrapper>
+      </TouchAbsorber>
     )
   }
   renderRow(position, keyShift) {
