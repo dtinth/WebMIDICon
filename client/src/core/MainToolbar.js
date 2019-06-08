@@ -17,7 +17,7 @@ export class MainToolbar extends React.Component {
       >
         <a
           ref={this.props.innerRef}
-          href="#"
+          href="#/"
           style={{
             color: '#8b8685',
             display: 'block',
