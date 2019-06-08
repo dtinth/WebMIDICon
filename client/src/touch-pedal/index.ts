@@ -1,6 +1,7 @@
 import { Pedal } from './Pedal'
+import { createFeature } from '../core'
 
-export default {
+export default createFeature({
   name: 'touch-pedal',
   category: 'instruments',
   description: 'A touchscreen-activated pedal.',
@@ -13,4 +14,4 @@ export default {
       component: Pedal,
     },
   ],
-}
+})

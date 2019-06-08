@@ -28,6 +28,12 @@ function render() {
   ReactDOM.render(<App features={features} />, main)
 }
 
+declare global {
+  interface NodeModule {
+    hot: any
+  }
+}
+
 if (module.hot) {
   module.hot.accept('./core', render)
 }

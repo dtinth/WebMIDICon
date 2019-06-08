@@ -1,6 +1,6 @@
-import { MIDI } from '../core'
+import { MIDI, createFeature } from '../core'
 
-let wasDown
+let wasDown = false
 function updateGamepads() {
   let down = false
   for (const gamepad of navigator.getGamepads()) {
@@ -24,9 +24,9 @@ function updateGamepads() {
 
 setInterval(updateGamepads, 16)
 
-export default {
+export default createFeature({
   name: 'joypedal',
   category: 'addons',
   description:
     'Press button 10 or 11 on any connected gamepad to activate the pedal. These buttons correspond to the analog buttons on a DualShock controller.',
-}
+})

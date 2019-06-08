@@ -1,11 +1,12 @@
-import { MIDI } from '../core'
+import { MIDI, createFeature } from '../core'
 import { observable } from 'mobx'
+import { KeyboardEvent } from 'react'
 
 const state = observable({
-  keyCodes: observable.map({}),
+  keyCodes: observable.map<number, boolean>({}),
 })
 
-function getKeyCode(event) {
+function getKeyCode(event: KeyboardEvent) {
   // macOS does not support the PC "Insert" key.
   // You can use Karabiner to remap "Insert" key into "PrintScreen" key.
   if (event.keyCode === 124) {
@@ -17,7 +18,7 @@ function getKeyCode(event) {
   return (event.location === 2 ? 1000 : 0) + event.keyCode
 }
 
-export default {
+export default createFeature({
   name: 'midi-keybindings',
   category: 'addons',
   description:
@@ -76,7 +77,7 @@ export default {
     }
     return notes
   },
-}
+})
 
 const transposeKeys = [
   27,

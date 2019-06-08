@@ -1,6 +1,7 @@
 import { DrumPad } from './DrumPad'
+import { createFeature } from '../core'
 
-export default {
+export default createFeature({
   name: 'drum-pad',
   category: 'instruments',
   description:
@@ -15,4 +16,4 @@ export default {
       component: DrumPad,
     },
   ],
-}
+})
