@@ -6,26 +6,16 @@
   "author": "Thai Pangsakulyanont <dtinth@spacet.me>",
   "license": "MIT",
   "scripts": {
-    "start": "cross-env DEV=1 webpack-dev-server --hot --port=9998 --host=0.0.0.0 --compress --mode=development",
-    "build": "webpack --mode=production",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "lint": "eslint src",
     "prettier": "prettier --list-different 'src/**/*.js'",
-    "prettier:fix": "prettier --write 'src/**/*.js'",
-    "deploy": "gh-pages -d build"
+    "prettier:fix": "prettier --write 'src/**/*.js'"
   },
   "standard": {
     "parser": "babel-eslint"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^8.2.6",
-    "babel-loader": "^7.1.2",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.6.0",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
-    "cross-env": "^5.0.5",
-    "css-loader": "^0.28.7",
     "eslint": "^5.3.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-standard": "^11.0.0",
@@ -35,18 +25,10 @@
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-react": "^7.10.0",
     "eslint-plugin-standard": "^3.1.0",
-    "gh-pages": "^1.0.0",
-    "html-webpack-plugin": "^3.2.0",
-    "postcss-cssnext": "^3.0.2",
-    "postcss-loader": "^2.0.6",
     "prettier": "^1.14.2",
-    "style-loader": "^0.18.2",
-    "webpack": "^4.16.5",
-    "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.5"
+    "react-scripts": "3.0.1"
   },
   "dependencies": {
-    "babel-runtime": "^6.26.0",
     "emotion": "^9.2.6",
     "lodash": "^4.17.10",
     "markdown-it": "^8.4.2",
@@ -57,5 +39,17 @@
     "react-emotion": "^9.2.6",
     "react-router-dom": "^4.3.1",
     "reselect": "^3.0.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

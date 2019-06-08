@@ -1,5 +1,3 @@
-'use strict'
-
 import { action, observable } from 'mobx'
 
 export function createStore(features) {
