@@ -31,6 +31,15 @@ jobs:
           command: |
             cd client
             yarn tsc
+      - run:
+          name: build and deploy
+          command: |
+            if [ "$CIRCLE_BRANCH" = master ]
+            then
+              cd client
+              yarn build
+              yarn deploy
+            fi
       - store_test_results:
           path: /tmp/circleci-test-results
       - store_artifacts:
