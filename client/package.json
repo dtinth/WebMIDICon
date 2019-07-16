@@ -8,7 +8,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "if [ \"$(git rev-parse --abbrev-ref HEAD)\" = master ]; then firebase deploy --only hosting; fi",
+    "deploy": "if [ \"$BRANCH\" = master ]; then firebase deploy --only hosting --token \"$FIREBASE_TOKEN\"; fi",
     "lint": "eslint src",
     "prettier": "prettier --list-different 'src/**/*.js'",
     "prettier:fix": "prettier --write 'src/**/*.js'"
