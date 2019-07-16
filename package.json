@@ -1,7 +1,7 @@
 {
-  "scripts": {
-  },
+  "scripts": {},
   "dependencies": {
+    "firebase-tools": "^7.1.0"
   },
   "private": true,
   "workspaces": [
