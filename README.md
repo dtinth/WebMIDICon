@@ -1,6 +1,6 @@
-# midi-instruments
+# WebMIDICon
 
-A collection of **hackable web-based MIDI instruments.**
+A collection of **hackable web-based MIDI instruments, implemented as a MIDI controller.**
 I wanted to create a MIDI instrument that allows me to jam with other musicians.
 Play MIDI with your PC keyboard, or with a touch screen on an iPad.
 
