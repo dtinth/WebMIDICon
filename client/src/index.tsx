@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom'
 
 import { App } from './core'
 
+// TODO: Add a service worker to allow this app to run offline.
+
 const main = (() => {
   const existing = document.getElementById('main')
   if (existing) return existing
