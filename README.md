@@ -64,7 +64,3 @@ You need to create a **virtual MIDI cable** (a.k.a. <acronym title="inter-applic
 
 You can use the **Web MIDI Browser** app, a iOS web browser that supports Web MIDI API.
 Then you can set up a Bluetooth LE connection from your iDevice to Mac.
-
-## Offline iOS App
-
-For offline playing, you can find an Xcode project in the [ios](ios) folder and compile it yourself.
