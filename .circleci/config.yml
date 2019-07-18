@@ -15,28 +15,24 @@ jobs:
             - v1-dep-{{ .Branch }}-
             - v1-dep-master-
             - v1-dep-
-      - run: cd client && yarn
+      - run: yarn
       - save_cache:
           key: v1-dep-{{ .Branch }}-{{ epoch }}
           paths:
-            - client/node_modules
             - ~/.cache/yarn
       - run:
           name: lint code
           command: |
-            cd client
             yarn lint
       - run:
           name: type checking
           command: |
-            cd client
             yarn tsc
       - run:
           name: build and deploy
           command: |
             if [ "$CIRCLE_BRANCH" = master ]
             then
-              cd client
               yarn build
               yarn deploy
             fi
