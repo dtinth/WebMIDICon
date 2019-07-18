@@ -77,7 +77,7 @@ export function App({ features }: { features: Feature[] }) {
                   textDecoration: 'none',
                   fontWeight: 'normal',
                 }}
-                href="https://codesandbox.io/s/github/dtinth/midi-instruments/tree/master/client"
+                href="https://codesandbox.io/s/github/dtinth/midi-instruments/tree/master"
               >
                 hack on this project using CodeSandbox
               </a>
