@@ -1,4 +1,5 @@
 dependencies:
+  '@types/node': 12.6.8
   '@types/react': 16.8.23
   '@types/react-dom': 16.8.4
   '@types/react-router-dom': 4.3.4
@@ -2070,6 +2071,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-UpYjBi8xefVChsCoBpKShdxTllC9pwISirfoZsUa2AAdQg/Jd2KQGtSbw+ya7GPo7x/wAPlH6JBhKhAsXUEZNA==
+  /@types/node/12.6.8:
+    dev: false
+    resolution:
+      integrity: sha512-aX+gFgA5GHcDi89KG5keey2zf0WfZk/HAQotEamsK2kbey+8yGKcson0hbK8E+v0NArlCJQCqMP161YhV6ZXLg==
   /@types/prop-types/15.7.1:
     dev: false
     resolution:
@@ -12679,6 +12684,7 @@ registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
+  '@types/node': ^12.6.8
   '@types/react': ^16.8.19
   '@types/react-dom': ^16.8.4
   '@types/react-router-dom': ^4.3.3

@@ -77,9 +77,9 @@ export function App({ features }: { features: Feature[] }) {
                   textDecoration: 'none',
                   fontWeight: 'normal',
                 }}
-                href="https://codesandbox.io/s/github/dtinth/midi-instruments/tree/master"
+                href="https://glitch.com/edit/#!/webmidicon"
               >
-                hack on this project using CodeSandbox
+                remix on Glitch
               </a>
             )}
           </HeaderTitle>
