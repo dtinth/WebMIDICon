@@ -1,10 +1,62 @@
 {
-  "scripts": {},
-  "dependencies": {
+  "name": "midi-instruments-client",
+  "version": "1.0.0",
+  "description": "My MIDI instruments",
+  "main": "index.js",
+  "author": "Thai Pangsakulyanont <dtinth@spacet.me>",
+  "license": "MIT",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "deploy": "firebase deploy --only hosting --token \"$FIREBASE_TOKEN\"",
+    "lint": "eslint src",
+    "prettier": "prettier --list-different 'src/**/*.js'",
+    "prettier:fix": "prettier --write 'src/**/*.js'"
+  },
+  "standard": {
+    "parser": "babel-eslint"
+  },
+  "devDependencies": {
+    "eslint": "^5.3.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-config-standard-react": "^6.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-react": "^7.10.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "prettier": "^1.14.2",
+    "react-scripts": "3.0.1",
+    "typescript": "^3.5.1",
     "firebase-tools": "^7.1.0"
   },
-  "private": true,
-  "workspaces": [
-    "client"
-  ]
+  "dependencies": {
+    "@types/react": "^16.8.19",
+    "@types/react-dom": "^16.8.4",
+    "@types/react-router-dom": "^4.3.3",
+    "@types/webmidi": "^2.0.3",
+    "emotion": "^9.2.6",
+    "lodash": "^4.17.10",
+    "markdown-it": "^8.4.2",
+    "mobx": "^5.0.3",
+    "mobx-react": "^5.2.5",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-emotion": "^9.2.6",
+    "react-router-dom": "^4.3.1",
+    "reselect": "^3.0.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
