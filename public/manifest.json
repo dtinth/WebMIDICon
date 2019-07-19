@@ -1,0 +1,11 @@
+{
+  "short_name": "WebMIDICon",
+  "name": "WebMIDICon",
+  "icons": [
+  ],
+  "start_url": "/",
+  "background_color": "#353433",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#090807"
+}
