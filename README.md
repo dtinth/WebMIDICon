@@ -32,7 +32,9 @@ Play MIDI with your PC keyboard, or with a touch screen on an iPad.
 
 ## Hacking on this project
 
-- The easiest way is to use Code Sandbox! https://codesandbox.io/s/github/dtinth/midi-instruments/tree/master
+- Remix this project on Glitch: https://glitch.com/edit/#!/webmidicon
+
+- Fork on Code Sandbox: https://codesandbox.io/s/github/dtinth/midi-instruments/tree/master
 
 ## MIDI setup
 

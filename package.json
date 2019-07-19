@@ -45,7 +45,8 @@
     "react-dom": "^16.8.6",
     "react-emotion": "^9.2.6",
     "react-router-dom": "^4.3.1",
-    "reselect": "^3.0.1"
+    "reselect": "^3.0.1",
+    "@types/node": "^12.6.8"
   },
   "browserslist": {
     "production": [
