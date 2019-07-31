@@ -68,7 +68,7 @@ export function App({ features }: { features: Feature[] }) {
       <Wrapper>
         <Header>
           <HeaderTitle>
-            my web based instruments
+            WebMIDICon
             {' — '}
             {!window.location.hostname.match(/codesandbox\.io$/) && (
               <a
