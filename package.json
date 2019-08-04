@@ -12,9 +12,6 @@
     "prettier": "prettier --list-different 'src/**/*.js'",
     "prettier:fix": "prettier --write 'src/**/*.js'"
   },
-  "standard": {
-    "parser": "babel-eslint"
-  },
   "devDependencies": {
     "prettier": "^1.14.2",
     "react-scripts": "3.0.1",

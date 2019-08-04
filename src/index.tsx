@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import { App } from './core'
+import * as serviceWorker from './serviceWorker'
 
 // TODO [#20]: Add a service worker to allow this app to run offline.
 // See:
@@ -44,3 +45,4 @@ if (module.hot) {
 }
 
 render()
+serviceWorker.register()

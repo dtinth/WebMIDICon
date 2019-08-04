@@ -24,7 +24,7 @@ Play MIDI with your PC keyboard, or with a touch screen on an iPad.
 
 ## Usage
 
-1. Go to [https://dtinth.github.io/midi-instruments/](https://dtinth.github.io/midi-instruments/) using a browser that supports Web MIDI API.
+1. Go to [https://webmidicon.web.app/](https://webmidicon.web.app/) using a browser that supports Web MIDI API.
 
 2. Select the output MIDI port at the top-right corner. See [MIDI setup](#midi-setup) section for more details.
 

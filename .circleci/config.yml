@@ -21,9 +21,9 @@ jobs:
           paths:
             - ~/.cache/yarn
       - run:
-          name: lint code
+          name: prettier
           command: |
-            yarn lint
+            yarn prettier
       - run:
           name: type checking
           command: |
