@@ -3,6 +3,7 @@ import { computed } from 'mobx'
 import { createSelector } from 'reselect'
 import { observer } from 'mobx-react'
 import styled from 'react-emotion'
+import { TouchAbsorber } from '../core/TouchAbsorber'
 
 const IsomorphicKeyboardCircle = styled('div')`
   position: absolute;
@@ -27,6 +28,19 @@ const types = {
       y: (column, row) =>
         height - keyDistance / 2 + (column / 2 - row) * yOffset,
       note: (column, row) => column * -5 + row * 12,
+    }
+  },
+  ccba: (width, height) => {
+    const keyDistance = height / 4.33
+    const keySize = keyDistance * 0.5
+    const xOffset = keyDistance / 2
+    const yOffset = keyDistance * Math.sqrt(3)
+    return {
+      keySize,
+      x: column => keyDistance / 2 + column * xOffset,
+      y: (column, row) =>
+        height - keyDistance / 2 + (column / 2 - row) * yOffset,
+      note: (column, row) => column * 2 + row * -1,
     }
   },
   harmonic: (width, height) => {
@@ -147,22 +161,24 @@ export class IsomorphicKeyboard extends React.Component {
   }
   render() {
     return (
-      <div
-        ref={this.handleContainerRef}
-        onTouchStart={this.updateTouches}
-        onTouchMove={this.updateTouches}
-        onTouchEnd={this.updateTouches}
-        style={{
-          position: 'absolute',
-          overflow: 'hidden',
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0,
-        }}
-      >
-        {this.renderKeys()}
-      </div>
+      <TouchAbsorber>
+        <div
+          ref={this.handleContainerRef}
+          onTouchStart={this.updateTouches}
+          onTouchMove={this.updateTouches}
+          onTouchEnd={this.updateTouches}
+          style={{
+            position: 'absolute',
+            overflow: 'hidden',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+          }}
+        >
+          {this.renderKeys()}
+        </div>
+      </TouchAbsorber>
     )
   }
 }
