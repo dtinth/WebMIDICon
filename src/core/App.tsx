@@ -123,7 +123,7 @@ function MIDIStatus() {
       }}
     >
       <MIDISettings onClick={handleToggle}>
-        <Observer>{() => MIDI.getStatus()}</Observer>
+        <Observer>{() => <>{MIDI.getStatus()}</>}</Observer>
       </MIDISettings>
       {renderSelector()}
     </div>
