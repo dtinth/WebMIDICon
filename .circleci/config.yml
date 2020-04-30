@@ -29,11 +29,21 @@ jobs:
           command: |
             yarn tsc
       - run:
-          name: build and deploy
+          name: obtain tree hash
+          command: |
+            git rev-parse HEAD: | tee /tmp/tree.hash
+      - restore_cache:
+          keys:
+            - v1-tree-{{ checksum "/tmp/tree.hash" }}
+      - run:
+          name: build
+          command: |
+            yarn build
+      - run:
+          name: deploy
           command: |
             if [ "$CIRCLE_BRANCH" = master ]
             then
-              yarn build
               yarn deploy
             fi
       - store_test_results:
