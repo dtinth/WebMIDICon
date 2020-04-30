@@ -38,7 +38,7 @@ jobs:
       - run:
           name: build
           command: |
-            yarn build
+            test -d build || yarn build
       - save_cache:
           key: v1-tree-{{ checksum "/tmp/tree.hash" }}
           paths:
