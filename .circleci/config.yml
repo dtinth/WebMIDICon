@@ -12,12 +12,12 @@ jobs:
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
       - restore_cache:
           keys:
-            - v1-dep-{{ .Branch }}-
-            - v1-dep-master-
-            - v1-dep-
-      - run: yarn
+            - yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - yarn-packages-v1-{{ .Branch }}-
+            - yarn-packages-v1-
+      - run: yarn --frozen-lockfile
       - save_cache:
-          key: v1-dep-{{ .Branch }}-{{ epoch }}
+          key: yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
       - run:
@@ -38,8 +38,7 @@ jobs:
       - run:
           name: build
           command: |
-            # yarn build
-            false
+            yarn build
       - save_cache:
           key: v1-tree-{{ checksum "/tmp/tree.hash" }}
           paths:
