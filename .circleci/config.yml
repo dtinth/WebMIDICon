@@ -38,7 +38,12 @@ jobs:
       - run:
           name: build
           command: |
-            yarn build
+            # yarn build
+            false
+      - save_cache:
+          key: v1-tree-{{ checksum "/tmp/tree.hash" }}
+          paths:
+            - build
       - run:
           name: deploy
           command: |
