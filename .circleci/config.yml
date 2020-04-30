@@ -31,7 +31,12 @@ jobs:
       - run:
           name: obtain tree hash
           command: |
-            git rev-parse HEAD: | tee /tmp/tree.hash
+            git rev-parse HEAD:src | tee -a /tmp/tree.hash
+            git rev-parse HEAD:public | tee -a /tmp/tree.hash
+            git rev-parse HEAD:.babelrc | tee -a /tmp/tree.hash
+            git rev-parse HEAD:postcss.config.js | tee -a /tmp/tree.hash
+            git rev-parse HEAD:tsconfig.json | tee -a /tmp/tree.hash
+            git rev-parse HEAD:yarn.lock | tee -a /tmp/tree.hash
       - restore_cache:
           keys:
             - v1-tree-{{ checksum "/tmp/tree.hash" }}
