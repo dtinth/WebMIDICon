@@ -12,12 +12,12 @@ jobs:
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
       - restore_cache:
           keys:
-            - v1-dep-{{ .Branch }}-
-            - v1-dep-master-
-            - v1-dep-
-      - run: yarn
+            - yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - yarn-packages-v1-{{ .Branch }}-
+            - yarn-packages-v1-
+      - run: yarn --frozen-lockfile
       - save_cache:
-          key: v1-dep-{{ .Branch }}-{{ epoch }}
+          key: yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
       - run:
@@ -29,11 +29,30 @@ jobs:
           command: |
             yarn tsc
       - run:
-          name: build and deploy
+          name: obtain tree hash
+          command: |
+            git rev-parse HEAD:src | tee -a /tmp/tree.hash
+            git rev-parse HEAD:public | tee -a /tmp/tree.hash
+            git rev-parse HEAD:.babelrc | tee -a /tmp/tree.hash
+            git rev-parse HEAD:postcss.config.js | tee -a /tmp/tree.hash
+            git rev-parse HEAD:tsconfig.json | tee -a /tmp/tree.hash
+            git rev-parse HEAD:yarn.lock | tee -a /tmp/tree.hash
+      - restore_cache:
+          keys:
+            - v1-tree-{{ checksum "/tmp/tree.hash" }}
+      - run:
+          name: build
+          command: |
+            test -f build/index.html || yarn build
+      - save_cache:
+          key: v1-tree-{{ checksum "/tmp/tree.hash" }}
+          paths:
+            - build
+      - run:
+          name: deploy
           command: |
             if [ "$CIRCLE_BRANCH" = master ]
             then
-              yarn build
               yarn deploy
             fi
       - store_test_results:
