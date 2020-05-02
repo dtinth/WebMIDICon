@@ -9,7 +9,7 @@ type Props = {
 
 export default function WheelController(props: Props) {
   const wheelValue = useRef(0)
-  const { registerWheelListener } = props
+  const { registerWheelListener, store } = props
   const velocity = useObserver(() => props.store.noteVelocity)
   useEffect(
     () => {
@@ -25,14 +25,14 @@ export default function WheelController(props: Props) {
             Math.sign(wheelValue.current)
           wheelValue.current -= delta
         }
-        props.store.noteVelocity = clamp(
-          props.store.noteVelocity + delta,
+        store.noteVelocity = clamp(
+          store.noteVelocity + delta,
           0,
           127
         )
       })
     },
-    [registerWheelListener]
+    [registerWheelListener, store]
   )
   return (
     <div style={{ display: 'flex', height: '100%' }}>
