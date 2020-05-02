@@ -8,6 +8,7 @@ import { Switch, Route } from 'react-router-dom'
 import { Observer } from 'mobx-react'
 import { sortBy } from 'lodash'
 import FeatureList from './FeatureList'
+import WheelController from './WheelController'
 
 export class MainView extends React.Component {
   constructor(props) {
@@ -23,9 +24,15 @@ export class MainView extends React.Component {
   }
   componentDidMount() {
     window.addEventListener('keydown', this.handleGlobalKeyDown, false)
+    window.addEventListener('wheel', this.handleWheel, {
+      passive: false,
+    })
   }
   componentWillUnmount() {
     window.removeEventListener('keydown', this.handleGlobalKeyDown, false)
+    window.removeEventListener('wheel', this.handleWheel, {
+      passive: false,
+    })
   }
   handleGlobalKeyDown = e => {
     if (e.keyCode === 13) {
@@ -53,6 +60,19 @@ export class MainView extends React.Component {
     e.stopPropagation()
     this.store.handleKeyUp(e.nativeEvent)
     e.preventDefault()
+  }
+  wheelListeners = new Set()
+  registerWheelListener = listener => {
+    this.wheelListeners.add(listener)
+    return () => this.wheelListeners.remove(listener)
+  }
+  handleWheel = e => {
+    if (document.activeElement === this.contentElement) {
+      e.preventDefault()
+      for (const wheelListener of this.wheelListeners) {
+        wheelListener(e)
+      }
+    }
   }
   handleClick = e => {
     setTimeout(() => {
@@ -141,6 +161,12 @@ export class MainView extends React.Component {
         >
           {this.renderContent()}
         </MainContent>
+        <BottomArea>
+          <WheelController
+            store={this.store}
+            registerWheelListener={this.registerWheelListener}
+          />
+        </BottomArea>
         <Observer>
           {() => (
             <MIDIEmitter
@@ -168,12 +194,20 @@ const MainContent = styled('div')`
   position: absolute;
   top: 40px;
   right: 0;
-  bottom: 0;
+  bottom: 30px;
   left: 0;
   &:focus {
     outline: none;
     box-shadow: inset 0 0 0 2px #656463;
   }
+`
+
+const BottomArea = styled('div')`
+  position: absolute;
+  height: 30px;
+  right: 0;
+  bottom: 0;
+  left: 0;
 `
 
 const MainMenu = styled('ul')`

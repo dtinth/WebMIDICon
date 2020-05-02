@@ -32,6 +32,8 @@ Play MIDI with your PC keyboard, or with a touch screen on an iPad.
 
 ## Hacking on this project
 
+- Code on GitPod: https://gitpod.io/#https://github.com/dtinth/WebMIDICon
+
 - Remix this project on Glitch: https://glitch.com/edit/#!/webmidicon
 
 - Fork on Code Sandbox: https://codesandbox.io/s/github/dtinth/midi-instruments/tree/master

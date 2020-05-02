@@ -135,7 +135,6 @@ function init() {
       }
     )
   } else if (
-    /* global webkit */
     typeof webkit !== 'undefined' &&
     webkit.messageHandlers &&
     webkit.messageHandlers.send &&
