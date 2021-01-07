@@ -209,9 +209,9 @@
     csstype "^3.0.2"
 
 "@vitejs/plugin-react-refresh@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@vitejs/plugin-react-refresh/-/plugin-react-refresh-1.1.0.tgz#cf8414e3c9e6b6b829077799259017cb7dbbe98d"
-  integrity sha512-HPq3gYfnmzLygVLxs6h6sWFI/YFISv9/KZeRDGez7dLulCNBNs3g5BsTpFUPMZyMGDLc2wQb0h49t5FDydIFaA==
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@vitejs/plugin-react-refresh/-/plugin-react-refresh-1.1.1.tgz#5bddaa2fea9804f12a8f1bb9dc334ab8dc6e3981"
+  integrity sha512-ihuypEjiZKzq0aSCcXXyfM56OcHR6s0eXLaEPBzDkQvmemzQ+K/KEOkUJh4mxw+nFMSC6rs3o+HU5LfFPeRBBA==
   dependencies:
     "@babel/core" "^7.12.10"
     "@babel/plugin-syntax-import-meta" "^7.10.4"
@@ -270,9 +270,9 @@ debug@^4.1.0:
     ms "2.1.2"
 
 esbuild@^0.8.26:
-  version "0.8.30"
-  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.8.30.tgz#3d057ff9ffe6d5d30bccb0afe8cc92a2e69622d3"
-  integrity sha512-gCJQYUMO9QNrfpNOIiCnFoX41nWiPFCvURBQF+qWckyJ7gmw2xCShdKCXvS+RZcQ5krcxEOLIkzujqclePKhfw==
+  version "0.8.31"
+  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.8.31.tgz#c21e7adb3ad283c951a53de7ad64a5ae2df2ed34"
+  integrity sha512-7EIU0VdUxltwivjVezX3HgeNzeIVR1snkrAo57WdUnuBMykdzin5rTrxwCDM6xQqj0RL/HjOEm3wFr2ijHKeaA==
 
 escape-string-regexp@^1.0.5:
   version "1.0.5"
