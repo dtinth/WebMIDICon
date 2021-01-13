@@ -464,9 +464,9 @@ typescript@^4.1.2:
   integrity sha512-B3ZIOf1IKeH2ixgHhj6la6xdwR9QrLC5d1VKeCSY4tvkqhF2eqd9O7txNlS0PO3GrBAFIdr3L1ndNwteUbZLYg==
 
 vite@^2.0.0-beta.12:
-  version "2.0.0-beta.22"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-2.0.0-beta.22.tgz#c33a4689fe1659bfdc87a36b9e8527baea0e3119"
-  integrity sha512-Mj9qTSYx0625htRTClQV4OLQhjhujgHCV/FStGNu8G9NcHp3MP56gc6+UoRgQzrAsK8HI9MKfcW+NFgljoJKyA==
+  version "2.0.0-beta.25"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-2.0.0-beta.25.tgz#0c356a5937de8e1c45156daa7506e2125194a4af"
+  integrity sha512-IRHkbYNEGvZ+mIxAxHCi4sh+qmNR6H93UaG9rA8ULXT+S4tzKqwa+1cDzbYvSwNv1SG1ycDY7+HsZTy6DrgZHA==
   dependencies:
     esbuild "^0.8.26"
     postcss "^8.2.1"
