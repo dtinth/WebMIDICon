@@ -209,9 +209,9 @@
     csstype "^3.0.2"
 
 "@vitejs/plugin-react-refresh@^1.1.0":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@vitejs/plugin-react-refresh/-/plugin-react-refresh-1.1.1.tgz#5bddaa2fea9804f12a8f1bb9dc334ab8dc6e3981"
-  integrity sha512-ihuypEjiZKzq0aSCcXXyfM56OcHR6s0eXLaEPBzDkQvmemzQ+K/KEOkUJh4mxw+nFMSC6rs3o+HU5LfFPeRBBA==
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@vitejs/plugin-react-refresh/-/plugin-react-refresh-1.1.2.tgz#09343cff21c5e726777d0a8e969824648937a9ca"
+  integrity sha512-iczCmFZRFx2lJTIzwEba63SeIpEiwGTpFdIGxCOJcZAZ5nmCF56gsM8gGYvvRACiUvj8ytZsRE06zdYBhzTvNg==
   dependencies:
     "@babel/core" "^7.12.10"
     "@babel/plugin-syntax-import-meta" "^7.10.4"
@@ -412,9 +412,9 @@ resolve@^1.19.0:
     path-parse "^1.0.6"
 
 rollup@^2.35.1:
-  version "2.36.2"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.36.2.tgz#883fc793c70c8481ad604f1065cd79ab0a4e9c49"
-  integrity sha512-qjjiuJKb+/8n0EZyQYVW+gFU4bNRBcZaXVzUgSVrGw0HlQBlK2aWyaOMMs1Ufic1jV69b9kW3u3i9B+hISDm3A==
+  version "2.37.0"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.37.0.tgz#5baf631dc224a56d7eb88dd11b20aa28c1e8dc6f"
+  integrity sha512-cbxuxkMGCQV+TnVh+yZSUerbVb5i8soRydbzHYoMNojgt7MMi+jDLLs24U9HHCssKkwkXmsj+LXcOZMldTbz2w==
   optionalDependencies:
     fsevents "~2.1.2"
 
@@ -464,9 +464,9 @@ typescript@^4.1.2:
   integrity sha512-B3ZIOf1IKeH2ixgHhj6la6xdwR9QrLC5d1VKeCSY4tvkqhF2eqd9O7txNlS0PO3GrBAFIdr3L1ndNwteUbZLYg==
 
 vite@^2.0.0-beta.12:
-  version "2.0.0-beta.31"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-2.0.0-beta.31.tgz#0ce5f6c496c29f72062f9f0ae70dd6dfb18b0916"
-  integrity sha512-tHBgSsSp0+dbz8tas6zOj2KbJSKOme62jXN13rk8BZdJEum5FDnwon9+7oas4db3NnVBLnciWa1r8QUNoOZjrA==
+  version "2.0.0-beta.34"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-2.0.0-beta.34.tgz#8db57443789b1bb0eac624cc596f3aeb7fde9eea"
+  integrity sha512-D4/2WBf219mZBgDRiKfMwK/07UGiP+d56W2a2SEqf21iMOfM3yNBf3cfTY7qrHoi28EUo8l1LVwkSFPNbFlV2w==
   dependencies:
     esbuild "^0.8.26"
     postcss "^8.2.1"
