@@ -236,7 +236,7 @@
     "@types/prop-types" "*"
     csstype "^3.0.2"
 
-"@vitejs/plugin-react-refresh@^1.1.0":
+"@vitejs/plugin-react-refresh@^1.3.1":
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/@vitejs/plugin-react-refresh/-/plugin-react-refresh-1.3.1.tgz#dfdb17e9924ba57fc4951ac882e39628051a30f4"
   integrity sha512-VxHkrvOOTnMGWq9BveEN5ufmfDfaGxfawCymlKdF+X0RApCr0jQFzOyewhmSSCgGHjqnpRj+7TTDebjBkB3qhg==
@@ -265,9 +265,9 @@ browserslist@^4.14.5:
     node-releases "^1.1.70"
 
 caniuse-lite@^1.0.30001181:
-  version "1.0.30001192"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001192.tgz#b848ebc0ab230cf313d194a4775a30155d50ae40"
-  integrity sha512-63OrUnwJj5T1rUmoyqYTdRWBqFFxZFlyZnRRjDR8NSUQFB6A+j/uBORU/SyJ5WzDLg4SPiZH40hQCBNdZ/jmAw==
+  version "1.0.30001194"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001194.tgz#3d16ff3d734a5a7d9818402c28b1f636c5be5bed"
+  integrity sha512-iDUOH+oFeBYk5XawYsPtsx/8fFpndAPUQJC7gBTfxHM8xw5nOZv7ceAD4frS1MKCLUac7QL5wdAJiFQlDRjXlA==
 
 chalk@^2.0.0:
   version "2.4.2"
@@ -315,9 +315,9 @@ debug@^4.1.0:
     ms "2.1.2"
 
 electron-to-chromium@^1.3.649:
-  version "1.3.676"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.676.tgz#18b2336239b6cdc68c57ce96bf73daf80bab9eba"
-  integrity sha512-t0eEgYCP+XEbH/KwxWYZDY0XKwzmokDAsjFJ2rBstp2XuwuBCUZ+ni5qXI6XDRNkvDpVJcAOp2aJxkSkshKkmw==
+  version "1.3.678"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.678.tgz#c7c6960463167126b7ed076fade14cac6223bfff"
+  integrity sha512-E5ha1pE9+aWWrT2fUD5wdPBWUnYtKnEnloewbtVyrkAs79HvodOiNO4rMR94+hKbxgMFQG4fnPQACOc1cfMfBg==
 
 esbuild@^0.8.52:
   version "0.8.54"
@@ -523,10 +523,10 @@ typescript@^4.1.2:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.2.2.tgz#1450f020618f872db0ea17317d16d8da8ddb8c4c"
   integrity sha512-tbb+NVrLfnsJy3M59lsDgrzWIflR4d4TIUjz+heUnHZwdF7YsrMTKoRERiIvI2lvBG95dfpLxB21WZhys1bgaQ==
 
-vite@^2.0.1:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-2.0.4.tgz#063532a4139b59a067297d8ebb5960d450907a09"
-  integrity sha512-+PP89D7AKXFE4gps8c5+4eP5yXTh5qCogjdYX7iSsIxbLZAa26JoGSq6OLk0qdb/fqDh7gtJqGiLbG2V6NvkKQ==
+vite@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-2.0.5.tgz#ac46857a3fa8686d077921e61bd48a986931df1d"
+  integrity sha512-QTgEDbq1WsTtr6j+++ewjhBFEk6c8v0xz4fb/OWJQKNYU8ZZtphOshwOqAlnarSstPBtWCBR0tsugXx6ajfoUg==
   dependencies:
     esbuild "^0.8.52"
     postcss "^8.2.1"
