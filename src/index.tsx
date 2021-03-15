@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 
 import { App } from './core'
 import { featureModules } from './features'
-import * as serviceWorker from './serviceWorker'
 
 // TODO [#20]: Add a service worker to allow this app to run offline.
 // See:
@@ -32,4 +31,3 @@ declare global {
 }
 
 render()
-serviceWorker.register()
