@@ -5,6 +5,10 @@ jobs:
       - image: busybox
     steps:
       - run: echo dummy
-    branches:
-      only:
-        - never
+workflows:
+  dummy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: /^$/
