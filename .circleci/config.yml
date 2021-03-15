@@ -1,3 +1,4 @@
+# dummy no-op config file
 version: 2.1
 jobs:
   build:
