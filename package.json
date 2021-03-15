@@ -1,6 +1,9 @@
 {
-  "name": "fresh-app",
-  "version": "0.0.0",
+  "name": "webmidicon",
+  "version": "2.0.0",
+  "description": "My MIDI instruments",
+  "author": "Thai Pangsakulyanont <dtinth@spacet.me>",
+  "license": "MIT",
   "scripts": {
     "start": "vite",
     "build": "vite build",
