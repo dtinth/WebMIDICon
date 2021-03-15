@@ -1,63 +1,15 @@
-version: 2
+# dummy no-op config file
+version: 2.1
 jobs:
   build:
-    working_directory: ~/midi-instruments
-    environment:
-      CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
-      CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
     docker:
-      - image: circleci/node:10
+      - image: busybox
     steps:
-      - checkout
-      - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
-      - restore_cache:
-          keys:
-            - yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
-            - yarn-packages-v1-{{ .Branch }}-
-            - yarn-packages-v1-
-      - run: yarn --frozen-lockfile
-      - save_cache:
-          key: yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
-      - run:
-          name: prettier
-          command: |
-            yarn prettier
-      - run:
-          name: type checking
-          command: |
-            yarn tsc
-      - run:
-          name: obtain tree hash
-          command: |
-            git rev-parse HEAD:src | tee -a /tmp/tree.hash
-            git rev-parse HEAD:public | tee -a /tmp/tree.hash
-            git rev-parse HEAD:.babelrc | tee -a /tmp/tree.hash
-            git rev-parse HEAD:postcss.config.js | tee -a /tmp/tree.hash
-            git rev-parse HEAD:tsconfig.json | tee -a /tmp/tree.hash
-            git rev-parse HEAD:yarn.lock | tee -a /tmp/tree.hash
-      - restore_cache:
-          keys:
-            - v1-tree-{{ checksum "/tmp/tree.hash" }}
-      - run:
-          name: build
-          command: |
-            test -f build/index.html || yarn build
-      - save_cache:
-          key: v1-tree-{{ checksum "/tmp/tree.hash" }}
-          paths:
-            - build
-      - run:
-          name: deploy
-          command: |
-            if [ "$CIRCLE_BRANCH" = master ]
-            then
-              yarn deploy
-            fi
-      - store_test_results:
-          path: /tmp/circleci-test-results
-      - store_artifacts:
-          path: /tmp/circleci-artifacts
-      - store_artifacts:
-          path: /tmp/circleci-test-results
+      - run: echo dummy
+workflows:
+  dummy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: /^$/

@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import { App } from './core'
-import * as serviceWorker from './serviceWorker'
+import { featureModules } from './features'
 
 // TODO [#20]: Add a service worker to allow this app to run offline.
 // See:
@@ -18,17 +18,7 @@ const main = (() => {
   return div
 })()
 
-const featureModules = [
-  require('./beginner-chord-machine'),
-  require('./drum-pad'),
-  require('./isomorphic-keyboard'),
-  require('./piano-keyboard'),
-  require('./midi-keybindings'),
-  require('./touch-pedal'),
-  require('./joypedal'),
-]
-
-const features = featureModules.map(m => m.default)
+const features = featureModules.map((m) => m.default)
 
 function render() {
   ReactDOM.render(<App features={features} />, main)
@@ -40,9 +30,4 @@ declare global {
   }
 }
 
-if (module.hot) {
-  module.hot.accept('./core', render)
-}
-
 render()
-serviceWorker.register()
