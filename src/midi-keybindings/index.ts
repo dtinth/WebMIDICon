@@ -15,7 +15,10 @@ function getKeyCode(event: KeyboardEvent) {
 
   // Add 1000 to keyCode if on the right side.
   // This allows us to distinguish RShift from LShift.
-  return (event.location === 2 ? 1000 : 0) + event.keyCode
+  return (
+    (event.location === 2 ? 1000 : event.location === 3 ? 2000 : 0) +
+    event.keyCode
+  )
 }
 
 export default createFeature({
@@ -148,4 +151,11 @@ const secondRow = [
   36,
   34,
   33,
+  2055,
+  2056,
+  2111,
+  2057,
+  2106,
+  2107,
+  2109,
 ]
