@@ -29,4 +29,15 @@ export default createFeature({
   category: 'addons',
   description:
     'Press button 10 or 11 on any connected gamepad to activate the pedal. These buttons correspond to the analog buttons on a DualShock controller.',
+  configuration: {
+    title: 'Joypedal',
+    properties: {
+      'joypedal.buttons': {
+        type: 'string',
+        default: '10,11',
+        markdownDescription:
+          'Comma-separated list of gamepad button numbers to be detected. The pedal will be considered “pressed” when _any_ of these buttons are pressed. Use [gamepad-tester.com](https://gamepad-tester.com/) to find out the button.',
+      },
+    },
+  },
 })

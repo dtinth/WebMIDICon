@@ -29,7 +29,7 @@ export class DrumPad extends React.PureComponent {
   render() {
     return (
       <div
-        onTouchStart={e => e.preventDefault()}
+        onTouchStart={(e) => e.preventDefault()}
         style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0 }}
       >
         <div
@@ -53,7 +53,7 @@ export class DrumPad extends React.PureComponent {
           background={background}
           backgroundActive={backgroundActive}
           name={button.name}
-          onTrigger={velocity => this.handleTrigger(button.note, velocity)}
+          onTrigger={(velocity) => this.handleTrigger(button.note, velocity)}
         />
       </div>
     )
@@ -133,21 +133,21 @@ const DrumButton = class DrumButton extends React.PureComponent {
       </TouchAbsorber>
     )
   }
-  registerTouchElement = element => {
+  registerTouchElement = (element) => {
     this.element = element
   }
-  registerActiveElement = element => {
+  registerActiveElement = (element) => {
     this.activeElement = element
     if (element) {
       element.style.opacity = '0'
     }
   }
 
-  onContextMenu = e => {
+  onContextMenu = (e) => {
     e.preventDefault()
   }
 
-  handleTouchStart = e => {
+  handleTouchStart = (e) => {
     if (!this.element) return
     const touch = e.changedTouches[0]
     if (!touch) return

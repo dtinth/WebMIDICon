@@ -13,7 +13,18 @@ export default createFeature({
       name: 'Drum pad',
       description:
         'A drum pad with variable velocity. Touching nearer the center produces louder hits.',
-      component: DrumPad,
+      component: DrumPad as any,
     },
   ],
+  configuration: {
+    title: 'Drum Pad',
+    properties: {
+      'drumPad.midiChannelOverride': {
+        type: 'string',
+        default: '10',
+        markdownDescription:
+          'Overrides the MIDI channel for outputting drum notes.',
+      },
+    },
+  },
 })

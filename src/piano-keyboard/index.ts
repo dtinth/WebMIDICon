@@ -11,7 +11,7 @@ export default createFeature({
       sortKey: '101_piano',
       name: 'Piano',
       description: 'A piano keyboard.',
-      component: PianoKeyboard,
+      component: PianoKeyboard as any,
     },
   ],
 })

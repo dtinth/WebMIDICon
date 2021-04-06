@@ -1,3 +1,5 @@
+/// <reference types="webmidi" />
+
 import { action, observable } from 'mobx'
 
 export type Output = {
@@ -119,11 +121,11 @@ function init() {
   if (navigator.requestMIDIAccess) {
     setStatus('Requesting MIDI access')
     navigator.requestMIDIAccess({ sysex: false }).then(
-      access => {
+      (access) => {
         ok(access)
         access.onstatechange = () => onStateChange(access)
       },
-      e => {
+      (e) => {
         if (
           String(e).match(/^SecurityError:/) &&
           window.location.hostname.match(/\.codesandbox\.io$/)

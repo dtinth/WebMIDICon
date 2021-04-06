@@ -11,7 +11,7 @@ export default createFeature({
       sortKey: '401_pedal',
       name: 'iPedal',
       description: 'A touchscreen-activated pedal.',
-      component: Pedal,
+      component: Pedal as any,
     },
   ],
 })
