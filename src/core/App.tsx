@@ -67,22 +67,7 @@ export function App({ features }: { features: Feature[] }) {
     <HashRouter>
       <Wrapper>
         <Header>
-          <HeaderTitle>
-            WebMIDICon
-            {' — '}
-            {!window.location.hostname.match(/codesandbox\.io$/) && (
-              <a
-                style={{
-                  color: '#ffb',
-                  textDecoration: 'none',
-                  fontWeight: 'normal',
-                }}
-                href="https://glitch.com/edit/#!/webmidicon"
-              >
-                remix on Glitch
-              </a>
-            )}
-          </HeaderTitle>
+          <HeaderTitle>WebMIDICon</HeaderTitle>
           <HeaderRight>
             <MIDIStatus />
           </HeaderRight>
@@ -97,7 +82,7 @@ export function App({ features }: { features: Feature[] }) {
 
 function MIDIStatus() {
   const [open, setOpen] = useState(false)
-  const handleToggle = () => setOpen(o => !o)
+  const handleToggle = () => setOpen((o) => !o)
   const handleOutputSelect = (key: string) => MIDI.selectOutput(key)
   const renderSelector = () =>
     !!open && (
@@ -143,7 +128,7 @@ function MIDIOutputList(props: {
         whiteSpace: 'nowrap',
       }}
     >
-      {props.outputs.map(output => {
+      {props.outputs.map((output) => {
         return (
           <div key={output.key}>
             <button
