@@ -2,18 +2,12 @@ import './App.css'
 
 import * as MIDI from './MIDI'
 import MainView from './MainView'
-import React, { createContext, ReactNode, useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { Observer } from 'mobx-react'
 import styled from 'react-emotion'
 import { HashRouter } from 'react-router-dom'
 import { Feature } from './types'
-import {
-  ConfigurationProperty,
-  ConfigurationSchema,
-  ConfigurationSection,
-  ConfigurationStorage,
-} from '../configuration'
-import { coreSettings } from './CoreSettings'
+import { AppConfigurationProvider } from './AppConfigurationProvider'
 
 const MIDISettings = styled('button')`
   height: 30px;
@@ -160,54 +154,5 @@ function MIDIOutputList(props: {
         )
       })}
     </div>
-  )
-}
-
-const AppConfigurationContext = createContext<{
-  storage: ConfigurationStorage
-  schema: ConfigurationSchema
-} | null>(null)
-
-export function AppConfigurationProvider({
-  features,
-  children,
-}: {
-  features: Feature[]
-  children: ReactNode
-}) {
-  const storage = useMemo((): ConfigurationStorage => {
-    return {
-      get(key) {
-        return undefined
-      },
-    }
-  }, [])
-
-  const schema = useMemo((): ConfigurationSchema => {
-    const properties: Record<string, ConfigurationProperty> = {}
-
-    const sections: ConfigurationSection[] = [
-      ...Object.values(coreSettings),
-      ...features.flatMap((feature) =>
-        feature.configuration ? [feature.configuration] : []
-      ),
-    ]
-    for (const section of sections) {
-      for (const [key, descriptor] of Object.entries(section.properties)) {
-        properties[key] = descriptor
-      }
-    }
-
-    return {
-      getValue(key, stringValue) {
-        return undefined as any
-      },
-    }
-  }, [features])
-
-  return (
-    <AppConfigurationContext.Provider value={{ schema, storage }}>
-      {children}
-    </AppConfigurationContext.Provider>
   )
 }
