@@ -68,6 +68,9 @@ export class MainView extends React.Component {
     return () => this.wheelListeners.remove(listener)
   }
   handleWheel = (e) => {
+    if (e.target?.closest('[data-scroll-view]')) {
+      return
+    }
     if (document.activeElement === this.contentElement) {
       e.preventDefault()
       for (const wheelListener of this.wheelListeners) {
@@ -261,7 +264,7 @@ const MainMenuLink = styled('a')`
   }
 `
 
-const ScrollView = styled('div')`
+const ScrollViewElement = styled('div')`
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   position: absolute;
@@ -270,6 +273,10 @@ const ScrollView = styled('div')`
   bottom: 0;
   left: 0;
 `
+
+function ScrollView({ children }) {
+  return <ScrollViewElement data-scroll-view="1">{children}</ScrollViewElement>
+}
 
 class MIDIEmitter extends React.Component {
   constructor(props) {
