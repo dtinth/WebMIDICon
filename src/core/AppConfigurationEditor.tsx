@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { tw } from 'twind'
 import AppConfigurationContext from './AppConfigurationContext'
 import { InlineMarkdown } from './Markdown'
 
@@ -10,7 +11,7 @@ export function AppConfigurationEditor() {
 
   const { schema } = context
   return (
-    <div>
+    <div className={tw`p-4`}>
       {schema.sections.map((section, index) => {
         return (
           <section key={index}>

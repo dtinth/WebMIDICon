@@ -1,8 +1,18 @@
+import { setup } from 'twind'
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 
 import { App } from './core'
 import { featureModules } from './features'
+
+setup({
+  theme: {
+    fontFamily: {
+      sans: ['Arimo', 'Helvetica', 'sans-serif'],
+    },
+  },
+})
 
 const main = (() => {
   const existing = document.getElementById('main')

@@ -8,6 +8,7 @@ import styled from 'react-emotion'
 import { HashRouter } from 'react-router-dom'
 import { Feature } from './types'
 import AppConfigurationProvider from './AppConfigurationProvider'
+import { tw } from 'twind'
 
 const MIDISettings = styled('button')`
   height: 30px;
@@ -15,18 +16,10 @@ const MIDISettings = styled('button')`
   border: 1px solid #454443;
   color: #8b8685;
   font-family: inherit;
+  line-height: 1;
   font-size: 16px;
   margin: 0;
   display: block;
-`
-
-const Wrapper = styled('div')`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  overflow: hidden;
 `
 
 const Header = styled('div')`
@@ -67,7 +60,7 @@ export function App({ features }: { features: Feature[] }) {
   return (
     <HashRouter>
       <AppConfigurationProvider features={features}>
-        <Wrapper>
+        <div className={tw`absolute inset-0 overflow-hidden leading-tight`}>
           <Header>
             <HeaderTitle>WebMIDICon</HeaderTitle>
             <HeaderRight>
@@ -77,7 +70,7 @@ export function App({ features }: { features: Feature[] }) {
           <AppContent>
             <MainView features={features} />
           </AppContent>
-        </Wrapper>
+        </div>
       </AppConfigurationProvider>
     </HashRouter>
   )
