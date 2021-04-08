@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 import { ConfigurationSchema, ConfigurationStorage } from '../configuration'
 
-export const AppConfigurationContext = createContext<{
+export default createContext<{
   storage: ConfigurationStorage
   schema: ConfigurationSchema
 } | null>(null)

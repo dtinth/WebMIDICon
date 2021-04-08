@@ -7,9 +7,9 @@ import {
   ConfigurationStorage,
 } from '../configuration'
 import { coreSettings } from './CoreSettings'
-import { AppConfigurationContext } from './AppConfigurationContext'
+import AppConfigurationContext from './AppConfigurationContext'
 
-export function AppConfigurationProvider({
+export default function AppConfigurationProvider({
   features,
   children,
 }: {

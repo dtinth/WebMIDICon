@@ -7,7 +7,7 @@ import { Observer } from 'mobx-react'
 import styled from 'react-emotion'
 import { HashRouter } from 'react-router-dom'
 import { Feature } from './types'
-import { AppConfigurationProvider } from './AppConfigurationProvider'
+import AppConfigurationProvider from './AppConfigurationProvider'
 
 const MIDISettings = styled('button')`
   height: 30px;
