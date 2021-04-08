@@ -11,6 +11,11 @@ setup({
     fontFamily: {
       sans: ['Arimo', 'Helvetica', 'sans-serif'],
     },
+    extend: {
+      colors: {
+        '#d7fc70': '#d7fc70',
+      },
+    },
   },
 })
 
