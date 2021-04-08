@@ -24,6 +24,8 @@ export type FeatureConfigurationPropertyType<TypeName, Type> = {
   type: TypeName
   default: Type
   markdownDescription: string
+  enum?: Type[]
+  markdownEnumDescriptions?: Type[]
 }
 
 export interface Instrument {
