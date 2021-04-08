@@ -1,4 +1,4 @@
-import { FeatureConfiguration } from './types'
+import { FeatureConfiguration } from '../configuration'
 
 export const coreSettings: Record<string, FeatureConfiguration> = {
   midi: {
