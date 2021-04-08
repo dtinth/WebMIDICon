@@ -1,6 +1,6 @@
-import { FeatureConfiguration } from '../configuration'
+import { ConfigurationSection } from '../configuration'
 
-export const coreSettings: Record<string, FeatureConfiguration> = {
+export const coreSettings: Record<string, ConfigurationSection> = {
   midi: {
     title: 'MIDI',
     properties: {

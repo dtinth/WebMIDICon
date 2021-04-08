@@ -9,6 +9,7 @@ import { Observer } from 'mobx-react'
 import { sortBy } from 'lodash'
 import FeatureList from './FeatureList'
 import WheelController from './WheelController'
+import { AppConfigurationEditor } from './AppConfigurationEditor'
 
 export class MainView extends React.Component {
   constructor(props) {
@@ -16,7 +17,7 @@ export class MainView extends React.Component {
     const { features } = props
     this.store = createStore(features)
     const instruments = sortBy(
-      [].concat(...features.map(f => f.instruments || [])),
+      [].concat(...features.map((f) => f.instruments || [])),
       'sortKey'
     )
     console.log('Loaded instruments:', instruments)
@@ -34,12 +35,12 @@ export class MainView extends React.Component {
       passive: false,
     })
   }
-  handleGlobalKeyDown = e => {
+  handleGlobalKeyDown = (e) => {
     if (e.keyCode === 13) {
       if (this.contentElement) this.contentElement.focus()
     }
   }
-  handleKeyDown = e => {
+  handleKeyDown = (e) => {
     if (e.metaKey) {
       if (e.keyCode >= 0x30 && e.keyCode <= 0x39) {
         MIDI.send([0xc0, e.keyCode === 0x30 ? 9 : e.keyCode - 0x31])
@@ -56,17 +57,17 @@ export class MainView extends React.Component {
     this.store.handleKeyDown(e.nativeEvent)
     e.preventDefault()
   }
-  handleKeyUp = e => {
+  handleKeyUp = (e) => {
     e.stopPropagation()
     this.store.handleKeyUp(e.nativeEvent)
     e.preventDefault()
   }
   wheelListeners = new Set()
-  registerWheelListener = listener => {
+  registerWheelListener = (listener) => {
     this.wheelListeners.add(listener)
     return () => this.wheelListeners.remove(listener)
   }
-  handleWheel = e => {
+  handleWheel = (e) => {
     if (document.activeElement === this.contentElement) {
       e.preventDefault()
       for (const wheelListener of this.wheelListeners) {
@@ -74,7 +75,7 @@ export class MainView extends React.Component {
       }
     }
   }
-  handleClick = e => {
+  handleClick = (e) => {
     setTimeout(() => {
       if (!this.contentElement) return
       if (
@@ -90,7 +91,7 @@ export class MainView extends React.Component {
     return (
       <Switch>
         {this.instruments
-          .map(instrument => {
+          .map((instrument) => {
             const Component = instrument.component
             return (
               <Route
@@ -101,6 +102,11 @@ export class MainView extends React.Component {
             )
           })
           .concat([
+            <Route
+              key="@@configuration"
+              path="/config"
+              render={() => this.renderConfiguration()}
+            />,
             <Route key="@@main" render={() => this.renderMainMenu()} />,
           ])}
       </Switch>
@@ -117,7 +123,7 @@ export class MainView extends React.Component {
           )}
         </Observer>
         <MainMenu>
-          {this.instruments.map(instrument => (
+          {this.instruments.map((instrument) => (
             <React.Fragment key={instrument.id}>
               {this.renderMenuItem(
                 `#/${instrument.id}`,
@@ -131,7 +137,13 @@ export class MainView extends React.Component {
       </ScrollView>
     )
   }
-
+  renderConfiguration() {
+    return (
+      <ScrollView>
+        <AppConfigurationEditor />
+      </ScrollView>
+    )
+  }
   renderMenuItem(href, text, description) {
     return (
       <MainMenuItem>
@@ -149,7 +161,7 @@ export class MainView extends React.Component {
         <MainToolbarWrapper>
           <MainToolbar
             store={this.store}
-            innerRef={element => (this.toolbarElement = element)}
+            innerRef={(element) => (this.toolbarElement = element)}
           />
         </MainToolbarWrapper>
         <MainContent
@@ -157,7 +169,7 @@ export class MainView extends React.Component {
           onClick={this.handleClick}
           onKeyDown={this.handleKeyDown}
           onKeyUp={this.handleKeyUp}
-          innerRef={element => (this.contentElement = element)}
+          innerRef={(element) => (this.contentElement = element)}
         >
           {this.renderContent()}
         </MainContent>
