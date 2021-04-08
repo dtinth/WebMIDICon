@@ -1,5 +1,5 @@
 import { ComponentType, KeyboardEvent } from 'react'
-import { FeatureConfiguration } from '../configuration'
+import { ConfigurationSection } from '../configuration'
 
 export interface Feature {
   name: string
@@ -9,7 +9,7 @@ export interface Feature {
   onKeyDown?: (store: Store, event: KeyboardEvent) => void
   onKeyUp?: (store: Store, event: KeyboardEvent) => void
   getActiveNotes?: () => ActiveNote[]
-  configuration?: FeatureConfiguration
+  configuration?: ConfigurationSection
 }
 
 export interface Instrument {
