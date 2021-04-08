@@ -12,10 +12,15 @@ export function AppConfigurationEditor() {
   const { schema } = context
   return (
     <div className={tw`p-4`}>
+      <h2 className={tw`text-3xl p-2 text-#8b8685 font-bold`}>
+        WebMIDICon configuration
+      </h2>
       {schema.sections.map((section, index) => {
         return (
           <section key={index} className={tw`mb-8`}>
-            <h2 className={tw`text-3xl p-2 text-#d7fc70`}>{section.title}</h2>
+            <h2 className={tw`text-2xl pt-2 px-2 text-#d7fc70`}>
+              {section.title}
+            </h2>
             {Object.entries(section.properties).map(([name, descriptor]) => {
               return (
                 <div className={tw`p-2 leading-normal`}>
