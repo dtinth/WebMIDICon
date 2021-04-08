@@ -38,6 +38,19 @@ export default createFeature({
         markdownDescription:
           'Comma-separated list of gamepad button numbers to be detected. The pedal will be considered “pressed” when _any_ of these buttons are pressed. Use [gamepad-tester.com](https://gamepad-tester.com/) to find out the button.',
       },
+      'joypedal.mode': {
+        type: 'string',
+        default: 'sustain',
+        markdownDescription:
+          'Whether to use Joypedal as a sustain pedal or as a kick drum.',
+        enum: ['sustain', 'kick'],
+      },
+      'joypedal.kick.midiChannelOverride': {
+        type: 'string',
+        default: '10',
+        markdownDescription:
+          'Override the MIDI channel used for the kick drum.',
+      },
     },
   },
 })
