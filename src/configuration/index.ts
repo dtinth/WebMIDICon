@@ -12,6 +12,7 @@ export function getConfiguration<T>(
  */
 export interface ConfigurationSchema {
   getValue<T>(key: string, stringValue: string | undefined): T
+  sections: ConfigurationSection[]
 }
 
 /**

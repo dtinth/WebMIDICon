@@ -43,6 +43,7 @@ export default function AppConfigurationProvider({
       getValue(key, stringValue) {
         return undefined as any
       },
+      sections,
     }
   }, [features])
 

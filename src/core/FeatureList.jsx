@@ -1,18 +1,15 @@
 import React from 'react'
 import styled from 'react-emotion'
 import { groupBy, orderBy } from 'lodash'
-import MarkdownIt from 'markdown-it'
+import { InlineMarkdown } from './Markdown'
 
-const categoryIndex = name =>
+const categoryIndex = (name) =>
   ['instruments', 'addons'].indexOf(name) + 1 || Number.MAX_VALUE
-
-const md = MarkdownIt()
-const renderMarkdown = markdown => ({ __html: md.renderInline(markdown) })
 
 export default function FeatureList({ features }) {
   const categories = orderBy(
-    [...new Set(features.map(f => f.category).filter(c => c))],
-    [categoryIndex, c => c],
+    [...new Set(features.map((f) => f.category).filter((c) => c))],
+    [categoryIndex, (c) => c],
     ['asc', 'asc']
   )
   const grouped = groupBy(features, 'category')
@@ -27,22 +24,18 @@ export default function FeatureList({ features }) {
           </tr>
         </thead>
         <tbody>
-          {categories.map(cat => (
+          {categories.map((cat) => (
             <React.Fragment key={cat}>
               <tr>
                 <FeatureCategoryTD colSpan={2}>{cat}</FeatureCategoryTD>
               </tr>
-              {grouped[cat].map(feature => (
+              {grouped[cat].map((feature) => (
                 <tr key={feature.name}>
                   <FeatureNameTD>
                     <strong>{feature.name}</strong>
                   </FeatureNameTD>
                   <FeatureDescriptionTD>
-                    <span
-                      dangerouslySetInnerHTML={renderMarkdown(
-                        feature.description
-                      )}
-                    />
+                    <InlineMarkdown text={feature.description} />
                   </FeatureDescriptionTD>
                 </tr>
               ))}
