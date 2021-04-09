@@ -1,6 +1,9 @@
 import React, { ReactNode, useContext } from 'react'
 import { tw } from 'twind'
-import AppConfigurationContext from './AppConfigurationContext'
+import { ConfigurationProperty, getConfiguration } from '../configuration'
+import AppConfigurationContext, {
+  useAppConfigurationContext,
+} from './AppConfigurationContext'
 import { InlineMarkdown } from './Markdown'
 
 export function AppConfigurationEditor() {
@@ -27,11 +30,19 @@ export function AppConfigurationEditor() {
                   <h3 className={tw`font-bold`}>
                     <ConfigurationPropertyTitle propertyName={name} />
                   </h3>
-                  {!!descriptor.markdownDescription && (
-                    <p className={tw`opacity-75`}>
-                      <InlineMarkdown text={descriptor.markdownDescription} />
-                    </p>
-                  )}
+                  <ConfigurationPropertyEditor
+                    propertyName={name}
+                    propertyDescriptor={descriptor}
+                    description={
+                      descriptor.markdownDescription ? (
+                        <div className={tw`opacity-75`}>
+                          <InlineMarkdown
+                            text={descriptor.markdownDescription}
+                          />
+                        </div>
+                      ) : null
+                    }
+                  />
                 </div>
               )
             })}
@@ -65,4 +76,36 @@ function ConfigurationPropertyTitle({
         })}
     </span>
   )
+}
+
+function ConfigurationPropertyEditor(props: {
+  propertyName: string
+  propertyDescriptor: ConfigurationProperty
+  description: ReactNode
+}) {
+  const { schema, storage } = useAppConfigurationContext()
+  const value = getConfiguration(schema, storage, props.propertyName)
+  if (props.propertyDescriptor.type === 'boolean') {
+    return (
+      <div className={tw`flex`}>
+        <input type="checkbox" className={tw`mr-2`} />
+        {props.description}
+      </div>
+    )
+  }
+  if (props.propertyDescriptor.type === 'string') {
+    return (
+      <>
+        {props.description}
+        <p>
+          <input
+            type="text"
+            className={tw`p-1 bg-#090807 border border-#656463`}
+            value={String(value)}
+          />
+        </p>
+      </>
+    )
+  }
+  return <>{props.description}</>
 }
