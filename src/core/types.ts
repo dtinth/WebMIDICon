@@ -1,4 +1,5 @@
 import { ComponentType, KeyboardEvent } from 'react'
+import { ConfigurationSection } from '../configuration'
 
 export interface Feature {
   name: string
@@ -8,24 +9,7 @@ export interface Feature {
   onKeyDown?: (store: Store, event: KeyboardEvent) => void
   onKeyUp?: (store: Store, event: KeyboardEvent) => void
   getActiveNotes?: () => ActiveNote[]
-  configuration?: FeatureConfiguration
-}
-
-export interface FeatureConfiguration {
-  title: string
-  properties: Record<string, FeatureConfigurationProperty>
-}
-
-export type FeatureConfigurationProperty =
-  | FeatureConfigurationPropertyType<'string', string>
-  | FeatureConfigurationPropertyType<'boolean', boolean>
-
-export type FeatureConfigurationPropertyType<TypeName, Type> = {
-  type: TypeName
-  default: Type
-  markdownDescription: string
-  enum?: Type[]
-  markdownEnumDescriptions?: Type[]
+  configuration?: ConfigurationSection
 }
 
 export interface Instrument {
