@@ -19,7 +19,7 @@ export default function AppConfigurationProvider({
   const storage = useMemo((): ConfigurationStorage => {
     return {
       get(key) {
-        return undefined
+        return localStorage['WebMIDICon_' + key]
       },
     }
   }, [])
@@ -41,6 +41,17 @@ export default function AppConfigurationProvider({
 
     return {
       getValue(key, stringValue) {
+        const found = properties[key]
+        if (found.type === 'string') {
+          return stringValue ?? found.default
+        }
+        if (found.type === 'boolean') {
+          return stringValue === 'true'
+            ? true
+            : stringValue === 'false'
+            ? false
+            : found.default
+        }
         return undefined as any
       },
       sections,
