@@ -1,6 +1,10 @@
-import React, { ReactNode, useContext } from 'react'
+import React, { ReactNode, useContext, useState } from 'react'
 import { tw } from 'twind'
-import { ConfigurationProperty, getConfiguration } from '../configuration'
+import {
+  ConfigurationProperty,
+  getConfiguration,
+  setConfiguration,
+} from '../configuration'
 import AppConfigurationContext, {
   useAppConfigurationContext,
 } from './AppConfigurationContext'
@@ -13,8 +17,13 @@ export function AppConfigurationEditor() {
   }
 
   const { schema } = context
+  const stopPropagation = (e: React.KeyboardEvent) => e.stopPropagation()
   return (
-    <div className={tw`p-4`}>
+    <div
+      className={tw`p-4`}
+      onKeyDown={stopPropagation}
+      onKeyUp={stopPropagation}
+    >
       <h2 className={tw`text-3xl p-2 text-#8b8685 font-bold`}>
         WebMIDICon configuration
       </h2>
@@ -78,13 +87,44 @@ function ConfigurationPropertyTitle({
   )
 }
 
+function useConfigurationValue(propertyName: string) {
+  const { schema, storage } = useAppConfigurationContext()
+  const [value, setStateValue] = useState(() =>
+    getConfiguration(schema, storage, propertyName)
+  )
+  const overridden = storage.has(propertyName)
+  const setValue = (value: any) => {
+    setConfiguration(schema, storage, propertyName, value)
+    setStateValue(value)
+  }
+  const resetValue = () => {
+    storage.delete(propertyName)
+    setStateValue(schema.getDefaultValue(propertyName))
+  }
+  return { value, overridden, setValue, resetValue }
+}
+
 function ConfigurationPropertyEditor(props: {
   propertyName: string
   propertyDescriptor: ConfigurationProperty
   description: ReactNode
 }) {
-  const { schema, storage } = useAppConfigurationContext()
-  const value = getConfiguration(schema, storage, props.propertyName)
+  const { value, overridden, setValue, resetValue } = useConfigurationValue(
+    props.propertyName
+  )
+  const reset = overridden ? (
+    <span className={tw`ml-2 text-#8b8685`}>
+      (default:{' '}
+      <button
+        className={tw`underline`}
+        title="Click to reset to default value"
+        onClick={resetValue}
+      >
+        {props.propertyDescriptor.default}
+      </button>
+      )
+    </span>
+  ) : null
   if (props.propertyDescriptor.type === 'boolean') {
     return (
       <div className={tw`flex`}>
@@ -93,19 +133,80 @@ function ConfigurationPropertyEditor(props: {
       </div>
     )
   }
+  if (
+    props.propertyDescriptor.type === 'string' &&
+    props.propertyDescriptor.enum
+  ) {
+    return (
+      <>
+        {props.description}
+        <p>
+          <select
+            className={tw`p-1 bg-#090807 border border-#656463`}
+            onChange={(e) => setValue(e.target.value)}
+            value={(value as unknown) as string}
+          >
+            {props.propertyDescriptor.enum.map((value) => (
+              <option key={value} value={value}>
+                {value}
+              </option>
+            ))}
+          </select>
+          {reset}
+        </p>
+      </>
+    )
+  }
   if (props.propertyDescriptor.type === 'string') {
     return (
       <>
         {props.description}
         <p>
-          <input
-            type="text"
-            className={tw`p-1 bg-#090807 border border-#656463`}
-            value={String(value)}
+          <ConfigInput
+            value={value as string}
+            onChange={(text) => {
+              setValue(text)
+            }}
           />
+          {overridden ? (
+            <span className={tw`ml-2 text-#8b8685`}>
+              (default:{' '}
+              <button
+                className={tw`underline`}
+                title="Click to reset to default value"
+                onClick={resetValue}
+              >
+                {props.propertyDescriptor.default}
+              </button>
+              )
+            </span>
+          ) : null}
         </p>
       </>
     )
   }
   return <>{props.description}</>
+}
+
+function ConfigInput(props: {
+  value: string
+  onChange: (value: string) => void
+}) {
+  const [currentValue, setCurrentValue] = useState(props.value)
+  const [cachedValue, setCachedValue] = useState(props.value)
+  if (cachedValue !== props.value) {
+    setCachedValue(props.value)
+    setCurrentValue(props.value)
+  }
+  return (
+    <input
+      type="text"
+      className={tw`p-1 bg-#090807 border border-#656463`}
+      value={currentValue}
+      onChange={(e) => {
+        setCurrentValue(e.target.value)
+        props.onChange(e.target.value)
+      }}
+    />
+  )
 }

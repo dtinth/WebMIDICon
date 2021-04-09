@@ -21,6 +21,15 @@ export default function AppConfigurationProvider({
       get(key) {
         return localStorage['WebMIDICon_' + key]
       },
+      has(key) {
+        return localStorage['WebMIDICon_' + key] !== undefined
+      },
+      delete(key) {
+        delete localStorage['WebMIDICon_' + key]
+      },
+      set(key, value) {
+        localStorage['WebMIDICon_' + key] = value
+      },
     }
   }, [])
 
@@ -53,6 +62,20 @@ export default function AppConfigurationProvider({
             : found.default
         }
         return undefined as any
+      },
+      getDefaultValue(key) {
+        const found = properties[key]
+        return found?.default as any
+      },
+      serialize(key, value) {
+        const found = properties[key]
+        if (found.type === 'string') {
+          return (value as unknown) as string
+        }
+        if (found.type === 'boolean') {
+          return value ? 'true' : 'false'
+        }
+        return ''
       },
       sections,
     }
