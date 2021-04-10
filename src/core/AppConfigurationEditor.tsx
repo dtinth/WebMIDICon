@@ -30,7 +30,7 @@ export function AppConfigurationEditor() {
             </h2>
             {Object.entries(section.properties).map(([name, descriptor]) => {
               return (
-                <div className={tw`p-2 leading-normal`}>
+                <div className={tw`p-2 leading-normal`} key={name}>
                   <h3 className={tw`font-bold`}>
                     <ConfigurationPropertyTitle propertyName={name} />
                   </h3>

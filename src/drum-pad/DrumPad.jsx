@@ -1,5 +1,3 @@
-import { MIDI } from '../core'
-
 import React from 'react'
 import { TouchAbsorber } from '../core/TouchAbsorber'
 
@@ -25,7 +23,7 @@ const buttons = [
   { name: 'Kick', note: 36 },
 ]
 
-export class DrumPad extends React.PureComponent {
+export class DrumPadContents extends React.PureComponent {
   render() {
     return (
       <div
@@ -53,15 +51,10 @@ export class DrumPad extends React.PureComponent {
           background={background}
           backgroundActive={backgroundActive}
           name={button.name}
-          onTrigger={(velocity) => this.handleTrigger(button.note, velocity)}
+          onTrigger={(velocity) => this.props.onTrigger(button.note, velocity)}
         />
       </div>
     )
-  }
-  handleTrigger(note, velocity) {
-    const midiVelocity = Math.max(0, Math.min(127, Math.round(velocity * 127)))
-    MIDI.send([0x99, note, midiVelocity])
-    MIDI.send([0x89, note, midiVelocity])
   }
 }
 
