@@ -34,6 +34,7 @@ export interface ConfigurationStorage {
   has(key: string): boolean
   set(key: string, value: string): void
   delete(key: string): void
+  watch(key: string, onChange: () => void): { unsubscribe: () => void }
 }
 
 export interface ConfigurationSection {

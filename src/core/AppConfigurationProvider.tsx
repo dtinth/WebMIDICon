@@ -17,6 +17,13 @@ export default function AppConfigurationProvider({
   children: ReactNode
 }) {
   const storage = useMemo((): ConfigurationStorage => {
+    const subscribers: Record<string, Set<() => void>> = {}
+    const notify = (key: string) => {
+      const set = subscribers[key]
+      if (!set) return
+      for (const listener of set) listener()
+    }
+
     return {
       get(key) {
         return localStorage['WebMIDICon_' + key]
@@ -26,9 +33,21 @@ export default function AppConfigurationProvider({
       },
       delete(key) {
         delete localStorage['WebMIDICon_' + key]
+        notify(key)
       },
       set(key, value) {
         localStorage['WebMIDICon_' + key] = value
+        notify(key)
+      },
+      watch(key, callback) {
+        const set = (subscribers[key] ??= new Set())
+        const listener = () => callback()
+        set.add(listener)
+        return {
+          unsubscribe: () => {
+            set.delete(listener)
+          },
+        }
       },
     }
   }, [])

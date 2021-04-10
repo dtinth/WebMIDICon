@@ -1,4 +1,4 @@
-import React, { ReactNode, useContext, useState } from 'react'
+import React, { ReactNode, useContext, useEffect, useState } from 'react'
 import { tw } from 'twind'
 import {
   ConfigurationProperty,
@@ -92,15 +92,20 @@ function useConfigurationValue(propertyName: string) {
   const [value, setStateValue] = useState(() =>
     getConfiguration(schema, storage, propertyName)
   )
-  const overridden = storage.has(propertyName)
+  const [overridden, setOverridden] = useState(() => storage.has(propertyName))
   const setValue = (value: any) => {
     setConfiguration(schema, storage, propertyName, value)
-    setStateValue(value)
   }
   const resetValue = () => {
     storage.delete(propertyName)
-    setStateValue(schema.getDefaultValue(propertyName))
   }
+  useEffect(() => {
+    const subscriber = storage.watch(propertyName, () => {
+      setStateValue(getConfiguration(schema, storage, propertyName))
+      setOverridden(storage.has(propertyName))
+    })
+    return () => subscriber.unsubscribe()
+  }, [propertyName, storage])
   return { value, overridden, setValue, resetValue }
 }
 
