@@ -10,6 +10,7 @@ import { sortBy } from 'lodash'
 import FeatureList from './FeatureList'
 import WheelController from './WheelController'
 import { AppConfigurationEditor } from './AppConfigurationEditor'
+import { AppServices } from './AppServices'
 
 export class MainView extends React.Component {
   constructor(props) {
@@ -192,6 +193,7 @@ export class MainView extends React.Component {
             />
           )}
         </Observer>
+        <AppServices features={this.props.features} store={this.store} />
       </div>
     )
   }
