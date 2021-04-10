@@ -15,8 +15,8 @@ import { AppServices } from './AppServices'
 export class MainView extends React.Component {
   constructor(props) {
     super(props)
-    const { features } = props
-    this.store = createStore(features)
+    const { features, store } = props
+    this.store = store
     const instruments = sortBy(
       [].concat(...features.map((f) => f.instruments || [])),
       'sortKey'
