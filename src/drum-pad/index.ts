@@ -1,5 +1,5 @@
-import { DrumPad } from './DrumPad'
 import { createFeature } from '../core'
+import { DrumPadContainer } from './DrumPadContainer'
 
 export default createFeature({
   name: 'drum-pad',
@@ -13,7 +13,7 @@ export default createFeature({
       name: 'Drum pad',
       description:
         'A drum pad with variable velocity. Touching nearer the center produces louder hits.',
-      component: DrumPad as any,
+      component: DrumPadContainer as any,
     },
   ],
   configuration: {

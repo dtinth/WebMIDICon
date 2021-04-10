@@ -17,9 +17,37 @@ export default function AppConfigurationProvider({
   children: ReactNode
 }) {
   const storage = useMemo((): ConfigurationStorage => {
+    const subscribers: Record<string, Set<() => void>> = {}
+    const notify = (key: string) => {
+      const set = subscribers[key]
+      if (!set) return
+      for (const listener of set) listener()
+    }
+
     return {
       get(key) {
-        return undefined
+        return localStorage['WebMIDICon_' + key]
+      },
+      has(key) {
+        return localStorage['WebMIDICon_' + key] !== undefined
+      },
+      delete(key) {
+        delete localStorage['WebMIDICon_' + key]
+        notify(key)
+      },
+      set(key, value) {
+        localStorage['WebMIDICon_' + key] = value
+        notify(key)
+      },
+      watch(key, callback) {
+        const set = (subscribers[key] ??= new Set())
+        const listener = () => callback()
+        set.add(listener)
+        return {
+          unsubscribe: () => {
+            set.delete(listener)
+          },
+        }
       },
     }
   }, [])
@@ -41,7 +69,32 @@ export default function AppConfigurationProvider({
 
     return {
       getValue(key, stringValue) {
+        const found = properties[key]
+        if (found.type === 'string') {
+          return stringValue ?? found.default
+        }
+        if (found.type === 'boolean') {
+          return stringValue === 'true'
+            ? true
+            : stringValue === 'false'
+            ? false
+            : found.default
+        }
         return undefined as any
+      },
+      getDefaultValue(key) {
+        const found = properties[key]
+        return found?.default as any
+      },
+      serialize(key, value) {
+        const found = properties[key]
+        if (found.type === 'string') {
+          return (value as unknown) as string
+        }
+        if (found.type === 'boolean') {
+          return value ? 'true' : 'false'
+        }
+        return ''
       },
       sections,
     }

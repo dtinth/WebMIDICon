@@ -1,7 +1,21 @@
-import { createContext } from 'react'
+import { createContext, useContext } from 'react'
 import { ConfigurationSchema, ConfigurationStorage } from '../configuration'
 
-export default createContext<{
+type AppConfiguration = {
   storage: ConfigurationStorage
   schema: ConfigurationSchema
-} | null>(null)
+}
+
+export const AppConfigurationContext = createContext<AppConfiguration | null>(
+  null
+)
+
+export default AppConfigurationContext
+
+export function useAppConfigurationContext() {
+  const context = useContext(AppConfigurationContext)
+  if (!context) {
+    throw new Error('No context')
+  }
+  return context
+}

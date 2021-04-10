@@ -9,6 +9,7 @@ import { HashRouter } from 'react-router-dom'
 import { Feature } from './types'
 import AppConfigurationProvider from './AppConfigurationProvider'
 import { tw } from 'twind'
+import AppStoreProvider, { useAppStore } from './AppStoreProvider'
 
 const MIDISettings = styled('button')`
   height: 30px;
@@ -60,20 +61,27 @@ export function App({ features }: { features: Feature[] }) {
   return (
     <HashRouter>
       <AppConfigurationProvider features={features}>
-        <div className={tw`absolute inset-0 overflow-hidden leading-tight`}>
-          <Header>
-            <HeaderTitle>WebMIDICon</HeaderTitle>
-            <HeaderRight>
-              <MIDIStatus />
-            </HeaderRight>
-          </Header>
-          <AppContent>
-            <MainView features={features} />
-          </AppContent>
-        </div>
+        <AppStoreProvider features={features}>
+          <div className={tw`absolute inset-0 overflow-hidden leading-tight`}>
+            <Header>
+              <HeaderTitle>WebMIDICon</HeaderTitle>
+              <HeaderRight>
+                <MIDIStatus />
+              </HeaderRight>
+            </Header>
+            <AppContent>
+              <MainViewContainer features={features} />
+            </AppContent>
+          </div>
+        </AppStoreProvider>
       </AppConfigurationProvider>
     </HashRouter>
   )
+}
+
+function MainViewContainer(props: { features: Feature[] }) {
+  const store = useAppStore()
+  return <MainView features={props.features} store={store} />
 }
 
 function MIDIStatus() {

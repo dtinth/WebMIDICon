@@ -1,28 +1,5 @@
-import { MIDI, createFeature } from '../core'
-
-let wasDown = false
-function updateGamepads() {
-  let down = false
-  for (const gamepad of navigator.getGamepads()) {
-    if (!gamepad) continue
-    for (const i of [10, 11]) {
-      if (gamepad.buttons[i] && gamepad.buttons[i].pressed) {
-        down = true
-      }
-    }
-  }
-  if (!wasDown && down) {
-    wasDown = true
-    // MIDI.send([0x99, 36, 127])
-    // MIDI.send([0x89, 36, 127])
-    MIDI.send([0xb0, 0x40, 127])
-  } else if (wasDown && !down) {
-    wasDown = false
-    MIDI.send([0xb0, 0x40, 0])
-  }
-}
-
-setInterval(updateGamepads, 16)
+import { useEffect, useRef } from 'react'
+import { MIDI, createFeature, useConfiguration } from '../core'
 
 export default createFeature({
   name: 'joypedal',
@@ -53,4 +30,87 @@ export default createFeature({
       },
     },
   },
+  serviceComponent: JoypedalService,
 })
+
+type Mode = 'sustain' | 'kick'
+
+function JoypedalService() {
+  const mainChannel = useConfiguration<string>('midi.output.channel')
+  const buttons = useConfiguration<string>('joypedal.buttons')
+  const mode = useConfiguration<Mode>('joypedal.mode')
+  const kickChannel = useConfiguration<string>(
+    'joypedal.kick.midiChannelOverride'
+  )
+
+  const config = { buttons, mode, kickChannel, mainChannel }
+  const configRef = useRef(config)
+  useEffect(() => {
+    configRef.current = config
+  }, [config])
+
+  useEffect(() => {
+    return startJoypedal({
+      getButtons: () =>
+        configRef.current.buttons.value.split(',').map((x) => +x),
+      getMainChannel: () => +configRef.current.mainChannel.value,
+      getKickChannel: () => +configRef.current.mainChannel.value,
+      getMode: () => configRef.current.mode.value,
+    })
+  }, [])
+  return null
+}
+
+function startJoypedal(config: {
+  getButtons: () => number[]
+  getMainChannel: () => number
+  getKickChannel: () => number
+  getMode: () => Mode
+}) {
+  let wasDown: { up: () => void } | null = null
+  function updateGamepads() {
+    let down = false
+    for (const gamepad of navigator.getGamepads()) {
+      if (!gamepad) continue
+      for (const i of config.getButtons()) {
+        if (gamepad.buttons[i] && gamepad.buttons[i].pressed) {
+          down = true
+        }
+      }
+    }
+    if (!wasDown && down) {
+      switch (config.getMode()) {
+        case 'kick': {
+          const channel = config.getKickChannel() || 10
+          MIDI.send([0x90 + channel - 1, 36, 127])
+          MIDI.send([0x80 + channel - 1, 36, 127])
+          wasDown = { up: () => {} }
+          break
+        }
+        case 'sustain': {
+          const channel = config.getMainChannel() || 1
+          MIDI.send([0xb0 + channel - 1, 0x40, 127])
+          wasDown = {
+            up: () => {
+              MIDI.send([0xb0 + channel - 1, 0x40, 0])
+            },
+          }
+          break
+        }
+        default:
+          console.warn('Joypedal: Invalid mode.')
+      }
+    } else if (wasDown && !down) {
+      try {
+        wasDown.up()
+      } finally {
+        wasDown = null
+      }
+    }
+  }
+
+  const id = setInterval(updateGamepads, 16)
+  return () => {
+    clearInterval(id)
+  }
+}

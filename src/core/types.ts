@@ -6,6 +6,7 @@ export interface Feature {
   description: string
   category: 'instruments' | 'addons'
   instruments?: Instrument[]
+  serviceComponent?: ComponentType<{ store: Store }>
   onKeyDown?: (store: Store, event: KeyboardEvent) => void
   onKeyUp?: (store: Store, event: KeyboardEvent) => void
   getActiveNotes?: () => ActiveNote[]
