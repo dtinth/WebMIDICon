@@ -23,12 +23,6 @@ const MIDISettings = styled('button')`
   display: block;
 `
 
-const HeaderTitle = styled('div')`
-  color: #8b8685;
-  font-weight: bold;
-  margin-left: 10px;
-`
-
 const HeaderRight = styled('div')`
   position: absolute;
   top: 0;
@@ -54,7 +48,7 @@ export function App({ features }: { features: Feature[] }) {
             <header
               className={tw`absolute top-0 inset-x-0 height-[40px] bg-#090807 border-b border-#454443 leading-[40px] z-10`}
             >
-              <HeaderTitle>WebMIDICon</HeaderTitle>
+              <h1 className={tw`text-#8b8685 font-bold ml-2`}>WebMIDICon</h1>
               <HeaderRight>
                 <MIDIStatus />
               </HeaderRight>
