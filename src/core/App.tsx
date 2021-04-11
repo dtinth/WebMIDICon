@@ -23,14 +23,6 @@ const MIDISettings = styled('button')`
   display: block;
 `
 
-const AppContent = styled('div')`
-  position: absolute;
-  top: 40px;
-  right: 0;
-  bottom: 0;
-  left: 0;
-`
-
 export function App({ features }: { features: Feature[] }) {
   return (
     <HashRouter>
@@ -45,9 +37,9 @@ export function App({ features }: { features: Feature[] }) {
                 <MIDIStatus />
               </aside>
             </header>
-            <AppContent>
+            <section className={tw`absolute top-[40px] inset-x-0 bottom-0`}>
               <MainViewContainer features={features} />
-            </AppContent>
+            </section>
           </div>
         </AppStoreProvider>
       </AppConfigurationProvider>
