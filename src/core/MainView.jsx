@@ -38,7 +38,9 @@ export class MainView extends React.Component {
   }
   handleGlobalKeyDown = (e) => {
     if (e.keyCode === 13) {
-      if (this.contentElement) this.contentElement.focus()
+      if (this.contentElement) {
+        this.contentElement.focus()
+      }
     }
   }
   handleKeyDown = (e) => {

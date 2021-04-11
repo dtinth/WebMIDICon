@@ -7,7 +7,7 @@ import { Feature } from './types'
 import AppConfigurationProvider from './AppConfigurationProvider'
 import { tw } from 'twind'
 import AppStoreProvider, { useAppStore } from './AppStoreProvider'
-import { MIDIStatus } from './AppSettingsPopover'
+import { AppSettingsPopover } from './AppSettingsPopover'
 
 export function App({ features }: { features: Feature[] }) {
   return (
@@ -16,11 +16,11 @@ export function App({ features }: { features: Feature[] }) {
         <AppStoreProvider features={features}>
           <div className={tw`absolute inset-0 overflow-hidden leading-tight`}>
             <header
-              className={tw`absolute top-0 inset-x-0 height-[40px] bg-#090807 border-b border-#454443 leading-[40px] z-10`}
+              className={tw`absolute top-0 inset-x-0 h-[40px] bg-#090807 border-b border-#454443 z-10 flex items-center`}
             >
               <h1 className={tw`text-#8b8685 font-bold ml-2`}>WebMIDICon</h1>
-              <aside className={tw`absolute inset-y-0 right-2`}>
-                <MIDIStatus />
+              <aside className={tw`absolute inset-y-0 right-2 flex`}>
+                <AppSettingsPopover />
               </aside>
             </header>
             <section className={tw`absolute top-[40px] inset-x-0 bottom-0`}>
