@@ -65,8 +65,9 @@ export class MainView extends React.Component {
   }
   wheelListeners = new Set()
   registerWheelListener = (listener) => {
-    this.wheelListeners.add(listener)
-    return () => this.wheelListeners.remove(listener)
+    const listeners = this.wheelListeners
+    listeners.add(listener)
+    return () => listeners.delete(listener)
   }
   handleWheel = (e) => {
     if (e.target?.closest('[data-scroll-view]')) {
