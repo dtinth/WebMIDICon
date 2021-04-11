@@ -54,7 +54,7 @@ function JoypedalService() {
       getButtons: () =>
         configRef.current.buttons.value.split(',').map((x) => +x),
       getMainChannel: () => +configRef.current.mainChannel.value,
-      getKickChannel: () => +configRef.current.mainChannel.value,
+      getKickChannel: () => +configRef.current.kickChannel.value,
       getMode: () => configRef.current.mode.value,
     })
   }, [])
