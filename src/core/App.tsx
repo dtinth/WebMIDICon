@@ -11,18 +11,6 @@ import AppConfigurationProvider from './AppConfigurationProvider'
 import { tw } from 'twind'
 import AppStoreProvider, { useAppStore } from './AppStoreProvider'
 
-const MIDISettings = styled('button')`
-  height: 30px;
-  background: #252423;
-  border: 1px solid #454443;
-  color: #8b8685;
-  font-family: inherit;
-  line-height: 1;
-  font-size: 16px;
-  margin: 0;
-  display: block;
-`
-
 export function App({ features }: { features: Feature[] }) {
   return (
     <HashRouter>
@@ -51,6 +39,18 @@ function MainViewContainer(props: { features: Feature[] }) {
   const store = useAppStore()
   return <MainView features={props.features} store={store} />
 }
+
+const MIDISettings = styled('button')`
+  height: 30px;
+  background: #252423;
+  border: 1px solid #454443;
+  color: #8b8685;
+  font-family: inherit;
+  line-height: 1;
+  font-size: 16px;
+  margin: 0;
+  display: block;
+`
 
 function MIDIStatus() {
   const [open, setOpen] = useState(false)
