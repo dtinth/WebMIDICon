@@ -23,18 +23,6 @@ const MIDISettings = styled('button')`
   display: block;
 `
 
-const Header = styled('div')`
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 40px;
-  left: 0;
-  background: #090807;
-  border-bottom: 1px solid #454443;
-  line-height: 40px;
-  z-index: 10;
-`
-
 const HeaderTitle = styled('div')`
   color: #8b8685;
   font-weight: bold;
@@ -63,12 +51,14 @@ export function App({ features }: { features: Feature[] }) {
       <AppConfigurationProvider features={features}>
         <AppStoreProvider features={features}>
           <div className={tw`absolute inset-0 overflow-hidden leading-tight`}>
-            <Header>
+            <header
+              className={tw`absolute top-0 inset-x-0 height-[40px] bg-#090807 border-b border-#454443 leading-[40px] z-10`}
+            >
               <HeaderTitle>WebMIDICon</HeaderTitle>
               <HeaderRight>
                 <MIDIStatus />
               </HeaderRight>
-            </Header>
+            </header>
             <AppContent>
               <MainViewContainer features={features} />
             </AppContent>
