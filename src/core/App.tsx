@@ -23,14 +23,6 @@ const MIDISettings = styled('button')`
   display: block;
 `
 
-const HeaderRight = styled('div')`
-  position: absolute;
-  top: 0;
-  right: 4px;
-  bottom: 0;
-  line-height: 40px;
-`
-
 const AppContent = styled('div')`
   position: absolute;
   top: 40px;
@@ -49,9 +41,9 @@ export function App({ features }: { features: Feature[] }) {
               className={tw`absolute top-0 inset-x-0 height-[40px] bg-#090807 border-b border-#454443 leading-[40px] z-10`}
             >
               <h1 className={tw`text-#8b8685 font-bold ml-2`}>WebMIDICon</h1>
-              <HeaderRight>
+              <aside className={tw`absolute inset-y-0 right-2`}>
                 <MIDIStatus />
-              </HeaderRight>
+              </aside>
             </header>
             <AppContent>
               <MainViewContainer features={features} />
