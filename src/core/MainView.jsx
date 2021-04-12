@@ -38,7 +38,9 @@ export class MainView extends React.Component {
   }
   handleGlobalKeyDown = (e) => {
     if (e.keyCode === 13) {
-      if (this.contentElement) this.contentElement.focus()
+      if (this.contentElement) {
+        this.contentElement.focus()
+      }
     }
   }
   handleKeyDown = (e) => {
@@ -65,8 +67,9 @@ export class MainView extends React.Component {
   }
   wheelListeners = new Set()
   registerWheelListener = (listener) => {
-    this.wheelListeners.add(listener)
-    return () => this.wheelListeners.remove(listener)
+    const listeners = this.wheelListeners
+    listeners.add(listener)
+    return () => listeners.delete(listener)
   }
   handleWheel = (e) => {
     if (e.target?.closest('[data-scroll-view]')) {
