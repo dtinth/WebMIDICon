@@ -32,14 +32,14 @@ export class Pedal extends React.PureComponent {
             left: 0,
             background: 'white',
           }}
-          ref={div => {
+          ref={(div) => {
             this.div = div
           }}
         />
       </div>
     )
   }
-  handleTouch = e => {
+  handleTouch = (e) => {
     const pressure = e.touches.length
     const opacity = Math.pow(pressure / 11, 1 / 3)
     if (this.div) {
