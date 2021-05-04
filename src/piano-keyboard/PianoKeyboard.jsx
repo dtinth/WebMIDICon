@@ -102,7 +102,6 @@ export class PianoKeyboard extends React.PureComponent {
     void [].forEach.call(e.touches, (touch) => {
       const element = document.elementFromPoint(touch.clientX, touch.clientY)
       const matching = this.keyMap.get(element)
-      console.log(element, matching, this.keyMap)
       if (matching != null) {
         keys.add(matching)
       }
