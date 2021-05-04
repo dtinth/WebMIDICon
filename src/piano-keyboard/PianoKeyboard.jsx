@@ -97,18 +97,16 @@ export class PianoKeyboard extends React.PureComponent {
       </div>
     )
   }
-  handleTouch = e => {
+  handleTouch = (e) => {
     const keys = new Set()
-    void [].forEach.call(e.touches, touch => {
+    void [].forEach.call(e.touches, (touch) => {
       const element = document.elementFromPoint(touch.clientX, touch.clientY)
       const matching = this.keyMap.get(element)
-      console.log(element, matching, this.keyMap)
       if (matching != null) {
         keys.add(matching)
       }
     })
     this.props.store.handleTouches([...keys])
-    e.preventDefault()
   }
   handleKeyRef(keyId, row, element) {
     const current = this.keys[keyId] || (this.keys[keyId] = {})
@@ -156,7 +154,7 @@ export class Octave extends React.Component {
         store={this.props.store}
         keyColor={keyColor}
         noteValue={noteValue}
-        refKey={element => this.props.refKey(noteValue, element)}
+        refKey={(element) => this.props.refKey(noteValue, element)}
       />
     )
   }

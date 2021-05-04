@@ -1,6 +1,6 @@
-import { MIDI, createFeature } from '../core'
+import { MIDI, createFeature, useConfiguration } from '../core'
 import { observable } from 'mobx'
-import { KeyboardEvent } from 'react'
+import { KeyboardEvent, useEffect } from 'react'
 
 const state = observable({
   keyCodes: observable.map<number, boolean>({}),
@@ -21,6 +21,9 @@ function getKeyCode(event: KeyboardEvent) {
   )
 }
 
+let pedalMidiChannel = 1
+let currentPedal: { up: () => void } | null = null
+
 export default createFeature({
   name: 'midi-keybindings',
   category: 'addons',
@@ -37,7 +40,13 @@ export default createFeature({
       }
     }
     if (keyCode === 32) {
-      MIDI.send([0xb0, 0x40, 127])
+      const channel = pedalMidiChannel
+      MIDI.send([0xb0 + channel - 1, 0x40, 127])
+      currentPedal = {
+        up: () => {
+          MIDI.send([0xb0 + channel - 1, 0x40, 0])
+        },
+      }
       return
     }
     if (keyCode === 37) {
@@ -60,8 +69,9 @@ export default createFeature({
   },
   onKeyUp(store, event) {
     const keyCode = getKeyCode(event)
-    if (keyCode === 32) {
-      MIDI.send([0xb0, 0x40, 0])
+    if (keyCode === 32 && currentPedal) {
+      currentPedal.up()
+      currentPedal = null
       return
     }
     state.keyCodes.delete(keyCode)
@@ -80,7 +90,16 @@ export default createFeature({
     }
     return notes
   },
+  serviceComponent: MidiKeybindingsService,
 })
+
+function MidiKeybindingsService() {
+  const mainChannel = useConfiguration<string>('midi.output.channel')
+  useEffect(() => {
+    pedalMidiChannel = +mainChannel.value || 1
+  }, [mainChannel.value])
+  return null
+}
 
 const transposeKeys = [
   27,
