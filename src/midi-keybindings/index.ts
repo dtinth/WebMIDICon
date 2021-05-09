@@ -3,7 +3,7 @@ import { observable } from 'mobx'
 import { KeyboardEvent, useEffect } from 'react'
 
 const state = observable({
-  keyCodes: observable.map<number, boolean>({}),
+  keyCodes: observable.map<number, { altKey: boolean }>({}),
 })
 
 function getKeyCode(event: KeyboardEvent) {
@@ -65,7 +65,7 @@ export default createFeature({
       store.setOctave(store.octave - 1)
       return
     }
-    state.keyCodes.set(keyCode, true)
+    state.keyCodes.set(keyCode, { altKey: event.altKey })
   },
   onKeyUp(store, event) {
     const keyCode = getKeyCode(event)
@@ -78,14 +78,14 @@ export default createFeature({
   },
   getActiveNotes() {
     const notes = []
-    for (const keyCode of state.keyCodes.keys()) {
+    for (const [keyCode, { altKey }] of state.keyCodes.entries()) {
       {
         const index = firstRow.indexOf(+keyCode)
         if (index > -1) notes.push(index + 11)
       }
       {
         const index = secondRow.indexOf(+keyCode)
-        if (index > -1) notes.push(index + 22)
+        if (index > -1) notes.push(index + 22 + (altKey ? 12 : 0))
       }
     }
     return notes
