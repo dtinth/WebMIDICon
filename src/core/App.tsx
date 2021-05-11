@@ -8,6 +8,7 @@ import AppConfigurationProvider from './AppConfigurationProvider'
 import { tw } from 'twind'
 import AppStoreProvider, { useAppStore } from './AppStoreProvider'
 import { AppSettingsPopover } from './AppSettingsPopover'
+import { PWAUpdateConnector } from './PWAUpdate'
 
 export function App({ features }: { features: Feature[] }) {
   return (
@@ -18,7 +19,22 @@ export function App({ features }: { features: Feature[] }) {
             <header
               className={tw`absolute top-0 inset-x-0 h-[40px] bg-#090807 border-b border-#454443 z-10 flex items-center`}
             >
-              <h1 className={tw`text-#8b8685 font-bold ml-2`}>WebMIDICon</h1>
+              <h1 className={tw`text-#8b8685 font-bold ml-2`}>
+                <PWAUpdateConnector>
+                  {(updateNeeded) =>
+                    updateNeeded ? (
+                      <button
+                        className={tw`cursor-pointer text-yellow-300`}
+                        onClick={() => updateNeeded.reload()}
+                      >
+                        New version available — click to update
+                      </button>
+                    ) : (
+                      <>WebMIDICon</>
+                    )
+                  }
+                </PWAUpdateConnector>
+              </h1>
               <aside className={tw`absolute inset-y-0 right-2 flex`}>
                 <AppSettingsPopover />
               </aside>

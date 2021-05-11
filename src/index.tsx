@@ -1,10 +1,12 @@
 import { setup } from 'twind'
+import { registerSW } from 'virtual:pwa-register'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
 
 import { App } from './core'
 import { featureModules } from './features'
+import { registerUpdate } from './core/PWAUpdate'
 
 setup({
   theme: {
@@ -25,6 +27,15 @@ setup({
         '#ffffbb': '#ffffbb',
       },
     },
+  },
+})
+
+const updateSW = registerSW({
+  onNeedRefresh() {
+    registerUpdate(() => updateSW(true))
+  },
+  onOfflineReady() {
+    console.log('Offline ready')
   },
 })
 
