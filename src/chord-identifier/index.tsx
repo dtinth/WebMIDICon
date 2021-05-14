@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Observer } from 'mobx-react'
 import { createFeature, StatusBarItem, Store } from '../core'
-import { tw } from 'twind'
 
 export default createFeature({
   name: 'chord-identifier',
@@ -45,7 +44,7 @@ function ChordIdentifier(props: {
     () =>
       activeNotes.length > 2
         ? sharp11?.chord.identifyArray(
-            props.activeNotes.map((value) => sharp11.note.fromValue(value))
+            props.activeNotes.map((value) => sharp11.note.fromValue(value + 24))
           )
         : null,
     [activeNotes, sharp11]
