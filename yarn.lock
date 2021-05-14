@@ -856,6 +856,14 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
+"@dtinth/sharp11-browserified@dtinth/sharp11-browserified#v2.0.2-0":
+  version "2.0.2-0"
+  resolved "https://codeload.github.com/dtinth/sharp11-browserified/tar.gz/e42d5bb00b263787316a36885fc718c11a7e4b54"
+
+"@dtinth/sharp11-browserified@dtinth/sharp11-browserified#v2.0.2-1":
+  version "2.0.2-1"
+  resolved "https://codeload.github.com/dtinth/sharp11-browserified/tar.gz/6d9aea97187b2d12dbcc8b20ac9fabee15d5307f"
+
 "@emotion/babel-utils@^0.6.4":
   version "0.6.10"
   resolved "https://registry.yarnpkg.com/@emotion/babel-utils/-/babel-utils-0.6.10.tgz#83dbf3dfa933fae9fc566e54fbb45f14674c6ccc"

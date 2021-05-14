@@ -5,6 +5,7 @@ import * as PianoKeyboard from './piano-keyboard'
 import * as MidiKeybindings from './midi-keybindings'
 import * as TouchPedal from './touch-pedal'
 import * as Joypedal from './joypedal'
+import * as ChordIdentifier from './chord-identifier'
 
 export const featureModules = [
   BeginnerChordMachine,
@@ -14,4 +15,5 @@ export const featureModules = [
   MidiKeybindings,
   TouchPedal,
   Joypedal,
+  ChordIdentifier,
 ]

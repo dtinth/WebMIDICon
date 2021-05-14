@@ -11,6 +11,8 @@ import WheelController from './WheelController'
 import { AppConfigurationEditor } from './AppConfigurationEditor'
 import { AppServices } from './AppServices'
 import MIDIEmitter from './MIDIEmitter'
+import { tw } from 'twind'
+import { StatusBar } from './StatusBar'
 
 export class MainView extends React.Component {
   constructor(props) {
@@ -186,6 +188,11 @@ export class MainView extends React.Component {
             registerWheelListener={this.registerWheelListener}
           />
         </BottomArea>
+        <section
+          className={tw`absolute bottom-0 inset-x-0 h-[24px] flex bg-#252423 border-t border-#454443`}
+        >
+          <StatusBar />
+        </section>
         <Observer>
           {() => (
             <MIDIEmitter
@@ -214,7 +221,7 @@ const MainContent = styled('div')`
   position: absolute;
   top: 40px;
   right: 0;
-  bottom: 30px;
+  bottom: 54px;
   left: 0;
   &:focus {
     outline: none;
@@ -226,7 +233,7 @@ const BottomArea = styled('div')`
   position: absolute;
   height: 30px;
   right: 0;
-  bottom: 0;
+  bottom: 24px;
   left: 0;
 `
 
