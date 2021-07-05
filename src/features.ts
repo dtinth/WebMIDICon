@@ -6,6 +6,7 @@ import * as MidiKeybindings from './midi-keybindings'
 import * as TouchPedal from './touch-pedal'
 import * as Joypedal from './joypedal'
 import * as ChordIdentifier from './chord-identifier'
+import * as Gyrocon from './gyro-controller'
 
 export const featureModules = [
   BeginnerChordMachine,
@@ -16,4 +17,5 @@ export const featureModules = [
   TouchPedal,
   Joypedal,
   ChordIdentifier,
+  Gyrocon,
 ]
