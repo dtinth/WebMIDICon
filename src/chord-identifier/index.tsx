@@ -11,10 +11,9 @@ export default createFeature({
 })
 
 function ChordIdentifierContainer(props: { store: Store }) {
-  const [sharp11, setSharp11] =
-    useState<typeof import('@dtinth/sharp11-browserified') | undefined>(
-      undefined
-    )
+  const [sharp11, setSharp11] = useState<
+    typeof import('@dtinth/sharp11-browserified') | undefined
+  >(undefined)
   useEffect(() => {
     import('@dtinth/sharp11-browserified').then((module) => {
       setSharp11(module)
