@@ -1,0 +1,23 @@
+= Activate the sustain pedal
+:experimental:
+
+You can activate the sustain pedal in many ways.
+
+[#keyboard]
+== Use the Space key
+
+You can xref:midi-keybindings.adoc#sustain[hold down the space bar] on your keyboard and the sustain pedal will be activated.
+
+[#joypedal]
+== Use a game controller
+
+If you have a game controller, you can use it to control the sustain pedal.
+Go to the settings page and set the desired button numbers.
+To obtain the key number, you can use the https://gamepad-tester.com/[Gamepad Tester] website.
+
+https://www.youtube.com/watch?v=lFd45YYASWo[Here’s a video of me using a Dualshock controller as a sustain pedal.]
+
+[#ipedal]
+== Use a touchscreen
+
+You can use the *iPedal* instrument to control the sustain pedal with a touchscreen.

@@ -1,7 +1,7 @@
 = Play with your keyboard
 :experimental:
 
-You can use these keys to play MIDI notes with your QWERTY keyboard:
+When WebMIDICon is focused, you can use these keys to play MIDI notes with your QWERTY keyboard:
 
 image::keyboard.svg[]
 
@@ -12,3 +12,8 @@ The keys marked as green are used for setting the transpose option. This lets yo
 == Access higher notes
 
 If you hold down the kbd:[Alt] key, the notes on the upper row will be shifted up an octave, giving you access to a higher range.
+
+[#sustain]
+== Sustain pedal
+
+You can hold down the kbd:[Space] key to activate xref:pedal.adoc[the sustain pedal].
