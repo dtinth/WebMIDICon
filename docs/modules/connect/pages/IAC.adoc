@@ -1,0 +1,44 @@
+= IAC
+
+== macOS
+
+macOS comes with a built-in *IAC Driver* to facilitate MIDI connections
+between applications. See
+https://support.apple.com/guide/audio-midi-setup/transfer-midi-information-between-apps-ams1013/mac[*“Transfer
+MIDI information between apps in Audio MIDI Setup on Mac”* on Apple
+Support] for more information.
+
+====
+Connecting *WebMIDICon* through *IAC Driver* to *Logic Pro* running on
+the same machine:
+
+image::IAC-macOS.png[image]
+====
+
+== Windows
+
+You can install https://www.nerds.de/en/loopbe1.html[LoopBe1], a virtual
+MIDI device driver for Windows which is free for non-commercial use. If
+you need more than 1 port, you can buy the
+https://www.nerds.de/en/loopbe30.html[LoopBe30] device.
+
+====
+Connecting *WebMIDICon* through *LoopBe1* to *FL Studio* running on the
+same machine:
+
+image::IAC-Windows.png[image]
+====
+
+== iOS
+
+You can buy https://www.midiflow.com/[Midiflow] which lets you create
+virtual MIDI devices that other apps can use. Please note that iOS is
+not that great at multitasking, and from my experience, the application
+in the background is automatically killed by the OS after a while.
+
+====
+Connecting *WebMIDICon* through *Midiflow* to *GarageBand* running on
+the same iPhone:
+
+image::IAC-macOS.png[image]
+====
