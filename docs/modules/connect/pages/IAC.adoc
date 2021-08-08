@@ -1,5 +1,7 @@
 = IAC
 
+An *IAC (Inter-App Communication) device* is a virtual MIDI device that allows multiple MIDI applications on the same device to communicate with each other.
+
 == macOS
 
 macOS comes with a built-in *IAC Driver* to facilitate MIDI connections
