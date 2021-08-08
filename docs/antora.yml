@@ -1,0 +1,5 @@
+name: webmidicon
+version: master
+title: 'WebMIDICon'
+nav:
+  - modules/ROOT/nav.adoc
