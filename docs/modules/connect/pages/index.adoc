@@ -14,7 +14,7 @@ NOTE: This section is a work in progress.
 |From |To
 
 |From a macOS app:
-|   To other apps on the same machine: xref:IAC.adoc[] +
+|   To other apps on the same machine: xref:IAC.adoc#macOS[IAC] +
     To apps on Windows/macOS/iOS over Wi-Fi/LAN: xref:RTP-MIDI.adoc[] +
     To apps on macOS/iOS/Android over Bluetooth: xref:BLE-MIDI.adoc[] +
     To apps on iOS over USB: xref:IDAM.adoc[] +
@@ -22,13 +22,13 @@ NOTE: This section is a work in progress.
     To MIDI devices over USB: xref:USB-MIDI.adoc[]
 
 |From a Windows app
-|   To other apps on the same machine: xref:IAC.adoc[] +
+|   To other apps on the same machine: xref:IAC.adoc#Windows[IAC] +
     To apps on Windows/macOS/iOS over Wi-Fi/LAN: xref:RTP-MIDI.adoc[] +
     To apps on Android over USB: xref:USB-MIDI.adoc[] +
     To MIDI devices over USB: xref:USB-MIDI.adoc[]
 
 |From an iOS app
-|   To other apps on the same device: xref:IAC.adoc[] +
+|   To other apps on the same device: xref:IAC.adoc#iOS[IAC] +
     To apps on macOS/iOS/Android over Bluetooth: xref:BLE-MIDI.adoc[] +
     To apps on Windows/macOS/iOS over Wi-Fi/LAN: xref:RTP-MIDI.adoc[] +
     To apps on macOS over USB: xref:IDAM.adoc[] +

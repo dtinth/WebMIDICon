@@ -2,6 +2,7 @@
 
 An *IAC (Inter-App Communication) device* is a virtual MIDI device that allows multiple MIDI applications on the same device to communicate with each other.
 
+[#macOS]
 == macOS
 
 macOS comes with a built-in *IAC Driver* to facilitate MIDI connections
@@ -17,6 +18,7 @@ the same machine:
 image::IAC-macOS.png[image]
 ====
 
+[#Windows]
 == Windows
 
 You can install https://www.nerds.de/en/loopbe1.html[LoopBe1], a virtual
@@ -31,6 +33,7 @@ same machine:
 image::IAC-Windows.png[image]
 ====
 
+[#iOS]
 == iOS
 
 You can buy https://www.midiflow.com/[Midiflow] which lets you create
