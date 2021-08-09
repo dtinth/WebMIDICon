@@ -3,6 +3,7 @@
 ** xref:connect:BLE-MIDI.adoc[]
 ** xref:connect:IAC.adoc[]
 ** xref:connect:IDAM.adoc[]
+** xref:connect:RTP-MIDI.adoc[]
 * xref:midi-keybindings.adoc[]
 * xref:pedal.adoc[]
 * xref:touch-instruments.adoc[]
