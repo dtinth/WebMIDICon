@@ -1,4 +1,4 @@
-= Play with your keyboard
+= Play notes with your keyboard
 :experimental:
 
 When WebMIDICon is focused, you can use these keys to play MIDI notes with your QWERTY keyboard:

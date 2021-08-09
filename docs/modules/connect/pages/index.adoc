@@ -1,5 +1,14 @@
 = Connection guide
 
+WebMIDICon, built on the Web MIDI technology, makes it very flexible to use it with various MIDI appliances (DAWs and synthesizers), through various mediums.
+
+image::ROOT:connection_options.png[Connection options]
+
+This part of the documentation will guide you through the different connection options, and how to set them up.
+Although the guides here are written for WebMIDICon, they can be used with any MIDI-enabled apps.
+
+NOTE: This section is a work in progress.
+
 [cols="1,3"]
 |===
 |From |To
