@@ -1,4 +1,4 @@
-= Connection guide
+= MIDI connection guide
 
 WebMIDICon, built on the Web MIDI technology, makes it very flexible to use it with various MIDI appliances (DAWs and synthesizers), through various mediums.
 
@@ -16,7 +16,7 @@ NOTE: This section is a work in progress.
 |From a macOS app:
 |   To other apps on the same machine: xref:IAC.adoc#macOS[IAC] +
     To apps on Windows/macOS/iOS over Wi-Fi/LAN: xref:RTP-MIDI.adoc[] +
-    To apps on macOS/iOS/Android over Bluetooth: xref:BLE-MIDI.adoc[] +
+    To apps on macOS/iOS/Android over Bluetooth: xref:BLE-MIDI.adoc#macOS[BLE-MIDI] +
     To apps on iOS over USB: xref:IDAM.adoc[] +
     To apps on Android over USB: xref:USB-MIDI.adoc[] +
     To MIDI devices over USB: xref:USB-MIDI.adoc[]
@@ -29,18 +29,18 @@ NOTE: This section is a work in progress.
 
 |From an iOS app
 |   To other apps on the same device: xref:IAC.adoc#iOS[IAC] +
-    To apps on macOS/iOS/Android over Bluetooth: xref:BLE-MIDI.adoc[] +
+    To apps on macOS/iOS/Android over Bluetooth: xref:BLE-MIDI.adoc#iOS[BLE-MIDI] +
     To apps on Windows/macOS/iOS over Wi-Fi/LAN: xref:RTP-MIDI.adoc[] +
     To apps on macOS over USB: xref:IDAM.adoc[] +
     To apps on Android over USB: xref:USB-MIDI.adoc[] +
     To MIDI devices over USB: xref:USB-MIDI.adoc[]
 
 |From an Android app
-|   To apps on macOS/iOS over Bluetooth: xref:BLE-MIDI.adoc[] +
+|   To apps on macOS/iOS over Bluetooth: xref:BLE-MIDI.adoc#Android[BLE-MIDI] +
     To apps on Windows/macOS/Android over USB: xref:USB-MIDI.adoc[] +
     To MIDI devices over USB: xref:USB-MIDI.adoc[]
 
 |From a MIDI device
-|   To apps on macOS/iOS/Android over Bluetooth: xref:BLE-MIDI.adoc[] +
+|   To apps on macOS/iOS/Android over Bluetooth: xref:BLE-MIDI.adoc#device[BLE-MIDI] +
     To apps on Windows/macOS/iOS/Android over USB: xref:USB-MIDI.adoc[]
 |===
