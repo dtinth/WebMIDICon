@@ -1,0 +1,7 @@
+= IDAM
+
+*IDAM (Inter-Device Audio and MIDI)* is a protocol for sending audio and MIDI between iOS/iPadOS devices and macOS via a USB cable.
+
+====
+video::WIf1P7n3Eqk[youtube]
+====
