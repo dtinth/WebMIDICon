@@ -39,5 +39,15 @@ export default createFeature({
         <IsomorphicKeyboard type="ccba" store={store} />
       ),
     },
+    {
+      id: 'bcba',
+      sortKey: '303_bcba',
+      name: 'B-System',
+      description:
+        'A isomorphic keyboard with the B-System Chromatic Button Accordian layout.',
+      component: ({ store }) => (
+        <IsomorphicKeyboard type="bcba" store={store} />
+      ),
+    },
   ],
 })

@@ -1,4 +1,4 @@
-* xref:index.adoc[About]
+* xref:index.adoc[]
 * xref:connect:index.adoc[]
 ** xref:connect:BLE-MIDI.adoc[]
 ** xref:connect:IAC.adoc[]

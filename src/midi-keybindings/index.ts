@@ -22,6 +22,7 @@ function getKeyCode(event: KeyboardEvent) {
 }
 
 let pedalMidiChannel = 1
+let chromaticMode = false
 let currentPedal: { up: () => void } | null = null
 
 export default createFeature({
@@ -78,103 +79,72 @@ export default createFeature({
   },
   getActiveNotes() {
     const notes = []
-    for (const [keyCode, { altKey }] of state.keyCodes.entries()) {
-      {
-        const index = firstRow.indexOf(+keyCode)
-        if (index > -1) notes.push(index + 11)
+    if (!chromaticMode) {
+      for (const [keyCode, { altKey }] of state.keyCodes.entries()) {
+        {
+          const index = firstRow.indexOf(+keyCode)
+          if (index > -1) notes.push(index + 11)
+        }
+        {
+          const index = secondRow.indexOf(+keyCode)
+          if (index > -1) notes.push(index + 22 + (altKey ? 12 : 0))
+        }
       }
-      {
-        const index = secondRow.indexOf(+keyCode)
-        if (index > -1) notes.push(index + 22 + (altKey ? 12 : 0))
+    } else {
+      for (const [keyCode] of state.keyCodes.entries()) {
+        for (const [row, keys] of chromatic.entries()) {
+          const index = keys.indexOf(+keyCode)
+          if (index > -1) notes.push(row + index * 3 + 4)
+        }
       }
     }
     return notes
+  },
+  configuration: {
+    title: 'MIDI Keybindings',
+    properties: {
+      'midiKeybindings.keymap': {
+        type: 'string',
+        default: 'piano',
+        markdownDescription:
+          'Whether to use the Piano keymap or B-System Chromatic Button Accordian keymap.',
+        enum: ['piano', 'bcba'],
+      },
+    },
   },
   serviceComponent: MidiKeybindingsService,
 })
 
 function MidiKeybindingsService() {
   const mainChannel = useConfiguration<string>('midi.output.channel')
+  const keymap = useConfiguration<string>('midiKeybindings.keymap')
   useEffect(() => {
     pedalMidiChannel = +mainChannel.value || 1
   }, [mainChannel.value])
+  useEffect(() => {
+    chromaticMode = keymap.value === 'bcba'
+  }, [keymap.value])
   return null
 }
 
 const transposeKeys = [
-  27,
-  112,
-  113,
-  114,
-  115,
-  116,
-  117,
-  118,
-  119,
-  120,
-  121,
-  122,
-  123,
+  27, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123,
 ]
 
 const firstRow = [
-  16,
-  90,
-  83,
-  88,
-  68,
-  67,
-  86,
-  71,
-  66,
-  72,
-  78,
-  74,
-  77,
-  188,
-  76,
-  190,
-  186,
-  191,
+  16, 90, 83, 88, 68, 67, 86, 71, 66, 72, 78, 74, 77, 188, 76, 190, 186, 191,
   1016,
 ]
 
 const secondRow = [
-  192,
-  9,
-  81,
-  50,
-  87,
-  51,
-  69,
-  82,
-  53,
-  84,
-  54,
-  89,
-  55,
-  85,
-  73,
-  57,
-  79,
-  48,
-  80,
-  219,
-  187,
-  221,
-  8,
-  220,
-  45,
-  46,
-  35,
-  36,
-  34,
-  33,
-  2055,
-  2056,
-  2111,
-  2057,
-  2106,
-  2107,
-  2109,
+  192, 9, 81, 50, 87, 51, 69, 82, 53, 84, 54, 89, 55, 85, 73, 57, 79, 48, 80,
+  219, 187, 221, 8, 220, 45, 46, 35, 36, 34, 33, 2055, 2056, 2111, 2057, 2106,
+  2107, 2109,
+]
+
+const chromatic = [
+  [192, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 189, 187, 8],
+  [9, 81, 87, 69, 82, 84, 89, 85, 73, 79, 80, 219, 221, 220],
+  [17, 65, 83, 68, 70, 71, 72, 74, 75, 76, 186, 222],
+  [16, 90, 88, 67, 86, 66, 78, 77, 188, 190, 191, 1016],
 ]

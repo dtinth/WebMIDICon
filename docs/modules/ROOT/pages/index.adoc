@@ -1,3 +1,4 @@
+[reftext="About WebMIDICon"]
 = WebMIDICon
 
 A collection of *hackable web-based MIDI instruments*, implemented as a web-based MIDI controller.
