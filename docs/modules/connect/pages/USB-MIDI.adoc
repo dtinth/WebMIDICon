@@ -1,0 +1,37 @@
+= USB-MIDI
+
+When it comes to USB, there are 2 main roles: the *Host* and the
+*Device*.
+
+[#macOS]
+== macOS
+
+macOS can act as a *Host*. Just plug in USB MIDI devices and it can be
+used right away.
+
+[#Windows]
+== Windows
+
+Windows can act as a *Host*. Just plug in USB MIDI devices and it can be
+used right away.
+
+[#iOS]
+== iOS
+
+iOS can act as a *Host*. Just plug in USB MIDI devices through the and
+it can be used right away. Many iOS devices have only the Lightning
+port. To plug in USB MIDI Device you would need an adapter such as the
+https://www.apple.com/shop/product/MK0W2AM/A/lightning-to-usb-3-camera-adapter[Lightning
+to USB 3 Camera Adapter].
+
+iOS can also act as a *Device* when plugged into a macOS *Host* in
+link:./IDAM.md[IDAM] mode. Unfortunately, the IDAM mode only works with
+macOS.
+
+[#Android]
+== Android
+
+Android can act as a *Host*. Just plug in USB MIDI devices (through USB
+adapters) and it can be used right away.
+
+Android can also as a *Device* by changing the USB mode to MIDI.

@@ -1,0 +1,23 @@
+[reftext="About WebMIDICon"]
+= WebMIDICon
+
+A collection of *hackable web-based MIDI instruments*, implemented as a web-based MIDI controller.
+
+I wanted to create a MIDI instrument that allows me to jam with other musicians. Play MIDI with your PC keyboard, or with a touch screen on an iPad.
+
+== Features
+
+WebMIDICon works on desktop, tablet, and mobile devices. It lets you use one tool for many use cases.
+
+image::connection_options.png[Connection options]
+
+On the desktop, you can xref:midi-keybindings.adoc[play MIDI notes with your keyboard], and optionally xref:pedal.adoc#joypedal[plug in a game controller to use as a sustain pedal].
+
+On tablets and mobile devices, you can play MIDI notes and drum notes with your finger. You can put your device on the floor and xref:pedal.adoc#ipedal[use its touch screen as a sustain pedal].
+
+== Demos
+
+Check out https://dt.in.th/webmidicon.html[the demos on my website].
+
+[link="https://dt.in.th/webmidicon.html"]
+image::https://ss.dt.in.th/api/screenshots/dt.in.th-webmidicon.png[]

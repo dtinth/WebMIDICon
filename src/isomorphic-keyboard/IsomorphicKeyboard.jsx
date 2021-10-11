@@ -24,10 +24,23 @@ const types = {
     const yOffset = keyDistance * Math.sqrt(3)
     return {
       keySize,
-      x: column => keyDistance / 2 + column * xOffset,
+      x: (column) => keyDistance / 2 + column * xOffset,
       y: (column, row) =>
         height - keyDistance / 2 + (column / 2 - row) * yOffset,
       note: (column, row) => column * -5 + row * 12,
+    }
+  },
+  bcba: (width, height) => {
+    const keyDistance = height / 4.33
+    const keySize = keyDistance * 0.5
+    const xOffset = keyDistance / 2
+    const yOffset = keyDistance * Math.sqrt(3)
+    return {
+      keySize,
+      x: (column) => keyDistance / 2 + column * xOffset,
+      y: (column, row) =>
+        height - keyDistance / 2 + (column / 2 - row) * yOffset,
+      note: (column, row) => column * 1 + row * 1 + 7,
     }
   },
   ccba: (width, height) => {
@@ -37,7 +50,7 @@ const types = {
     const yOffset = keyDistance * Math.sqrt(3)
     return {
       keySize,
-      x: column => keyDistance / 2 + column * xOffset,
+      x: (column) => keyDistance / 2 + column * xOffset,
       y: (column, row) =>
         height - keyDistance / 2 + (column / 2 - row) * yOffset,
       note: (column, row) => column * 2 + row * -1,
@@ -50,7 +63,7 @@ const types = {
     const yOffset = keyDistance
     return {
       keySize,
-      x: column => keyDistance / 2 + column * xOffset,
+      x: (column) => keyDistance / 2 + column * xOffset,
       y: (column, row) =>
         height - keyDistance / 2 + (column / 2 - row) * yOffset,
       note: (column, row) => row * 7 - column * 3,
@@ -94,7 +107,7 @@ export class IsomorphicKeyboard extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleSizeChange)
   }
-  handleContainerRef = container => {
+  handleContainerRef = (container) => {
     this.container = container
   }
   handleSizeChange = () => {
@@ -115,9 +128,10 @@ export class IsomorphicKeyboard extends React.Component {
     this.selectKeys,
     ({ props }) => props.store,
     ({ keys, keySize }, store) => {
-      return keys.map(key => {
+      return keys.map((key) => {
         return (
           <Circle
+            data-key={key.key}
             store={store}
             key={key.key}
             size={keySize}
@@ -136,7 +150,7 @@ export class IsomorphicKeyboard extends React.Component {
   renderKeys = () => {
     return this.selectKeyElements(this.getSelectorState())
   }
-  updateTouches = e => {
+  updateTouches = (e) => {
     e.preventDefault()
     const container = this.container
     if (!container) return
@@ -145,7 +159,7 @@ export class IsomorphicKeyboard extends React.Component {
     const by = bound.top
     const activated = new Set()
     const { keys } = this.selectKeys(this.getSelectorState())
-    void [].forEach.call(e.touches, touch => {
+    void [].forEach.call(e.touches, (touch) => {
       const rankedKeys = keys
         .map(({ noteValue, x, y }) => ({
           noteValue,
@@ -197,6 +211,7 @@ const Circle = observer(
       const trueNoteValue = transpose + noteValue
       return (
         <div
+          data-key={this.props['data-key']}
           style={{
             position: 'absolute',
             left: left - size / 2,

@@ -1,0 +1,30 @@
+= RTP-MIDI
+
+The https://en.wikipedia.org/wiki/RTP-MIDI[*RTP-MIDI*] protocol lets device exchange MIDI data over the network, such as Wi-Fi or LAN.
+
+To minimize the latency, I recommend connecting devices using a LAN cable if possible. Using an ad-hoc Wi-Fi network can also give lower latency than having 2 devices communicate via a Wi-Fi router.
+
+[#macOS]
+== macOS
+
+See https://support.apple.com/guide/audio-midi-setup/share-midi-information-over-a-network-ams1012/mac[*“Share MIDI information over a network in Audio MIDI Setup on Mac”* on Apple Support] for more information.
+
+====
+.The MIDI Network Setup window in the Audio MIDI Setup app
+image::RTP-MIDI-macOS.png[image]
+====
+
+[#Windows]
+== Windows
+
+Windows users can use the https://www.tobias-erichsen.de/software/rtpmidi.html[rtpMIDI] driver. It is free for private, non-commercial use.
+
+[#iOS]
+== iOS
+
+Use the https://apps.apple.com/us/app/midi-network/id1102428729[MIDI Network] app to connect your iOS device to other RTP-MIDI capable devices.
+
+====
+.The MIDI network app
+image::RTP-MIDI-iOS.png[image]
+====

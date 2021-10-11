@@ -1,0 +1,29 @@
+= Play notes with your keyboard
+:experimental:
+
+When WebMIDICon is focused, you can use these keys to play MIDI notes with your QWERTY keyboard. There are 2 keymaps available.
+
+== Piano Keymap
+
+The piano keymap is based on the piano keyboard layout.
+
+image::keyboard.svg[]
+
+=== Access higher notes
+
+If you hold down the kbd:[Alt] key, the notes on the upper row will be shifted up an octave, giving you access to a higher range.
+
+== Chromatic Keymap
+
+The chromatic keymap is based on the B-system chromatic button accordian layout.
+
+image::keyboard-chromatic.svg[]
+
+== Transpose
+
+The keys marked as green are used for setting the transpose option. This lets you quickly change keys.
+
+[#sustain]
+== Sustain pedal
+
+You can hold down the kbd:[Space] key to activate xref:pedal.adoc[the sustain pedal].

@@ -1,0 +1,24 @@
+= Play notes with your touchscreen
+
+WebMIDICon comes with multiple *touch instruments* that can be played with your touchscreen.
+
+== Keyboards
+
+Piano::
+A normal piano keyboard. It has 3 rows, giving you access to 4 octaves.
+Jammer::
+An http://www.altkeyboards.com/instruments/isomorphic-keyboards[isomorphic keyboard] based on the http://www.altkeyboards.com/instruments/jammer[Jammer] https://en.wikipedia.org/wiki/Wicki%E2%80%93Hayden_note_layout[(Wicki-Hayden) note layout].
+Sonome::
+An http://www.altkeyboards.com/instruments/isomorphic-keyboards[isomorphic keyboard] based on the http://www.altkeyboards.com/instruments/sonomes[Sonome] https://en.wikipedia.org/wiki/Harmonic_table_note_layout[(harmonic table) note layout].
+C-System::
+An http://www.altkeyboards.com/instruments/isomorphic-keyboards[isomorphic keyboard] based on the C-system layout, as used in https://en.wikipedia.org/wiki/Chromatic_button_accordion[Chromatic button accordions].
+
+== Drums
+
+Drum pad::
+A 4x4 drum pad that lets you xref:finger-drumming.adoc[finger drum]. It supports variable velocity, producing natural-sounding drum hits.
+
+== Pedals
+
+iPedal::
+Put your device on the floor and use it as a sustain pedal or a kick drum.

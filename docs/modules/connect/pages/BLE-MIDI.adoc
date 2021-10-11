@@ -1,0 +1,85 @@
+= BLE-MIDI
+
+When it comes to *BLE-MIDI (MIDI over Bluetooth Low Energy)* there are 2
+main roles:
+
+* The *Central* (who discovers and connects to Peripherals); and
+* The *Peripheral* (who advertises MIDI services so Centrals can connect
+to it).
+
+[#macOS]
+== macOS
+
+A macOS device can act as both the *Central* and the *Peripheral* at the
+same time. You set this up in the *Audio MIDI Setup* app.
+Once the Bluetooth connection is establised, the Bluetooth device
+becomes available to every macOS app.
+
+See
+https://support.apple.com/guide/audio-midi-setup/set-up-bluetooth-midi-devices-ams33f013765/mac[*“Set
+up Bluetooth MIDI devices in Audio MIDI Setup on Mac”* on Apple Support]
+for more information.
+
+[#Android]
+== Android
+
+You can use the
+https://play.google.com/store/apps/details?id=com.mobileer.example.midibtlepairing[*MIDI
+BLE Connect*] app to become a Central establish a MIDI connection to
+other peripherals. Other apps can then use this connection to send and
+receive MIDI data.
+
+[#iOS]
+== iOS
+
+An iOS device can act as both the *Central* and the *Peripheral* at the
+same time, but it varies from application to application.
+
+* *GarageBand* can act as the Central.
+** To set up: Settings → Advanced → Bluetooth MIDI Devices.
+* *Web MIDI Browser* can act as both the Central and the Peripheral.
+** To set up: Settings → Bluetooth MIDI → Setup Bluetooth MIDI
+Central/Peripheral
+* *Midiflow* can act as both the Central and the Peripheral.
+** To set up: Config → Bluetooth → “Advertise this device” or “Find
+nearby devices”
+
+====
+Connecting *WebMIDICon* running on *iOS* through *Bluetooth* to *Logic
+Pro* running on *macOS*:
+
+image::BLE-MIDI-iOS-macOS.png[image]
+====
+
+[#Windows]
+== Windows
+
+There is an application called
+https://www.microsoft.com/en-us/p/midiberry/9n39720h2m05?activetab=pivot:overviewtab[MIDIberry]
+that makes your device act as a *Central*. At least Windows 10 is
+required.
+
+WARNING: From my testing, only Bluetooth Input is supported; I could not get
+Output to work. Also the app may crash from time to time.
+
+. Go to *Bluetooth and other devices settings*.
+. Click *Add device* and then make sure your device is discoverable.
+. Select *Bluetooth* and then pair your devices together.
+. Open *MIDIberry*.
+. Select the Bluetooth *Input*.
+. Select the output MIDI device to send the input to. If you want to
+send it to another Windows application, use an link:./IAC.md[IAC
+device].
+
+[#device]
+== MIDI devices
+
+Some devices have built-in BLE-MIDI support, such as the KORG’s
+https://www.korg.com/us/products/computergear/microkey2_air/[microKEY
+Air].
+
+For other devices, you can buy adapters such as Yamaha’s
+https://jp.yamaha.com/products/music_production/accessories/md-bt01/index.html[MD-BT01]
+(for devices with MIDI ports) or
+https://jp.yamaha.com/products/musical_instruments/pianos/accessories/interfaces/ud-bt01/index.html[UD-BT01]
+(for devices with a USB port).

@@ -1,0 +1,7 @@
+= Finger drumming
+
+If you have a touchscreen, you can use the *Drum pad* to https://www.youtube.com/watch?v=CHarkZrQH34:[play drums with your fingers].
+
+== Controlling the hit velocity
+
+Touching nearer the center produces louder hits.
