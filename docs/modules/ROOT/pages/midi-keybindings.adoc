@@ -13,11 +13,21 @@ image::keyboard.svg[]
 
 If you hold down the kbd:[Alt] key, the notes on the upper row will be shifted up an octave, giving you access to a higher range.
 
-== Chromatic Keymap
+== Isomorphic Keymap
 
-The chromatic keymap is based on the B-system chromatic button accordian layout.
+The isomorphic keymap is based on the B-system chromatic button accordian layout.
 
 image::keyboard-chromatic.svg[]
+
+The idea is that for any given key…
+
+* The key on the top right is whole tone up.
+* The key on the bottom right is semitone up.
+
+Using this system, you can combine semitones and whole tones to create any musical interval.
+It lets you play in any key without changing the fingering, and it uses the keyboard more efficiently, allowing you to reach more notes.
+
+image::isomorphic.svg[]
 
 == Transpose
 
