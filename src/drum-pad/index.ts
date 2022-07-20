@@ -25,6 +25,12 @@ export default createFeature({
         markdownDescription:
           'Overrides the MIDI channel for outputting drum notes.',
       },
+      'drumPad.buttonOverride': {
+        type: 'string',
+        default: '',
+        markdownDescription:
+          'Overrides the button. Syntax: “i=n,text;” Example: “5=36,Kick;”',
+      },
     },
   },
 })

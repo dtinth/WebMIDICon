@@ -1,27 +1,6 @@
 import React from 'react'
 import { TouchAbsorber } from '../core/TouchAbsorber'
-
-const buttons = [
-  { name: 'Ride Edge', note: 52 },
-  { name: 'Ride Bell', note: 53 },
-  { name: 'Cymbal 1', note: 57 },
-  { name: 'Cymbal 2', note: 49 },
-
-  { name: 'Hi Tom', note: 48 },
-  { name: 'Mid Tom', note: 45 },
-  { name: 'Low Tom', note: 41 },
-  { name: 'Ride In', note: 59 },
-
-  { name: 'Kick', note: 36 },
-  { name: 'Snare', note: 38 },
-  { name: 'Closed Hi-Hat', note: 42 },
-  { name: 'Open Hi-Hat', note: 46 },
-
-  { name: 'Kick', note: 36 },
-  { name: 'Sidestick', note: 37 },
-  { name: 'Kick', note: 36 },
-  { name: 'Kick', note: 36 },
-]
+import { DrumButtonMapping } from './DrumButtonMapping'
 
 export class DrumPadContents extends React.PureComponent {
   render() {
@@ -33,7 +12,11 @@ export class DrumPadContents extends React.PureComponent {
         <div
           style={{ position: 'absolute', top: 2, right: 2, bottom: 2, left: 2 }}
         >
-          {buttons.map((button, index) => this.renderButton(button, index))}
+          <DrumButtonMapping>
+            {(buttons) =>
+              buttons.map((button, index) => this.renderButton(button, index))
+            }
+          </DrumButtonMapping>
         </div>
       </div>
     )
