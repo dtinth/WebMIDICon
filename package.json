@@ -11,7 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@dtinth/sharp11-browserified": "dtinth/sharp11-browserified#v2.0.2-1",
+    "@dtinth/sharp11-browserified": "https://github.com/dtinth/sharp11-browserified/archive/refs/tags/v2.0.2-1.tar.gz",
     "emotion": "^9.2.6",
     "lodash": "^4.17.21",
     "markdown-it": "^12.0.4",
