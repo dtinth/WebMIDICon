@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Feature, Store } from './types'
 import { ErrorBoundary } from 'react-error-boundary'
 import { StatusBarItem } from './StatusBar'
@@ -9,19 +9,23 @@ export function AppServices(props: { features: Feature[]; store: Store }) {
     <>
       {props.features.map((f, index) => {
         const Component = f.serviceComponent
-        return Component ? (
-          <ErrorBoundary
-            fallbackRender={({ error, resetErrorBoundary }) => (
-              <ErrorView
-                thing={f.name}
-                error={error}
-                onReset={resetErrorBoundary}
-              />
-            )}
-          >
-            <Component key={index} store={props.store} />
-          </ErrorBoundary>
-        ) : null
+        return (
+          <Fragment key={index}>
+            {Component ? (
+              <ErrorBoundary
+                fallbackRender={({ error, resetErrorBoundary }) => (
+                  <ErrorView
+                    thing={f.name}
+                    error={error}
+                    onReset={resetErrorBoundary}
+                  />
+                )}
+              >
+                <Component key={index} store={props.store} />
+              </ErrorBoundary>
+            ) : null}
+          </Fragment>
+        )
       })}
     </>
   )

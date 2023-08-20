@@ -2,7 +2,7 @@ import React from 'react'
 import { computed } from 'mobx'
 import { createSelector } from 'reselect'
 import { observer } from 'mobx-react'
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 import { TouchAbsorber } from '../core/TouchAbsorber'
 
 const IsomorphicKeyboardCircle = styled('div')`

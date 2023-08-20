@@ -2,8 +2,8 @@ import * as MIDI from './MIDI'
 
 import MainToolbar from './MainToolbar'
 import React from 'react'
-import styled from 'react-emotion'
-import { Switch, Route } from 'react-router-dom'
+import styled from '@emotion/styled'
+import { Routes, Route } from 'react-router-dom'
 import { Observer } from 'mobx-react'
 import { sortBy } from 'lodash'
 import FeatureList from './FeatureList'
@@ -98,7 +98,7 @@ export class MainView extends React.Component {
 
   renderContent() {
     return (
-      <Switch>
+      <Routes>
         {this.instruments
           .map((instrument) => {
             const Component = instrument.component
@@ -106,7 +106,7 @@ export class MainView extends React.Component {
               <Route
                 key={instrument.id}
                 path={`/${instrument.id}`}
-                component={() => <Component store={this.store} />}
+                element={<Component store={this.store} />}
               />
             )
           })
@@ -114,11 +114,11 @@ export class MainView extends React.Component {
             <Route
               key="@@configuration"
               path="/config"
-              render={() => this.renderConfiguration()}
+              element={this.renderConfiguration()}
             />,
-            <Route key="@@main" render={() => this.renderMainMenu()} />,
+            <Route key="@@main" path="/" element={this.renderMainMenu()} />,
           ])}
-      </Switch>
+      </Routes>
     )
   }
   renderMainMenu() {

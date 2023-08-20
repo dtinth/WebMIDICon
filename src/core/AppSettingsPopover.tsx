@@ -1,20 +1,20 @@
 import { Observer } from 'mobx-react'
 import React from 'react'
-import { useHistory } from 'react-router-dom'
-import { Button } from 'reakit/Button'
-import { Menu, MenuButton, MenuItem, useMenuState } from 'reakit/Menu'
-import { Popover, PopoverDisclosure, usePopoverState } from 'reakit/Popover'
+import { useNavigate } from 'react-router-dom'
+import { Button } from '@ariakit/react'
+import { Menu, MenuButton, MenuItem, useMenuStore } from '@ariakit/react'
+import { Popover, PopoverDisclosure, usePopoverStore } from '@ariakit/react'
 import { tw } from 'twind'
 import * as MIDI from './MIDI'
 
 export function AppSettingsPopover() {
-  const popover = usePopoverState({ gutter: 4, placement: 'bottom-end' })
+  const popover = usePopoverStore({ placement: 'bottom-end' })
   return (
     <>
-      <PopoverDisclosure {...popover} className={tw`text-#8b8685 px-2`}>
+      <PopoverDisclosure store={popover} className={tw`text-#8b8685 px-2`}>
         <MIDIIcon />
       </PopoverDisclosure>
-      <Popover {...popover} aria-label="MIDI settings">
+      <Popover store={popover} aria-label="MIDI settings">
         <div className={tw`w-[256px] bg-#090807 border border-#8b8685 p-2`}>
           <AppSettingsPopoverContents onClose={() => popover.hide()} />
         </div>
@@ -24,9 +24,9 @@ export function AppSettingsPopover() {
 }
 
 function AppSettingsPopoverContents(props: { onClose: () => void }) {
-  let history = useHistory()
+  let navigate = useNavigate()
   const goToSettings = () => {
-    history.push('/config')
+    navigate('/config')
     props.onClose()
   }
   return (
@@ -63,7 +63,7 @@ function MIDIIcon() {
 }
 
 export function MIDIOutputSelector() {
-  const menu = useMenuState({ gutter: 2 })
+  const menu = useMenuStore()
   const handleOutputSelect = (key: string) => {
     MIDI.selectOutput(key)
     menu.hide()
@@ -71,13 +71,14 @@ export function MIDIOutputSelector() {
   return (
     <>
       <MenuButton
-        {...menu}
+        store={menu}
         className={tw`bg-#252423 p-1 border border-#454443`}
       >
         <Observer>{() => <>{MIDI.getStatus()}</>}</Observer>
       </MenuButton>
       <Menu
-        {...menu}
+        store={menu}
+        gutter={2}
         aria-label="MIDI output settings"
         className={tw`bg-#090807 border border-#8b8685 p-1`}
       >
@@ -90,7 +91,7 @@ export function MIDIOutputSelector() {
                   return (
                     <MenuItem
                       key={output.key}
-                      {...menu}
+                      store={menu}
                       className={tw`block w-full focus:bg-#454443 text-left p-1`}
                       onClick={() => handleOutputSelect(output.key)}
                     >

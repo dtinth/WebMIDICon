@@ -51,6 +51,6 @@ export const DrumButtonMapping: FC<DrumButtonMapping> = (props) => {
       }
     )
     return result
-  }, [buttons, buttonOverride.value])
+  }, [buttons, buttonOverride])
   return <>{props.children(mappedButtons)}</>
 }
