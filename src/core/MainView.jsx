@@ -13,6 +13,8 @@ import { AppServices } from './AppServices'
 import MIDIEmitter from './MIDIEmitter'
 import { tw } from 'twind'
 import { StatusBar } from './StatusBar'
+import { switchOutputChannel, OutputChannelSwitcher } from './switchOutputChannel'
+import { showInformationMessage } from './showInformationMessage'
 
 export class MainView extends React.Component {
   constructor(props) {
@@ -49,6 +51,16 @@ export class MainView extends React.Component {
     if (e.metaKey) {
       if (e.keyCode >= 0x30 && e.keyCode <= 0x39) {
         MIDI.send([0xc0, e.keyCode === 0x30 ? 9 : e.keyCode - 0x31])
+        showInformationMessage(
+          'Program change to #' + (e.keyCode === 0x30 ? 10 : e.keyCode - 0x30)
+        )
+        e.preventDefault()
+        return
+      }
+    }
+    if (e.ctrlKey) {
+      if (e.keyCode >= 0x30 && e.keyCode <= 0x39) {
+        switchOutputChannel(e.keyCode === 0x30 ? 9 : e.keyCode - 0x31)
         e.preventDefault()
         return
       }
@@ -204,6 +216,7 @@ export class MainView extends React.Component {
           )}
         </Observer>
         <AppServices features={this.props.features} store={this.store} />
+        <OutputChannelSwitcher />
       </div>
     )
   }
