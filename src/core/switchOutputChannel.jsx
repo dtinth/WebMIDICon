@@ -14,5 +14,5 @@ export function OutputChannelSwitcher() {
       showInformationMessage('Switched output channel to ch.' + channel);
     };
   }, [mainChannel.setValue]);
-  return <StatusBarItem>ch.{+mainChannel.value + 1}</StatusBarItem>;
+  return <StatusBarItem>ch.{mainChannel.value}</StatusBarItem>;
 }
