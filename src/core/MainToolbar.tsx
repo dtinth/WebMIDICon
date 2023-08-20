@@ -1,30 +1,36 @@
 import React from 'react'
 import { Observer } from 'mobx-react'
+import { Store } from './types'
 
-export function MainToolbar(props) {
-  const renderTransposeButton = (n) => {
+export interface MainToolbar {
+  store: Store
+  innerRef: React.RefObject<HTMLAnchorElement>
+}
+
+export function MainToolbar(props: MainToolbar) {
+  const renderTransposeButton = (n: number) => {
     const store = props.store
     return (
-      <Button
+      <ToolbarButton
         width="1.3em"
         onTap={() => store.setTranspose(n)}
         selected={store.transpose === n}
       >
         {n}
-      </Button>
+      </ToolbarButton>
     )
   }
 
-  const renderOctaveButton = (n) => {
+  const renderOctaveButton = (n: number) => {
     const store = props.store
     return (
-      <Button
+      <ToolbarButton
         width="1.2em"
         onTap={() => store.setOctave(n)}
         selected={store.octave === n}
       >
         {n}
-      </Button>
+      </ToolbarButton>
     )
   }
 
@@ -55,7 +61,7 @@ export function MainToolbar(props) {
       <Observer>
         {() => (
           <React.Fragment>
-            <Title>Transpose</Title>
+            <ToolbarSectionTitle>Transpose</ToolbarSectionTitle>
             {renderTransposeButton(-6)}
             {renderTransposeButton(-5)}
             {renderTransposeButton(-4)}
@@ -76,7 +82,7 @@ export function MainToolbar(props) {
       <Observer>
         {() => (
           <React.Fragment>
-            <Title>Octave</Title>
+            <ToolbarSectionTitle>Octave</ToolbarSectionTitle>
             {renderOctaveButton(0)}
             {renderOctaveButton(1)}
             {renderOctaveButton(2)}
@@ -91,7 +97,11 @@ export function MainToolbar(props) {
   )
 }
 
-const Title = (props) => (
+interface ToolbarSectionTitle {
+  children: React.ReactNode
+}
+
+const ToolbarSectionTitle = (props: ToolbarSectionTitle) => (
   <div
     style={{
       marginLeft: 12,
@@ -105,9 +115,16 @@ const Title = (props) => (
   </div>
 )
 
-const Button = props => (
+interface ToolbarButton {
+  onTap: () => void
+  selected?: boolean
+  width?: string
+  children: React.ReactNode
+}
+
+const ToolbarButton = (props: ToolbarButton) => (
   <div
-    onTouchStart={e => {
+    onTouchStart={(e) => {
       e.preventDefault()
       props.onTap()
     }}
