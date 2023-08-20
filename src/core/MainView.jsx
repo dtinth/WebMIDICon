@@ -60,7 +60,7 @@ export class MainView extends React.Component {
     }
     if (e.ctrlKey) {
       if (e.keyCode >= 0x30 && e.keyCode <= 0x39) {
-        switchOutputChannel(e.keyCode === 0x30 ? 9 : e.keyCode - 0x31)
+        switchOutputChannel(e.keyCode === 0x30 ? 10 : e.keyCode - 0x30)
         e.preventDefault()
         return
       }

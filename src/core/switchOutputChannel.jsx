@@ -11,7 +11,7 @@ export function OutputChannelSwitcher() {
   useEffect(() => {
     switchOutputChannel = (channel) => {
       mainChannel.setValue(String(channel));
-      showInformationMessage('Switched output channel to ch.' + (channel + 1));
+      showInformationMessage('Switched output channel to ch.' + channel);
     };
   }, [mainChannel.setValue]);
   return <StatusBarItem>ch.{+mainChannel.value + 1}</StatusBarItem>;
