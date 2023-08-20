@@ -6,9 +6,9 @@
   "license": "MIT",
   "scripts": {
     "start": "vite",
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "vite --port ${PORT:-3171}",
+    "preview": "vite preview --port ${PORT:-3171}",
+    "build": "vite build"
   },
   "dependencies": {
     "@dtinth/sharp11-browserified": "https://github.com/dtinth/sharp11-browserified/archive/refs/tags/v2.0.2-1.tar.gz",
