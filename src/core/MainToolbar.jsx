@@ -1,72 +1,9 @@
 import React from 'react'
 import { Observer } from 'mobx-react'
 
-export class MainToolbar extends React.Component {
-  render() {
-    return (
-      <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0,
-          display: 'flex',
-          alignItems: 'center',
-        }}
-      >
-        <a
-          ref={this.props.innerRef}
-          href="#/"
-          style={{
-            color: '#8b8685',
-            display: 'block',
-            marginLeft: 10,
-            textDecoration: 'none',
-          }}
-        >
-          &larr;
-        </a>
-        <Observer>
-          {() => (
-            <React.Fragment>
-              <Title>Transpose</Title>
-              {this.renderTransposeButton(-6)}
-              {this.renderTransposeButton(-5)}
-              {this.renderTransposeButton(-4)}
-              {this.renderTransposeButton(-3)}
-              {this.renderTransposeButton(-2)}
-              {this.renderTransposeButton(-1)}
-              {this.renderTransposeButton(0)}
-              {this.renderTransposeButton(1)}
-              {this.renderTransposeButton(2)}
-              {this.renderTransposeButton(3)}
-              {this.renderTransposeButton(4)}
-              {this.renderTransposeButton(5)}
-              {this.renderTransposeButton(6)}
-            </React.Fragment>
-          )}
-        </Observer>
-
-        <Observer>
-          {() => (
-            <React.Fragment>
-              <Title>Octave</Title>
-              {this.renderOctaveButton(0)}
-              {this.renderOctaveButton(1)}
-              {this.renderOctaveButton(2)}
-              {this.renderOctaveButton(3)}
-              {this.renderOctaveButton(4)}
-              {this.renderOctaveButton(5)}
-              {this.renderOctaveButton(6)}
-            </React.Fragment>
-          )}
-        </Observer>
-      </div>
-    )
-  }
-  renderTransposeButton(n) {
-    const store = this.props.store
+export function MainToolbar(props) {
+  const renderTransposeButton = (n) => {
+    const store = props.store
     return (
       <Button
         width="1.3em"
@@ -77,8 +14,9 @@ export class MainToolbar extends React.Component {
       </Button>
     )
   }
-  renderOctaveButton(n) {
-    const store = this.props.store
+
+  const renderOctaveButton = (n) => {
+    const store = props.store
     return (
       <Button
         width="1.2em"
@@ -89,9 +27,71 @@ export class MainToolbar extends React.Component {
       </Button>
     )
   }
+
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        display: 'flex',
+        alignItems: 'center',
+      }}
+    >
+      <a
+        ref={props.innerRef}
+        href="#/"
+        style={{
+          color: '#8b8685',
+          display: 'block',
+          marginLeft: 10,
+          textDecoration: 'none',
+        }}
+      >
+        &larr;
+      </a>
+      <Observer>
+        {() => (
+          <React.Fragment>
+            <Title>Transpose</Title>
+            {renderTransposeButton(-6)}
+            {renderTransposeButton(-5)}
+            {renderTransposeButton(-4)}
+            {renderTransposeButton(-3)}
+            {renderTransposeButton(-2)}
+            {renderTransposeButton(-1)}
+            {renderTransposeButton(0)}
+            {renderTransposeButton(1)}
+            {renderTransposeButton(2)}
+            {renderTransposeButton(3)}
+            {renderTransposeButton(4)}
+            {renderTransposeButton(5)}
+            {renderTransposeButton(6)}
+          </React.Fragment>
+        )}
+      </Observer>
+
+      <Observer>
+        {() => (
+          <React.Fragment>
+            <Title>Octave</Title>
+            {renderOctaveButton(0)}
+            {renderOctaveButton(1)}
+            {renderOctaveButton(2)}
+            {renderOctaveButton(3)}
+            {renderOctaveButton(4)}
+            {renderOctaveButton(5)}
+            {renderOctaveButton(6)}
+          </React.Fragment>
+        )}
+      </Observer>
+    </div>
+  )
 }
 
-const Title = props => (
+const Title = (props) => (
   <div
     style={{
       marginLeft: 12,
