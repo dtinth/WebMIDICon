@@ -1,6 +1,7 @@
 /// <reference types="webmidi" />
 
 import { action, observable } from 'mobx'
+import { $midiAccess, enumerateKeys } from '../core-midi'
 
 export type Output = {
   key: string
@@ -78,6 +79,7 @@ const handleAvailableOutputs = action(
 
 function ok(access: WebMidi.MIDIAccess) {
   window.midiAccess = access
+  $midiAccess.set(access)
   setStatus('Found MIDI outputs: ' + access.outputs.size)
   try {
     refreshOutputList(access)
@@ -87,13 +89,10 @@ function ok(access: WebMidi.MIDIAccess) {
 }
 
 function refreshOutputList(access: WebMidi.MIDIAccess) {
-  const ports: Output[] = []
-  const iterator = access.outputs.keys()
-  for (;;) {
-    const { done, value: key } = iterator.next()
-    if (done) break
-    ports.push({ key, name: access.outputs.get(key)!.name! })
-  }
+  const ports: Output[] = enumerateKeys(access.outputs).flatMap((key) => {
+    const output = access.outputs.get(key)
+    return output ? [{ key, name: output.name || `(${key})` }] : []
+  })
   const previousKey = store.selectedOutputKey
   handleAvailableOutputs(ports)
   if (previousKey !== store.selectedOutputKey) {
