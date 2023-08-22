@@ -7,6 +7,7 @@ import * as TouchPedal from './touch-pedal'
 import * as Joypedal from './joypedal'
 import * as ChordIdentifier from './chord-identifier'
 import * as Gyrocon from './gyro-controller'
+import * as MidiMirror from './midi-mirror'
 
 export const featureModules = [
   BeginnerChordMachine,
@@ -18,4 +19,5 @@ export const featureModules = [
   Joypedal,
   ChordIdentifier,
   Gyrocon,
+  MidiMirror,
 ]
