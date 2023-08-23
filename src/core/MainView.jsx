@@ -13,7 +13,10 @@ import { AppServices } from './AppServices'
 import MIDIEmitter from './MIDIEmitter'
 import { tw } from 'twind'
 import { StatusBar } from './StatusBar'
-import { switchOutputChannel, OutputChannelSwitcher } from './switchOutputChannel'
+import {
+  switchOutputChannel,
+  OutputChannelSwitcher,
+} from './switchOutputChannel'
 import { showInformationMessage } from './showInformationMessage'
 
 export class MainView extends React.Component {
@@ -59,8 +62,25 @@ export class MainView extends React.Component {
       }
     }
     if (e.ctrlKey) {
+      const updateVelocity = (delta) => {
+        const velocity = Math.round(
+          Math.max(0, Math.min(127, this.store.noteVelocity + delta * 8))
+        )
+        this.store.noteVelocity = velocity
+        showInformationMessage('Velocity: ' + velocity)
+      }
       if (e.keyCode >= 0x30 && e.keyCode <= 0x39) {
         switchOutputChannel(e.keyCode === 0x30 ? 10 : e.keyCode - 0x30)
+        e.preventDefault()
+        return
+      } else if (e.keyCode === 189) {
+        // Ctrl + -
+        updateVelocity(-1)
+        e.preventDefault()
+        return
+      } else if (e.keyCode === 187) {
+        // Ctrl + =
+        updateVelocity(1)
         e.preventDefault()
         return
       }

@@ -1,6 +1,7 @@
-import { MIDI, createFeature, useConfiguration } from '../core'
+import { MIDI, Store, createFeature, useConfiguration } from '../core'
 import { observable } from 'mobx'
 import { KeyboardEvent, useEffect } from 'react'
+import { showInformationMessage } from '../core/showInformationMessage'
 
 const state = observable({
   keyCodes: observable.map<number, { altKey: boolean }>({}),
@@ -24,6 +25,12 @@ function getKeyCode(event: KeyboardEvent) {
 let pedalMidiChannel = 1
 let chromaticMode = false
 let currentPedal: { up: () => void } | null = null
+
+function notifyTranspose(store: Store) {
+  showInformationMessage(
+    `Octave: ${store.octave}, Transpose: ${store.transpose}`
+  )
+}
 
 export default createFeature({
   name: 'midi-keybindings',
@@ -52,18 +59,22 @@ export default createFeature({
     }
     if (keyCode === 37) {
       store.setTranspose(store.transpose - 1)
+      notifyTranspose(store)
       return
     }
     if (keyCode === 38) {
       store.setOctave(store.octave + 1)
+      notifyTranspose(store)
       return
     }
     if (keyCode === 39) {
       store.setTranspose(store.transpose + 1)
+      notifyTranspose(store)
       return
     }
     if (keyCode === 40) {
       store.setOctave(store.octave - 1)
+      notifyTranspose(store)
       return
     }
     state.keyCodes.set(keyCode, { altKey: event.altKey })
