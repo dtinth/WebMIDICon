@@ -171,7 +171,7 @@ const Key = observer(
     render() {
       const active = this.isTouched.get()
       const transpose = this.props.store.transpose
-      const trueNoteValue = transpose + this.props.noteValue
+      const trueNoteValue = transpose + this.props.noteValue + 3
       return (
         <PianoKeyboardKey>
           <div className={this.props.keyColor} ref={this.props.refKey} />

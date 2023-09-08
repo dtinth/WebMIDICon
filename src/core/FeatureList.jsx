@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'react-emotion'
-import { groupBy, orderBy } from 'lodash'
+import { groupBy, orderBy } from 'lodash-es'
 import { InlineMarkdown } from './Markdown'
 
 const categoryIndex = (name) =>
