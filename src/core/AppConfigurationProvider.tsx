@@ -9,6 +9,22 @@ import {
 import { coreSettings } from './CoreSettings'
 import AppConfigurationContext from './AppConfigurationContext'
 
+import { memoize } from 'lodash-es'
+import { atom } from 'nanostores'
+
+const getConfigurationStore = memoize((key: string) => {
+  const storageKey = `WebMIDICon_${key}`
+  const store = atom<string | undefined>(localStorage[storageKey])
+  store.listen((value) => {
+    if (value !== undefined) {
+      localStorage[storageKey] = value
+    } else {
+      delete localStorage[storageKey]
+    }
+  })
+  return store
+})
+
 export default function AppConfigurationProvider({
   features,
   children,
@@ -17,36 +33,23 @@ export default function AppConfigurationProvider({
   children: ReactNode
 }) {
   const storage = useMemo((): ConfigurationStorage => {
-    const subscribers: Record<string, Set<() => void>> = {}
-    const notify = (key: string) => {
-      const set = subscribers[key]
-      if (!set) return
-      for (const listener of set) listener()
-    }
-
     return {
       get(key) {
-        return localStorage['WebMIDICon_' + key]
+        return getConfigurationStore(key).get()
       },
       has(key) {
-        return localStorage['WebMIDICon_' + key] !== undefined
+        return getConfigurationStore(key).get() !== undefined
       },
       delete(key) {
-        delete localStorage['WebMIDICon_' + key]
-        notify(key)
+        getConfigurationStore(key).set(undefined)
       },
       set(key, value) {
-        localStorage['WebMIDICon_' + key] = value
-        notify(key)
+        getConfigurationStore(key).set(value)
       },
       watch(key, callback) {
-        const set = (subscribers[key] ??= new Set())
-        const listener = () => callback()
-        set.add(listener)
+        const unsubscribe = getConfigurationStore(key).listen(callback)
         return {
-          unsubscribe: () => {
-            set.delete(listener)
-          },
+          unsubscribe: () => unsubscribe(),
         }
       },
     }
@@ -89,7 +92,7 @@ export default function AppConfigurationProvider({
       serialize(key, value) {
         const found = properties[key]
         if (found.type === 'string') {
-          return (value as unknown) as string
+          return value as unknown as string
         }
         if (found.type === 'boolean') {
           return value ? 'true' : 'false'
