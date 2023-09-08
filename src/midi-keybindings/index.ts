@@ -26,6 +26,33 @@ let pedalMidiChannel = 1
 let chromaticMode = false
 let currentPedal: { up: () => void } | null = null
 
+const drumMap: Record<string, number> = {
+  // ZXCV
+  90: 36,
+  88: 38,
+  67: 37,
+  86: 36,
+
+  // ASDFGH
+  65: 36,
+  83: 40,
+  68: 42,
+  70: 46,
+  71: 44,
+
+  // QWERT
+  81: 50,
+  87: 47,
+  69: 45,
+  82: 43,
+
+  // 1234
+  49: 49,
+  50: 52,
+  51: 55,
+  52: 57,
+}
+
 function notifyTranspose(store: Store) {
   showInformationMessage(
     `Octave: ${store.octave}, Transpose: ${store.transpose}`
@@ -77,6 +104,19 @@ export default createFeature({
       notifyTranspose(store)
       return
     }
+
+    const drumMode = false // true // false
+    if (drumMode) {
+      const found = drumMap[keyCode]
+      if (found) {
+        const channel = pedalMidiChannel
+        const note = found
+        MIDI.send([0x90 + channel - 1, note, store.noteVelocity])
+        MIDI.send([0x80 + channel - 1, note, store.noteVelocity])
+      }
+      return
+    }
+
     state.keyCodes.set(keyCode, { altKey: event.altKey })
   },
   onKeyUp(store, event) {
