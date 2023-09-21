@@ -1,6 +1,7 @@
 import React from 'react'
 import { TouchAbsorber } from '../core/TouchAbsorber'
 import { DrumButtonMapping } from './DrumButtonMapping'
+import { NoteHueConnector } from '../core/NoteHueConnector'
 
 export class DrumPadContents extends React.PureComponent {
   render() {

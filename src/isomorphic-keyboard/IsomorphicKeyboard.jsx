@@ -4,6 +4,7 @@ import { createSelector } from 'reselect'
 import { observer } from 'mobx-react'
 import styled from 'react-emotion'
 import { TouchAbsorber } from '../core/TouchAbsorber'
+import { NoteHueConnector } from '../core/NoteHueConnector'
 
 const IsomorphicKeyboardCircle = styled('div')`
   position: absolute;
@@ -209,6 +210,7 @@ const Circle = observer(
       const { size, noteValue, left, top } = this.props
       const transpose = this.props.store.transpose
       const trueNoteValue = transpose + noteValue
+      const opacity = this.isTouched.get() ? 1 : 0
       return (
         <div
           data-key={this.props['data-key']}
@@ -220,19 +222,25 @@ const Circle = observer(
             height: size,
           }}
         >
-          <IsomorphicKeyboardCircle
-            style={{
-              borderColor: `hsl(${(trueNoteValue % 12) * 30},50%,72%)`,
-            }}
-          />
-          <IsomorphicKeyboardCircle
-            className="is-active"
-            style={{
-              borderColor: 'white',
-              background: `hsl(${(trueNoteValue % 12) * 30},50%,72%)`,
-              opacity: this.isTouched.get() ? 1 : 0,
-            }}
-          />
+          <NoteHueConnector note={trueNoteValue}>
+            {(hue) => (
+              <>
+                <IsomorphicKeyboardCircle
+                  style={{
+                    borderColor: `hsl(${hue},50%,72%)`,
+                  }}
+                />
+                <IsomorphicKeyboardCircle
+                  className="is-active"
+                  style={{
+                    borderColor: 'white',
+                    background: `hsl(${hue},50%,72%)`,
+                    opacity,
+                  }}
+                />
+              </>
+            )}
+          </NoteHueConnector>
         </div>
       )
     }

@@ -4,6 +4,7 @@ import React from 'react'
 import { computed } from 'mobx'
 import { observer } from 'mobx-react'
 import { TouchAbsorber } from '../core/TouchAbsorber'
+import { NoteHueConnector } from '../core/NoteHueConnector'
 
 const PianoKeyboardWrapper = styled('div')`
   position: absolute;
@@ -171,18 +172,22 @@ const Key = observer(
     render() {
       const active = this.isTouched.get()
       const transpose = this.props.store.transpose
-      const trueNoteValue = transpose + this.props.noteValue + 3
+      const trueNoteValue = transpose + this.props.noteValue
       return (
         <PianoKeyboardKey>
           <div className={this.props.keyColor} ref={this.props.refKey} />
-          <div
-            className={this.props.keyColor + ' is-active'}
-            style={{
-              opacity: active ? 1 : 0,
-              background: `hsl(${(trueNoteValue % 12) * 30},100%,90%)`,
-              transition: active ? '' : '0.3s opacity',
-            }}
-          />
+          <NoteHueConnector note={trueNoteValue}>
+            {(hue) => (
+              <div
+                className={this.props.keyColor + ' is-active'}
+                style={{
+                  opacity: active ? 1 : 0,
+                  background: `hsl(${hue},100%,90%)`,
+                  transition: active ? '' : '0.3s opacity',
+                }}
+              />
+            )}
+          </NoteHueConnector>
         </PianoKeyboardKey>
       )
     }
