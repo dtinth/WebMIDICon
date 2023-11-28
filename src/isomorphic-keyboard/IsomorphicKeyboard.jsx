@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { computed } from 'mobx'
 import { createSelector } from 'reselect'
 import { observer } from 'mobx-react'
@@ -93,41 +93,47 @@ function generateKeys(type, width, height) {
   return { keys, keySize }
 }
 
-export class IsomorphicKeyboard extends React.Component {
-  constructor(props) {
-    super(props)
-    this.keys = []
-    this.state = { keyElements: null }
-  }
-  componentDidMount() {
-    window.requestAnimationFrame(() => {
-      this.handleSizeChange()
-    })
-    window.addEventListener('resize', this.handleSizeChange)
-  }
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleSizeChange)
-  }
-  handleContainerRef = (container) => {
-    this.container = container
-  }
-  handleSizeChange = () => {
-    if (this.container) {
-      this.setState({
-        width: this.container.offsetWidth,
-        height: this.container.offsetHeight,
-      })
+export const IsomorphicKeyboard = (props) => {
+  const [width, setWidth] = useState(null);
+  const [height, setHeight] = useState(null);
+  const containerRef = useRef(null);
+
+  const handleContainerRef = (container) => {
+    containerRef.current = container;
+  };
+
+  const handleSizeChange = () => {
+    if (containerRef.current) {
+      setWidth(containerRef.current.offsetWidth);
+      setHeight(containerRef.current.offsetHeight);
     }
-  }
-  selectKeys = createSelector(
-    ({ props }) => props.type,
-    ({ state }) => state.width,
-    ({ state }) => state.height,
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      window.requestAnimationFrame(() => {
+        handleSizeChange();
+      });
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const selectKeys = createSelector(
+    () => props.type,
+    () => width,
+    () => height,
     generateKeys
-  )
-  selectKeyElements = createSelector(
-    this.selectKeys,
-    ({ props }) => props.store,
+  );
+
+  const selectKeyElements = createSelector(
+    selectKeys,
+    () => props.store,
     ({ keys, keySize }, store) => {
       return keys.map((key) => {
         return (
@@ -140,27 +146,32 @@ export class IsomorphicKeyboard extends React.Component {
             left={key.x}
             top={key.y}
           />
-        )
-      })
+        );
+      });
     }
-  )
-  getSelectorState = () => ({
-    props: this.props,
-    state: this.state,
-  })
-  renderKeys = () => {
-    return this.selectKeyElements(this.getSelectorState())
-  }
-  updateTouches = (e) => {
-    e.preventDefault()
-    const container = this.container
-    if (!container) return
-    const bound = container.getBoundingClientRect()
-    const bx = bound.left
-    const by = bound.top
-    const activated = new Set()
-    const { keys } = this.selectKeys(this.getSelectorState())
-    void [].forEach.call(e.touches, (touch) => {
+  );
+
+  const getSelectorState = () => ({
+    props: props,
+    state: { width, height },
+  });
+
+  const renderKeys = () => {
+    return selectKeyElements(getSelectorState());
+  };
+
+  const updateTouches = (e) => {
+    e.preventDefault();
+    const container = containerRef.current;
+    if (!container) return;
+
+    const bound = container.getBoundingClientRect();
+    const bx = bound.left;
+    const by = bound.top;
+    const activated = new Set();
+    const { keys } = selectKeys(getSelectorState());
+
+    [...e.touches].forEach((touch) => {
       const rankedKeys = keys
         .map(({ noteValue, x, y }) => ({
           noteValue,
@@ -169,34 +180,34 @@ export class IsomorphicKeyboard extends React.Component {
               Math.pow(touch.clientY - (by + y), 2)
           ),
         }))
-        .sort((a, b) => a.distance - b.distance)
-      activated.add(rankedKeys[0].noteValue)
-    })
-    this.props.store.handleTouches([...activated])
-  }
-  render() {
-    return (
-      <TouchAbsorber>
-        <div
-          ref={this.handleContainerRef}
-          onTouchStart={this.updateTouches}
-          onTouchMove={this.updateTouches}
-          onTouchEnd={this.updateTouches}
-          style={{
-            position: 'absolute',
-            overflow: 'hidden',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-          }}
-        >
-          {this.renderKeys()}
-        </div>
-      </TouchAbsorber>
-    )
-  }
-}
+        .sort((a, b) => a.distance - b.distance);
+      activated.add(rankedKeys[0].noteValue);
+    });
+
+    props.store.handleTouches([...activated]);
+  };
+
+  return (
+    <TouchAbsorber>
+      <div
+        ref={handleContainerRef}
+        onTouchStart={updateTouches}
+        onTouchMove={updateTouches}
+        onTouchEnd={updateTouches}
+        style={{
+          position: 'absolute',
+          overflow: 'hidden',
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+        }}
+      >
+        {renderKeys()}
+      </div>
+    </TouchAbsorber>
+  );
+};
 
 const Circle = observer(
   class Circle extends React.Component {
